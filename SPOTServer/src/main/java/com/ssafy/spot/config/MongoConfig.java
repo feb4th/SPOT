@@ -1,4 +1,4 @@
-package com.spot.config;
+package com.ssafy.spot.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
@@ -37,7 +37,8 @@ public class MongoConfig extends MongoAutoConfiguration {
 	public MongoClient mongoClient() {
 		// MongoDB 접속을 위한 url세팅
 		MongoClient mongoClient = MongoClients.create(
-	            new ConnectionString("mongodb://"+userName+":"+password+"@"+host+":"+port+"/"+database+"?authSource=admin"));
+	            new ConnectionString("mongodb://localhost:27017/testdb"));
+//		new ConnectionString("mongodb://"+userName+":"+password+"@"+host+":"+port+"/"+database+"?authSource=admin"));
 		return mongoClient;
 	}
 }
