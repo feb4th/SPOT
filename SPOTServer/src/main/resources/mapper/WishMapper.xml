@@ -9,5 +9,16 @@
 		insert into wishlist values(null, #{user_id}, #{spot_id})
 	</insert>
 	
+	<select id="wishcheck" parameterType="String" resultType="java.util.Map">
+		select wishlist_id from wishlist where user_id=#{user_id} and spot_id=#{spot_id}
+	</select>
+	
+	<delete id="delwish" parameterType="String">
+		delete from wishlist where wishlist_id=#{wishlist_id}
+	</delete>
+	
+	<select id="wishlist" parameterType="String" resultType="java.util.Map">
+		select spot_id from wishlist where user_id=#{user_id}
+	</select>
 	
 </mapper>
