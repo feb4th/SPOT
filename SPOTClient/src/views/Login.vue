@@ -133,7 +133,7 @@ export default {
         });
     },
     signup() {
-      //this.$router.push("/signup");
+      this.$router.push("/signup");
     },
     findidpw() {
       //this.$router.push("/findidpw");
