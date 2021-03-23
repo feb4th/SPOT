@@ -1,23 +1,24 @@
 <template>
-	<v-app>
-		<!-- Content, Footer -->
+  <v-app>
+    <!-- Content, Footer -->
+    <router-view />
 
-		<router-view />
-		<Footer />
-	</v-app>
+    <!-- 로그인 시 푸터를 보여줌 -->
+    <Footer />
+  </v-app>
 </template>
 
 <script>
-	import Footer from "./views/Footer";
-	export default {
-		name: "App",
+import Footer from "./views/Footer";
+export default {
+  name: "App",
 
-		components: {
-			Footer
-		},
+  components: {
+    Footer
+  },
 
-		data: () => ({
-			//
-		})
-	};
+  data: () => ({
+    //
+  })
+};
 </script>
