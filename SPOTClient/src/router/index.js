@@ -3,8 +3,9 @@ import VueRouter from "vue-router";
 
 import Main from "../views/MainPage.vue";
 import NotFound from "../components/error/NotFound.vue";
-import Login from "../views/Login.vue";
 
+import findRoute from "./routers/FindRouter";
+import Login from "../views/Login.vue";
 //import exampleRoute from "./routers/ExampleRouter";
 import memberRoute from "./routers/MemberRouter";
 
@@ -34,8 +35,10 @@ const routes = [
     component: Login
   }
   // concat을 통한 module화 한 routes 추가
-] //.concat(exampleRoute)
+]
+  .concat(findRoute)
   .concat(memberRoute);
+
 
 const router = new VueRouter({
   mode: "history",
