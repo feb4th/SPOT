@@ -1,31 +1,36 @@
 package com.ssafy.spot.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.spot.model.BasicResponse;
-import com.ssafy.spot.service.WishService;
+import com.ssafy.spot.service.TourReviewService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin
+@Api("TourReviewController V1")
 @RestController
-public class WishController {
-	@Autowired
-	WishService service;
+@CrossOrigin
+public class TourReviewController {
 	
-	@PostMapping(value= "/wish")
-	@ApiOperation(value = "Wishlist", notes= "Wishlist 추가 요청")
-	public Object wish(@RequestParam String user_id, @RequestParam String spot_id) {        
+	@Autowired
+	TourReviewService service;
+	
+	@ApiOperation(value = "관광지의 리뷰 조회", notes = "message : success, fail과 성공시 리뷰리스트 반환", response = List.class)
+	@GetMapping("/review")
+	public ResponseEntity findReviews(){
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
+		
 		try {
-			service.addwish(user_id, spot_id);
+			
 			result.message = "";
 		}catch(Exception e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -34,4 +39,5 @@ public class WishController {
 		status = HttpStatus.ACCEPTED;
         return new ResponseEntity<>(result, status);
 	}
+	
 }
