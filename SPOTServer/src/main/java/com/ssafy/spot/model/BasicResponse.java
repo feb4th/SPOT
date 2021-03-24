@@ -1,4 +1,4 @@
-package com.web.spot.model;
+package com.ssafy.spot.model;
 
 import io.swagger.annotations.ApiModelProperty;
 

@@ -20,5 +20,6 @@
 	<select id="wishlist" parameterType="String" resultType="java.util.Map">
 		select spot_id from wishlist where user_id=#{user_id}
 	</select>
+
 	
 </mapper>
