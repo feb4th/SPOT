@@ -21,12 +21,17 @@ public class WishController {
 	
 	@PostMapping(value= "/wish")
 	@ApiOperation(value = "Wishlist", notes= "Wishlist 추가 요청")
-	public Object wish(@RequestParam String user_id, @RequestParam String spot_id) {
-		service.addwish(user_id, spot_id);
-		
-		final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "add wish";
-        return new ResponseEntity<>(result, HttpStatus.OK);
+	public Object wish(@RequestParam String user_id, @RequestParam String spot_id) {        
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		try {
+			service.addwish(user_id, spot_id);
+			result.message = "";
+		}catch(Exception e) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status = HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
 	}
 }
