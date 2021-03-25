@@ -18,4 +18,9 @@ public class TourReviewServiceImpl implements TourReviewService {
 	public List<TourReview> findById(String id) {
 		return dao.findById(id);
 	}
+	
+	@Override
+	public void insertReview(TourReview review) {
+		dao.insertReview(review);
+	}
 }

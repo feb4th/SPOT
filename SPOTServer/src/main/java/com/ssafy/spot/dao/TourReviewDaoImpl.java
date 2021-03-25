@@ -18,4 +18,9 @@ public class TourReviewDaoImpl implements TourReviewDao {
 	public List<TourReview> findById(String id) {
 		return mapper.findById(id);
 	}
+	
+	@Override
+	public void insertReview(TourReview review) {
+		mapper.insertReview(review);
+	}
 }

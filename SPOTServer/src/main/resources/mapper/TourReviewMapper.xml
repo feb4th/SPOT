@@ -9,5 +9,8 @@
 		select * from TourSightReview where toursight_id = #{id};
 	</select>
 	
+	<insert id="insertReview" parameterType="TourReview">
+		insert into TourSightReview values(null, #{user_id}, #{toursight_id}, #{content}, now(), #{score});
+	</insert>
 	
 </mapper>

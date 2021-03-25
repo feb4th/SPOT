@@ -8,8 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.spot.dto.TourReview;
 import com.ssafy.spot.model.BasicResponse;
 import com.ssafy.spot.service.TourReviewService;
 
@@ -33,6 +37,24 @@ public class TourReviewController {
 		
 		try {
 			result.result = service.findById(id);
+			result.message = "success";
+		}catch(Exception e) {
+			result.message = "fail";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status = HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+	}
+	
+	@ApiOperation(value = "관광지의 리뷰 생성", notes = "message : success, fail", response = TourReview.class)
+	@PostMapping("/review")
+	public Object addReviews(@ApiParam(value = "TourReview", required = true) @RequestBody TourReview review){
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		System.out.println(review.toString());
+		try {
+			service.insertReview(review);
 			result.message = "success";
 		}catch(Exception e) {
 			result.message = "fail";
