@@ -6,4 +6,5 @@ import com.ssafy.spot.dto.TourReview;
 
 public interface TourReviewService {
 	public List<TourReview> findById(String id);
+	public void insertReview(TourReview review);
 }

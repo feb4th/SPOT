@@ -9,9 +9,12 @@ public class TourReview {
 	private String date;
 	private String score;
 	
-	public TourReview(String tour_review_id, String user_id, String toursight_id, String content, String date,
-			String score) {
+	public TourReview() {}
 
+	@Override
+	public String toString() {
+		return "TourReview [tour_review_id=" + tour_review_id + ", user_id=" + user_id + ", toursight_id="
+				+ toursight_id + ", content=" + content + ", date=" + date + ", score=" + score + "]";
 	}
 
 	public String getTour_review_id() {
