@@ -23,4 +23,9 @@ public class TourReviewDaoImpl implements TourReviewDao {
 	public void insertReview(TourReview review) {
 		mapper.insertReview(review);
 	}
+	
+	@Override
+	public void updateReview(TourReview review) {
+		mapper.updateReview(review);
+	}
 }
