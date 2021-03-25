@@ -8,4 +8,5 @@ public interface TourReviewDao {
 	public List<TourReview> findById(String id);
 	public void insertReview(TourReview review);
 	public void updateReview(TourReview review);
+	public void deleteReview(String id);
 }
