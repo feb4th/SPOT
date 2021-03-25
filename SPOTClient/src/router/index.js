@@ -18,10 +18,10 @@ const routes = [
     component: Main,
     //메인페이지로 가기 전 로그아웃 상태면 login페이지로 이동
     beforeEnter(to, from, next) {
-      if (!localStorage.getItem("access-token")) {
-        next({ name: "login" });
-      } else {
+      if (sessionStorage.getItem("access-token")) {
         next();
+      } else {
+        next({ name: "login" });
       }
     }
   },
@@ -38,7 +38,6 @@ const routes = [
 ]
   .concat(findRoute)
   .concat(memberRoute);
-
 
 const router = new VueRouter({
   mode: "history",
