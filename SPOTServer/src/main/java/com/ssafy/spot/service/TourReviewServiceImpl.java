@@ -1,5 +1,21 @@
 package com.ssafy.spot.service;
 
-public class TourReviewServiceImpl implements TourReviewService {
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.spot.dao.TourReviewDao;
+import com.ssafy.spot.dto.TourReview;
+
+@Service
+public class TourReviewServiceImpl implements TourReviewService {
+	
+	@Autowired
+	TourReviewDao dao;
+	
+	@Override
+	public List<TourReview> findById(String id) {
+		return dao.findById(id);
+	}
 }

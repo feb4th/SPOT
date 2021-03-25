@@ -1,5 +1,9 @@
 package com.ssafy.spot.dao;
 
-public interface TourReviewDao {
+import java.util.List;
 
+import com.ssafy.spot.dto.TourReview;
+
+public interface TourReviewDao {
+	public List<TourReview> findById(String id);
 }

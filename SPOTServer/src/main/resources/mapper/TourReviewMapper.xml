@@ -3,9 +3,11 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.web.spot.mapper.UserMapper">
+<mapper namespace="com.ssafy.spot.mapper.TourReviewMapper">
 
-	
+	<select id="findById" resultType="TourReview" parameterType="string">
+		select * from TourSightReview where toursight_id = #{id};
+	</select>
 	
 	
 </mapper>

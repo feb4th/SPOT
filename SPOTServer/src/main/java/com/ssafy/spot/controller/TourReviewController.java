@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.spot.model.BasicResponse;
@@ -14,6 +15,7 @@ import com.ssafy.spot.service.TourReviewService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Api("TourReviewController V1")
 @RestController
@@ -24,15 +26,16 @@ public class TourReviewController {
 	TourReviewService service;
 	
 	@ApiOperation(value = "관광지의 리뷰 조회", notes = "message : success, fail과 성공시 리뷰리스트 반환", response = List.class)
-	@GetMapping("/review")
-	public ResponseEntity findReviews(){
+	@GetMapping("/review/{id}")
+	public Object findReviews(@ApiParam(value = "String", required = true) @PathVariable String id){
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
 		
 		try {
-			
-			result.message = "";
+			result.result = service.findById(id);
+			result.message = "success";
 		}catch(Exception e) {
+			result.message = "fail";
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 			e.printStackTrace();
 		}
