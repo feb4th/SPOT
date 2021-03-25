@@ -1,5 +1,7 @@
 package com.ssafy.spot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,10 @@ public class TourSightServiceImpl implements TourSightService {
 	@Override
 	public TourSight findById(String id) {
 		return dao.findById(id);
+	}
+	
+	@Override
+	public List<TourSight> findByName(String name) {
+		return dao.findByName(name);
 	}
 }

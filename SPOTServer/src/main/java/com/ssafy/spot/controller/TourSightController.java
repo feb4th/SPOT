@@ -1,5 +1,7 @@
 package com.ssafy.spot.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +41,22 @@ public class TourSightController {
 		}
 		status = HttpStatus.ACCEPTED;
         return new ResponseEntity<>(result, status);
+	}
+	@ApiOperation(value = "관광지 검색어 자동완성", notes = "message : success, fail과 성공시 리뷰리스트 반환", response = List.class)
+	@GetMapping("/toursight/auto/{name}")
+	public Object findTourSightAuto(@ApiParam(value = "String", required = true) @PathVariable String name){
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		
+		try {
+			result.result = service.findByName(name + "%");
+			result.message = "success";
+		}catch(Exception e) {
+			result.message = "fail";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status = HttpStatus.ACCEPTED;
+		return new ResponseEntity<>(result, status);
 	}
 }
