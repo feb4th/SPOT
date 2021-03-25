@@ -7,4 +7,5 @@ import com.ssafy.spot.dto.TourSight;
 public interface TourSightDao {
 	public TourSight findById(String id);
 	public List<TourSight> findByName(String name);
+	public List<TourSight> findByRange(String lat, String lng, String range);
 }
