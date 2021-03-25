@@ -1,7 +1,7 @@
 // Components import
 import Signup from "../../views/SignUp";
 import FindPw from "../../views/FindPw";
-
+import MyPage from "../../views/MyPage";
 // MemberRouter
 const memberRoute = [
   {
@@ -16,6 +16,13 @@ const memberRoute = [
     path: "/findpw",
     name: "findpw",
     component: FindPw,
+    props: false
+  },
+  {
+    // 마이페이지 route
+    path: "/mypage/:email",
+    name: "mypage",
+    component: MyPage,
     props: false
   }
 ];

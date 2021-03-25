@@ -279,7 +279,6 @@ export default {
         (this.name = "");
     },
     onSignup() {
-      /*
       // form 검증
       if (this.$refs.form.validate() === false) return;
 
@@ -300,7 +299,7 @@ export default {
       }
 
       this.processing = true;
-*/
+
       this.reqSignup({
         email: this.email,
         pw: this.pw,
