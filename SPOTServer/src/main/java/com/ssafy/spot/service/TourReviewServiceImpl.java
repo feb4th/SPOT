@@ -23,4 +23,9 @@ public class TourReviewServiceImpl implements TourReviewService {
 	public void insertReview(TourReview review) {
 		dao.insertReview(review);
 	}
+	
+	@Override
+	public void updateReview(TourReview review) {
+		dao.updateReview(review);
+	}
 }

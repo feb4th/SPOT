@@ -49,12 +49,30 @@ public class TourReviewController {
 	
 	@ApiOperation(value = "관광지의 리뷰 생성", notes = "message : success, fail", response = TourReview.class)
 	@PostMapping("/review")
-	public Object addReviews(@ApiParam(value = "TourReview", required = true) @RequestBody TourReview review){
+	public Object addReview(@ApiParam(value = "TourReview", required = true) @RequestBody TourReview review){
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
-		System.out.println(review.toString());
+		
 		try {
 			service.insertReview(review);
+			result.message = "success";
+		}catch(Exception e) {
+			result.message = "fail";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status = HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+	}
+	
+	@ApiOperation(value = "관광지의 리뷰 수정", notes = "message : success, fail", response = TourReview.class)
+	@PutMapping("/review")
+	public Object updateReview(@ApiParam(value = "TourReview", required = true) @RequestBody TourReview review){
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		
+		try {
+			service.updateReview(review);
 			result.message = "success";
 		}catch(Exception e) {
 			result.message = "fail";
