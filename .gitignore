@@ -36,8 +36,8 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.properties
-.pom.xml
+*.properties
+pom.xml
 
 ### IntelliJ IDEA ###
 .idea
