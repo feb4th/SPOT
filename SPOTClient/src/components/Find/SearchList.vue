@@ -1,36 +1,46 @@
 <template>
-  <v-sheet class="mx-auto" elevation="8" max-width="800">
-    <v-slide-group
-      v-model="model"
-      class="pa-4"
-      active-class="success"
-      show-arrows
-    >
-      <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
-        <v-card
-          :color="active ? undefined : 'grey lighten-1'"
-          class="ma-4"
-          height="200"
-          width="100"
-          @click="toggle"
-        >
-          <v-row class="fill-height" align="center" justify="center">
-            <v-scale-transition>
-              <v-icon
-                v-if="active"
-                color="white"
-                size="48"
-                v-text="'mdi-close-circle-outline'"
-              ></v-icon>
-            </v-scale-transition>
-          </v-row>
-        </v-card>
-      </v-slide-item>
-    </v-slide-group>
-  </v-sheet>
+  <v-container>
+    <v-sheet class="mx-auto" elevation="8" max-width="800">
+      <template v-if="getSearchList.length == 0">
+        <h1>검색 결과가 없습니다.</h1>
+      </template>
+      <v-slide-group class="pa-4" active-class="success" show-arrows>
+        <v-slide-item v-for="(card, idx) in getSearchList" :key="idx">
+          <v-card
+            class="ma-4"
+            height="200"
+            width="200"
+            @click="onSelect(card.storeid)"
+          >
+            <v-img>
+              :src = "card.img"
+            </v-img>
+          </v-card>
+        </v-slide-item>
+      </v-slide-group>
+    </v-sheet>
+  </v-container>
 </template>
 <script>
-export default {};
+import { mapActions, mapGetters } from "vuex";
+const FindStore = "FindStore";
+const SpotInfoStore = "SpotInfoStore";
+
+export default {
+  computed: {
+    ...mapGetters(FindStore, ["getSearchList"])
+  },
+  methods: {
+    ...mapActions(SpotInfoStore, ["reqSpot"]),
+    onSelect(storeNum) {
+      this.reqSpot(storeNum).then(response => {
+        if (!response) {
+          this.$router.push("/spotdetail");
+        } else alert(response.msg);
+      });
+    }
+  }
+};
 </script>
 
 <style></style>

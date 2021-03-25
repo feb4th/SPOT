@@ -1,36 +1,34 @@
 //import axios from "axios";
 
 const ExampleStore = {
-    namespaced: true,
-    state: {
-        /*
+  namespaced: true,
+  state: {
+    /*
             Store에 필요한 변수들을 넣으면 됨
             
             items: [],
             item: {},
         */
-        
-    },
-    getters: {
-        /*
+  },
+  getters: {
+    /*
             필요한 getter를 넣으면 됨
 
             getItems(state) { return state.items; },
             getItem(state) { return state.item; },
         */
-        
-    },
-    mutations: {
-        /*
+  },
+  mutations: {
+    /*
             store state에 셋팅
         
             setItems(state, payload) {
                 state.items = payload;
             },
         */
-    },
-    actions: {
-        /*
+  },
+  actions: {
+    /*
             비동기 통신으로 Backend에 요청 후
             값을 받아와서 처리(mutation으로 셋팅, or 값을 리턴)
 
@@ -50,7 +48,7 @@ const ExampleStore = {
                     })
             },
         */
-    }
-}
+  }
+};
 
 export default ExampleStore;
