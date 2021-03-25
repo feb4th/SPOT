@@ -28,4 +28,9 @@ public class TourReviewServiceImpl implements TourReviewService {
 	public void updateReview(TourReview review) {
 		dao.updateReview(review);
 	}
+	
+	@Override
+	public void deleteReview(String id) {
+		dao.deleteReview(id);
+	}
 }

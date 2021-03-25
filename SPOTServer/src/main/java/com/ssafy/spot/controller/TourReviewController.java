@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,6 +74,24 @@ public class TourReviewController {
 		
 		try {
 			service.updateReview(review);
+			result.message = "success";
+		}catch(Exception e) {
+			result.message = "fail";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status = HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+	}
+	
+	@ApiOperation(value = "관광지의 리뷰 삭제", notes = "message : success, fail", response = TourReview.class)
+	@DeleteMapping("/review/{id}")
+	public Object deleteReview(@ApiParam(value = "TourReview", required = true) @PathVariable String id){
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		
+		try {
+			service.deleteReview(id);
 			result.message = "success";
 		}catch(Exception e) {
 			result.message = "fail";

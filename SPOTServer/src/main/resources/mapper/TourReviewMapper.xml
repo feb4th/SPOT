@@ -17,4 +17,8 @@
 		update TourSightReview set content=#{content}, score=#{score} where tour_review_id = #{tour_review_id};
 	</update>
 	
+	<delete id="deleteReview" parameterType="String">
+		delete from TourSightReview where tour_review_id = #{id};
+	</delete>
+	
 </mapper>
