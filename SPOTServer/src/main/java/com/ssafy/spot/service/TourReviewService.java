@@ -1,5 +1,9 @@
 package com.ssafy.spot.service;
 
-public interface TourReviewService {
+import java.util.List;
 
+import com.ssafy.spot.dto.TourReview;
+
+public interface TourReviewService {
+	public List<TourReview> findById(String id);
 }
