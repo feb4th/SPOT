@@ -6,6 +6,8 @@ import ExampleStore from "./modules/ExampleStore";
 import MemberStore from "./modules/MemberStore";
 import FindStore from "./modules/FindStore";
 import SpotInfoStore from "./modules/SpotInfoStore";
+import CourseStore from "./modules/CourseStore";
+import WishStore from "./modules/WishStore";
 
 Vue.use(Vuex);
 
@@ -14,7 +16,9 @@ export default new Vuex.Store({
     ExampleStore,
     MemberStore,
     FindStore,
-    SpotInfoStore
+    SpotInfoStore,
+    CourseStore,
+    WishStore
   },
   plugins: []
 });
