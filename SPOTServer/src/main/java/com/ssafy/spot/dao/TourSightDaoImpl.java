@@ -23,4 +23,9 @@ public class TourSightDaoImpl implements TourSightDao {
 	public List<TourSight> findByName(String name) {
 		return mapper.findByName(name);
 	}
+	
+	@Override
+	public List<TourSight> findByRange(String lat, String lng, String range) {
+		return mapper.findByRange(lat, lng, range);
+	}
 }

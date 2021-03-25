@@ -59,4 +59,22 @@ public class TourSightController {
 		status = HttpStatus.ACCEPTED;
 		return new ResponseEntity<>(result, status);
 	}
+	@ApiOperation(value = "관광지 검색어 자동완성", notes = "message : success, fail과 성공시 리뷰리스트 반환", response = List.class)
+	@GetMapping("/toursight/around/{lat}/{lng}/{range}")
+	public Object findTourSightAround(@ApiParam(value = "String", required = true) @PathVariable String lat,
+			@PathVariable String lng, @PathVariable String range){
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		
+		try {
+			result.result = service.findByRange(lat, lng, range);
+			result.message = "success";
+		}catch(Exception e) {
+			result.message = "fail";
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status = HttpStatus.ACCEPTED;
+		return new ResponseEntity<>(result, status);
+	}
 }
