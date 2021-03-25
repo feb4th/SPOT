@@ -4,7 +4,7 @@ const MemberStore = {
   namespaced: true, // 모듈 개발사용 가능
   state: {
     isLogin: false, // 로그인 여부
-    memberInfo: {}
+    memberInfo: { email: "" }
   },
 
   getters: {
@@ -40,12 +40,12 @@ const MemberStore = {
     // 로그인
     Login(context, member) {
       return axios
-        .post("/login", {
+        .post("/user/login", {
           //유저정보를 보냄
           email: member.email,
           pw: member.pw
         })
-        .then((response) => {
+        .then(response => {
           //성공 시 변수 재설정
           if (response.status === 200 && response.data.status === true) {
             //토큰생성 및 저장
@@ -68,7 +68,7 @@ const MemberStore = {
             };
           }
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.response.status === 401) {
             if (error.response.data.data === "email")
               return {
@@ -100,22 +100,59 @@ const MemberStore = {
     /*
       Signup Component
     */
-    // 회원가입
-    reqSignup(context, info) {
+    //이메일 중복체크
+    reqCheckEmail(context, email) {
       return axios
-        .post("/signup", {
-          email: info.email,
-          name: info.name,
-          phone: info.phone,
-          pw: info.pw
-        })
-        .then((response) => {
+        .get("/user/email/" + email)
+        .then(response => {
           console.log(response.data);
           if (response.status === 200 && response.data.status === true) {
             return true;
           }
         })
-        .catch((error) => {
+        .catch(error => {
+          // 이메일 중복
+          if (error.response.status === 409) {
+            return false;
+          } else console.log(error);
+        });
+    },
+
+    //닉네임 중복체크
+    reqCheckNickname(context, nickname) {
+      return axios
+        .get("/user/nickname/" + nickname)
+        .then(response => {
+          console.log(response.data);
+          if (response.status === 200 && response.data.status === true) {
+            return true;
+          }
+        })
+        .catch(error => {
+          // 닉네임 중복
+          if (error.response.status === 409) {
+            return false;
+          } else console.log(error);
+        });
+    },
+
+    // 회원가입
+    reqSignup(context, info) {
+      return axios
+        .post("/signup", {
+          email: info.email,
+          nickname: info.nickname,
+          pwd: info.pwd,
+          gender: info.gender,
+          birth: info.birth
+        })
+        .then(response => {
+          console.log(response.data);
+          if (response.status === 200 && response.data.status === true) {
+            return true;
+          }
+        })
+        .catch(error => {
           // 이메일 중복
           if (error.response.status === 409) {
             return false;
@@ -126,11 +163,11 @@ const MemberStore = {
     reqSignupValidation(context, email) {
       return axios
         .post("/signup/validation", email)
-        .then((response) => {
+        .then(response => {
           if (response.status) return true;
           return false;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -141,49 +178,26 @@ const MemberStore = {
           email: info.email,
           authkey: info.authkey
         })
-        .then((response) => {
+        .then(response => {
           if (response.status) return true;
           return false;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     /*
-      FindIdPw Component
+      FindPw Component
     */
-    // ID 찾기
-    reqFindId(context, info) {
-      return axios
-        .post("/member/id", {
-          name: info.name,
-          phone: info.phone
-        })
-        .then((response) => {
-          if (response.data.status) {
-            // 데이터 존재
-            return {
-              result: true,
-              msg: "이메일은 " + response.data.data + " 입니다"
-            };
-          }
 
-          // 데이터 존재 x
-          return { result: false, msg: "회원정보가 존재하지 않습니다" };
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
     // 비밀번호 찾기
     reqFindPw(context, info) {
       return axios
         .post("/member/pw", {
           email: info.email,
-          name: info.name,
-          phone: info.phone
+          nickname: info.nickname
         })
-        .then((response) => {
+        .then(response => {
           if (response.data.status) {
             // 데이터 존재
             return {
@@ -195,7 +209,7 @@ const MemberStore = {
           // 데이터 존재 x
           return { result: false, msg: "회원정보가 존재하지 않습니다" };
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -203,14 +217,14 @@ const MemberStore = {
     reqMemberInfo(context, no) {
       return axios
         .get("/member/" + no)
-        .then((response) => {
+        .then(response => {
           if (response.data.status) {
             context.commit("setMemberInfo", response.data.object);
             return { result: true, msg: "회원정보조회 성공" };
           }
           return { result: false, msg: "회원정보가 존재하지 않습니다" };
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }

@@ -4,7 +4,7 @@
 
 // ExampleRouter 정의 부분
 const exampleRoute = [
-    /*
+  /*
         하나의 라우터는 이런 형식으로 정의합니다
         {
             path: address 뒤에 붙을 path -> http://localhost:8080/{path}

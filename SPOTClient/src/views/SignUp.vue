@@ -7,7 +7,7 @@
 
           <v-col cols="12" sm="8">
             <v-sheet min-height="70vh" rounded="lg">
-              <v-card class="py-10 my-10">
+              <v-card class="pu-10 mu-10">
                 <v-card-title class="justify-center">회원가입</v-card-title>
                 <!-- 회원 가입 fields -->
                 <v-form
@@ -16,23 +16,63 @@
                   lazy-validation
                   class="mx-10 my-20"
                 >
-                  <v-text-field
-                    v-model="email"
-                    :counter="50"
-                    :rules="[
-                      (v) => !!v || '이메일을 입력하세요',
-                      (v) => /.+@.+\..+/.test(v) || '이메일 형식이 아닙니다',
-                      (v) => v.length <= 50 || '이메일이 너무 깁니다'
-                    ]"
-                    label="이메일"
-                    required
-                  ></v-text-field>
+                  <v-row>
+                    <v-col cols="10">
+                      <v-text-field
+                        v-model="email"
+                        @change="emailcheck = false"
+                        :counter="50"
+                        :rules="[
+                          v => !!v || '이메일을 입력하세요',
+                          v => /.+@.+\..+/.test(v) || '이메일 형식이 아닙니다',
+                          v => v.length <= 50 || '이메일이 너무 깁니다'
+                        ]"
+                        label="이메일"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-btn
+                        color="success"
+                        block
+                        @click="checkEmail()"
+                        :disabled="emailcheck"
+                        >중복체크</v-btn
+                      ></v-col
+                    >
+                  </v-row>
+                  <v-row>
+                    <v-col cols="10">
+                      <v-text-field
+                        v-model="nickname"
+                        @change="nicknamecheck = false"
+                        :counter="10"
+                        :rules="[
+                          v => !!v || '닉네임을 입력해 주세요',
+                          v =>
+                            (v && v.length > 1 && v.length <= 10) ||
+                            '닉네임은 2자리 이상 10자리 이하로 입력해야 합니다'
+                        ]"
+                        label="닉네임"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-btn
+                        color="success"
+                        block
+                        @click="checkNickname()"
+                        :disabled="nicknamecheck"
+                        >중복체크</v-btn
+                      >
+                    </v-col>
+                  </v-row>
 
                   <v-text-field
                     v-model="pw"
                     :rules="[
-                      (v) => !!v || '비밀번호를 입력해 주세요',
-                      (v) =>
+                      v => !!v || '비밀번호를 입력해 주세요',
+                      v =>
                         (v && v.length > 7 && v.length <= 20) ||
                         '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
                     ]"
@@ -44,46 +84,45 @@
                   <v-text-field
                     v-model="pwvaild"
                     :rules="[
-                      (v) => !!v || '비밀번호를 입력해 주세요',
-                      (v) => v === pw || '입력한 비밀번호와 다릅니다'
+                      v => !!v || '비밀번호를 입력해 주세요',
+                      v => v === pw || '입력한 비밀번호와 다릅니다'
                     ]"
                     type="password"
                     label="비밀번호 확인"
                     required
                   ></v-text-field>
 
-                  <v-text-field
-                    v-model="name"
-                    :counter="10"
-                    :rules="[
-                      (v) => !!v || '이름을 입력해 주세요',
-                      (v) =>
-                        (v && v.length > 1 && v.length <= 10) ||
-                        '이름은 2자리 이상 10자리 이하로 입력해야 합니다'
-                    ]"
-                    label="이름"
-                    required
-                  ></v-text-field>
-
-                  <v-text-field
-                    v-model="phone"
-                    :counter="13"
-                    :rules="[
-                      (v) => !!v || '번호를 입력하세요',
-                      (v) =>
-                        /^\d{3}-\d{3,4}-\d{4}$/.test(v) ||
-                        '번호 형식이 아닙니다'
-                    ]"
-                    placeholder="xxx-xxxx-xxxx"
-                    label="전화번호"
-                    required
-                  ></v-text-field>
+                  <v-row>
+                    <v-col>
+                      <v-select
+                        :items="genders"
+                        label="성별"
+                        v-model="gender"
+                        :rules="[v => !!v || '성별을 선택해주세요']"
+                        required
+                      ></v-select>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        label="출생년도"
+                        placeholder="2021"
+                        v-model="birth"
+                        :rules="[
+                          v => !!v || '출생년도를 입력해주세요',
+                          v =>
+                            (v >= 1900 && v <= 2021) ||
+                            '네자리 연으로 입력해주세요'
+                        ]"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
                   <v-checkbox
                     v-model="check"
                     label="이용약관에 동의합니다"
                     class="mt-10"
-                    :rules="[(v) => v === true || '이용약관에 동의해주세요']"
+                    :rules="[v => v === true || '이용약관에 동의해주세요']"
                   ></v-checkbox>
                   <v-expansion-panels tile class="mb-10">
                     <v-expansion-panel>
@@ -166,10 +205,36 @@
 
           <v-col cols="12" sm="2"> </v-col>
         </v-row>
-        <v-snackbar centered v-model="snackbar" timeout="2000">
+        <v-snackbar centered v-model="snackbar" timeout="2000" :color="color">
           {{ msg }}
         </v-snackbar>
       </v-container>
+      <!-- 회원가입완료 모달창 -->
+      <v-dialog v-model="dialog" persistent max-width="290">
+        <v-card>
+          <v-alert border="top" colored-border type="success">
+            회원가입완료
+          </v-alert>
+          <v-card-text>
+            이메일 인증 후 로그인 해 주세요
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="success"
+              text
+              @click="dialog = false"
+              router-link
+              to="/login"
+            >
+              확인
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -183,18 +248,29 @@ export default {
     return {
       valid: true,
       email: "",
+      emailcheck: false,
+      nickname: "",
+      nicknamecheck: false,
       pw: "",
       pwvaild: "",
-      phone: "",
-      name: "",
+      gender: "",
+      genders: ["남", "녀"],
+      birth: "",
       check: false,
       processing: false,
       snackbar: false,
-      msg: ""
+      msg: "",
+      color: "",
+      dialog: false
     };
   },
   methods: {
-    ...mapActions(MemberStore, ["reqSignup", "reqSignupValidation"]),
+    ...mapActions(MemberStore, [
+      "reqSignup",
+      "reqSignupValidation",
+      "reqCheckEmail",
+      "reqCheckNickname"
+    ]),
     reset() {
       (this.email = ""),
         (this.pw = ""),
@@ -203,24 +279,42 @@ export default {
         (this.name = "");
     },
     onSignup() {
+      /*
       // form 검증
       if (this.$refs.form.validate() === false) return;
 
-      this.processing = true;
+      // 이메일 중복체크 검증
+      if (!this.emailcheck) {
+        this.msg = "이메일 중복체크를 진행해 주세요";
+        this.color = "error";
+        this.snackbar = true;
+        return;
+      }
 
+      // 이메일 중복체크 검증
+      if (!this.nicknameheck) {
+        this.msg = "닉네임 중복체크를 진행해 주세요";
+        this.color = "error";
+        this.snackbar = true;
+        return;
+      }
+
+      this.processing = true;
+*/
       this.reqSignup({
         email: this.email,
         pw: this.pw,
         phone: this.phone,
         name: this.name
       })
-        .then((response) => {
+        .then(response => {
           if (response) {
-            this.reqSignupValidation(this.email).then((response) => {
-              if (response) this.$router.push({ name: "validate" });
+            this.reqSignupValidation(this.email).then(response => {
+              if (response) this.dialog = true;
               else {
                 this.msg = "이메일 전송이 실패했습니다";
                 this.snackbar = true;
+                this.color = "error";
                 this.processing = false;
               }
             });
@@ -228,6 +322,7 @@ export default {
             // 이메일 중복
             this.msg = "이미 등록된 이메일입니다";
             this.snackbar = true;
+            this.color = "error";
             this.processing = false;
 
             this.email = "";
@@ -235,7 +330,48 @@ export default {
             this.pwvaild = "";
           }
         })
-        .catch((error) => {
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+    checkEmail() {
+      this.reqCheckEmail(this.email)
+        .then(response => {
+          if (response) {
+            //사용 가능한 이메일일 때
+            this.msg = "사용가능한 이메일입니다";
+            this.snackbar = true;
+            this.color = "success";
+            this.emailcheck = true;
+          } else {
+            //중복값이 존재할 때
+            this.msg = "이미 존재하는 이메일입니다";
+            this.snackbar = true;
+            this.color = "error";
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    checkNickname() {
+      this.reqCheckNickname(this.nickname)
+        .then(response => {
+          if (response) {
+            //사용 가능한 닉네임일 때
+            this.msg = "사용가능한 닉네임입니다";
+            this.snackbar = true;
+            this.color = "success";
+            this.emailcheck = true;
+          } else {
+            //중복값이 존재할 때
+            this.msg = "이미 존재하는 닉네임입니다";
+            this.snackbar = true;
+            this.color = "error";
+          }
+        })
+        .catch(error => {
           console.log(error);
         });
     }

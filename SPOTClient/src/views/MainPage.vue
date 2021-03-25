@@ -1,11 +1,11 @@
 <template>
-	<v-app>
-		<h1>main</h1>
-	</v-app>
+  <v-app>
+    <h1>main</h1>
+  </v-app>
 </template>
 
 <script>
-	export default {};
+export default {};
 </script>
 
 <style></style>
