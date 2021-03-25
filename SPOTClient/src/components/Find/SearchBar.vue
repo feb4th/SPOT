@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+const FindStore = "FindStore";
+
 export default {
   data() {
     return {
@@ -26,8 +29,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions(FindStore, ["reqSearch"]),
     onSearch() {
       //여기서 검색을 하고, 검색 대상을 Store에 선언해둔 녀석에 넣는건가?
+      this.reqSearch(this.msg); // 검색
       this.msg = "";
     },
     onReset() {
