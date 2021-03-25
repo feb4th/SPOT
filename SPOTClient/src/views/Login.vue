@@ -15,16 +15,15 @@
                     <v-col cols="12">
                       <v-text-field
                         label="이메일"
-                        placeholder="POT@email.com"
+                        placeholder="SPOT@email.com"
                         v-model="member.email"
                         required
                         clearable
                         :counter="50"
                         :rules="[
-                          (v) => !!v || '이메일을 입력하세요',
-                          (v) =>
-                            /.+@.+\..+/.test(v) || '이메일 형식이 아닙니다',
-                          (v) => v.length <= 50 || '이메일이 너무 깁니다'
+                          v => !!v || '이메일을 입력하세요',
+                          v => /.+@.+\..+/.test(v) || '이메일 형식이 아닙니다',
+                          v => v.length <= 50 || '이메일이 너무 깁니다'
                         ]"
                       ></v-text-field>
                     </v-col>
@@ -36,8 +35,8 @@
                         required
                         clearable
                         :rules="[
-                          (v) => !!v || '비밀번호를 입력해 주세요',
-                          (v) =>
+                          v => !!v || '비밀번호를 입력해 주세요',
+                          v =>
                             (v && v.length > 7 && v.length <= 20) ||
                             '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
                         ]"
@@ -59,11 +58,9 @@
                 </v-btn>
               </v-card-actions>
               <v-card-actions class="pb-5">
-                <v-col cols="7" class="text-end"
-                  >아이디 / 비밀번호를 잊으셨나요?</v-col
-                >
-                <v-btn col-4 color="blue darken-1" text @click="findidpw()">
-                  아이디/비밀번호 찾기
+                <v-col cols="7" class="text-end">비밀번호를 잊으셨나요?</v-col>
+                <v-btn col-4 color="blue darken-1" text @click="findpw()">
+                  비밀번호 찾기
                 </v-btn>
               </v-card-actions>
               <v-snackbar
@@ -114,29 +111,27 @@ export default {
         return;
       }
       this.Login(this.member) //Login action 사용 (member를 payload로 보냄)
-        .then((response) => {
+        .then(response => {
           this.msg = response.msg;
           this.color = response.color;
           this.snackbar = true;
 
           if (response.result && sessionStorage.getItem("access-token") != "") {
-            console.log("회원번호: " + this.memberid);
-            this.$router.push("/");
-            this.dialog = false;
+            this.$router.push({ name: "main" });
           } else {
-            this.email = "";
-            this.pw = "";
+            this.member.email = "";
+            this.member.pw = "";
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     signup() {
       this.$router.push("/signup");
     },
-    findidpw() {
-      //this.$router.push("/findidpw");
+    findpw() {
+      this.$router.push("/findpw");
     }
   }
 };
