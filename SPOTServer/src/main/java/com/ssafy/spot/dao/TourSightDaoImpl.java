@@ -1,5 +1,7 @@
 package com.ssafy.spot.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,10 @@ public class TourSightDaoImpl implements TourSightDao {
 	@Override
 	public TourSight findById(String id) {
 		return mapper.findById(id);
+	}
+	
+	@Override
+	public List<TourSight> findByName(String name) {
+		return mapper.findByName(name);
 	}
 }
