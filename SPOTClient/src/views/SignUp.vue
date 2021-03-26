@@ -8,7 +8,9 @@
           <v-col cols="12" sm="8">
             <v-sheet min-height="70vh" rounded="lg">
               <v-card class="pu-10 mu-10">
-                <v-card-title class="justify-center">회원가입</v-card-title>
+                <v-card-title class="headline justify-center"
+                  >회원가입</v-card-title
+                >
                 <!-- 회원 가입 fields -->
                 <v-form
                   ref="form"
@@ -70,6 +72,7 @@
 
                   <v-text-field
                     v-model="pw"
+                    :counter="20"
                     :rules="[
                       v => !!v || '비밀번호를 입력해 주세요',
                       v =>

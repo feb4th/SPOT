@@ -2,6 +2,7 @@
 import Signup from "../../views/SignUp";
 import FindPw from "../../views/FindPw";
 import MyPage from "../../views/MyPage";
+import MemberModify from "../../views/MemberModify";
 // MemberRouter
 const memberRoute = [
   {
@@ -23,6 +24,13 @@ const memberRoute = [
     path: "/mypage/:email",
     name: "mypage",
     component: MyPage,
+    props: false
+  },
+  {
+    // 회원정보수정 route
+    path: "/member/modify/:email",
+    name: "membermodify",
+    component: MemberModify,
     props: false
   }
 ];
