@@ -1,6 +1,6 @@
 package com.ssafy.spot.dto;
 
-public class Course {
+public class CourseReq {
 	private String course_id;
 	private String name;
 	private String user_id;
@@ -9,12 +9,13 @@ public class Course {
 	private String memo;
 	private String time;
 	private String type;
+	private String date;
 	
-	public Course() {
+	public CourseReq() {
 	}
-
-	public Course(String course_id, String name, String user_id, String spot_id, String orders, String memo, String time,
-			String type) {
+	
+	public CourseReq(String course_id, String name, String user_id, String spot_id, String orders, String memo,
+			String time, String type, String date) {
 		this.course_id = course_id;
 		this.name = name;
 		this.user_id = user_id;
@@ -23,8 +24,9 @@ public class Course {
 		this.memo = memo;
 		this.time = time;
 		this.type = type;
+		this.date = date;
 	}
-
+	
 	public String getCourse_id() {
 		return course_id;
 	}
@@ -90,6 +92,13 @@ public class Course {
 		this.type = type;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 	
 	
 }
