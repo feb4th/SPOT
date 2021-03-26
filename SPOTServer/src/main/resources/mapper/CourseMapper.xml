@@ -4,8 +4,39 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.spot.mapper.CourseMapper">
-	<insert id="insertCourse" parameterType="Course">
-		insert into Course values(null, #{user_id}, #{spot_id}, #{order}, #{type})
+	<insert id="insertCourse" parameterType="CourseReq">
+		insert into Course values(null, #{name}, #{user_id}, #{spot_id}, #{orders}, #{memo}, #{time}, #{type}, #{date})
   	</insert>
   	
+  	<select id="findById" parameterType="String" resultType="Integer">
+  		select count(*) from Course where user_id=#{user_id} and name=#{name} 
+  	</select>
+  	
+  	<select id="courseList" parameterType="String" resultType="java.util.Map">
+  		select distinct name from Course where user_id=#{user_id};
+  	</select>
+  	
+  	<update id="updateCourse">
+  		update Course set spot_id=#{spot_id}, orders=#{orders}, memo=#{memo}, time=#{time}, type=#{type} where user_id=#{user_id} and name=#{name} and course_id=#{course_id}
+  	</update>
+  	
+  	<select id="findIdByName" parameterType="String" resultType="String">
+  		select course_id from Course where user_id=#{user_id} and name=#{name}
+  	</select>
+  	
+  	<select id="findDateByName" parameterType="String" resultType="String">
+  		select distinct date from Course where user_id=#{user_id} and name=#{name}
+  	</select>
+  	
+  	<delete id="deleteCourse">
+  		delete from Course where course_id=#{course_id}
+  	</delete>
+  	
+  	<select id="readCourse" resultType="Course">
+  		select * from Course where user_id=#{user_id} and name=#{name} order by orders
+  	</select>
+  	
+  	<delete id="deleteCourseList" parameterType="String">
+  		delete from Course where user_id=#{user_id} and name=#{name}
+  	</delete>
 </mapper>
