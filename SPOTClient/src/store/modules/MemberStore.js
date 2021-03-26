@@ -139,7 +139,7 @@ const MemberStore = {
     // 회원가입
     reqSignup(context, info) {
       return axios
-        .post("/signup", {
+        .post("/user", {
           email: info.email,
           nickname: info.nickname,
           pwd: info.pwd,
@@ -193,7 +193,7 @@ const MemberStore = {
     // 비밀번호 찾기
     reqFindPw(context, info) {
       return axios
-        .post("/member/pw", {
+        .post("/user/pw", {
           email: info.email,
           nickname: info.nickname
         })
@@ -214,9 +214,9 @@ const MemberStore = {
         });
     },
 
-    reqMemberInfo(context, no) {
+    reqMemberInfo(context, email) {
       return axios
-        .get("/member/" + no)
+        .get("/user/" + email)
         .then(response => {
           if (response.data.status) {
             context.commit("setMemberInfo", response.data.object);
@@ -226,6 +226,39 @@ const MemberStore = {
         })
         .catch(error => {
           console.log(error);
+        });
+    },
+
+    reqModifyMember(context, member) {
+      return axios
+        .put("/user", {
+          nickname: member.nickname,
+          pwd: member.pwd
+        })
+        .then(response => {
+          if (response.message == "success") return true;
+          else return false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+    reqRemoveMember(context, memberid) {
+      return axios
+        .delete("/user", {
+          member_id: memberid
+        })
+        .then(response => {
+          if (response.message == "success") {
+            context.commit("logout");
+            sessionStorage.removeItem("access-token");
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+          return false;
         });
     }
   }
