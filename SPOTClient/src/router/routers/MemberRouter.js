@@ -3,6 +3,8 @@ import Signup from "../../views/SignUp";
 import FindPw from "../../views/FindPw";
 import MyPage from "../../views/MyPage";
 import MemberModify from "../../views/MemberModify";
+import AfterEmail from "../../views/AfterEmail";
+
 // MemberRouter
 const memberRoute = [
   {
@@ -32,6 +34,13 @@ const memberRoute = [
     name: "membermodify",
     component: MemberModify,
     props: false
+  },
+  {
+    // 이메일 인증 완료 route
+    path: "/validated",
+    name: "validated",
+    component: AfterEmail,
+    props: true
   }
 ];
 
