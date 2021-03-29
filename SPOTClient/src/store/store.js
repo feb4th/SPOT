@@ -8,6 +8,7 @@ import FindStore from "./modules/FindStore";
 import SpotInfoStore from "./modules/SpotInfoStore";
 import CourseStore from "./modules/CourseStore";
 import WishStore from "./modules/WishStore";
+import ThemeStore from "./modules/ThemeStore";
 
 Vue.use(Vuex);
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     FindStore,
     SpotInfoStore,
     CourseStore,
-    WishStore
+    WishStore,
+    ThemeStore
   },
   plugins: []
 });
