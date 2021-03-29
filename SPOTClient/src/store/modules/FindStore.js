@@ -5,7 +5,15 @@ const FindStore = {
   state: {
     isSearch: false,
     searchList: {},
-    suggestList: {}
+    suggestList: [
+      {
+        spot_id: "1",
+        name: "좋은 장소",
+        lat: "33.450705",
+        lng: "126.570677",
+        img: ""
+      }
+    ]
   },
 
   getters: {
