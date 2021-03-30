@@ -1,4 +1,6 @@
-<template> </template>
+<template>
+  <v-container>photo </v-container>
+</template>
 
 <script>
 export default {};

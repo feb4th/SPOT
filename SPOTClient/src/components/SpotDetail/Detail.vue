@@ -1,4 +1,6 @@
-<template> </template>
+<template>
+  <v-container>detail </v-container>
+</template>
 
 <script>
 export default {};
