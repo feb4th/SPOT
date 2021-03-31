@@ -8,21 +8,51 @@ const SpotInfoStore = {
       latitude: "37.570425",
       longitude: "126.991316",
       address: "서울시 종로구 종로3가",
-      bhour: {},
-      menulist: {},
+      bhour_list: [],
+      menu_list: [
+        {
+          menu: "엄마손국밥",
+          price: "6000"
+        },
+        {
+          menu: "아빠발국밥",
+          price: "5000"
+        }
+      ],
       tel: "010-1234-1234",
-      review_cnt: 1
-    }
+      review_cnt: 1,
+      type: 1
+    },
+    images: [
+      {
+        image_id: "1",
+        src: "../../assets/logo.png"
+      },
+      {
+        image_id: "2",
+        src: "../../assets/logo.png"
+      },
+      {
+        image_id: "3",
+        src: "../../assets/logo.png"
+      }
+    ]
   },
 
   getters: {
     getSpot(state) {
       return state.spot;
+    },
+    getImage(state) {
+      return state.images;
     }
   },
   mutations: {
-    setSpot(state, spot) {
-      state.spot = spot;
+    setSpot(state, payload) {
+      state.spot = payload;
+    },
+    setImage(state, payload) {
+      state.images = payload;
     }
   },
 

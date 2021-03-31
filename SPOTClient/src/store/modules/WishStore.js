@@ -4,23 +4,23 @@ const WishStore = {
   namespaced: true,
   state: {
     wishList: [],
-    wishlist_id: ""
+    wish_id: ""
   },
   getters: {
     getWishList(state) {
       //위시리스트 가져오기
       return state.wishList;
     },
-    getWishListId(state) {
-      return state.wishlist_id;
+    getWishId(state) {
+      return state.wish_id;
     }
   },
   mutations: {
     setWishList(state, payload) {
       state.wishList = payload;
     },
-    setWishListId(state, payload) {
-      state.wishlist_id = payload;
+    setWishId(state, payload) {
+      state.wish_id = payload;
     }
   },
   actions: {
@@ -49,7 +49,7 @@ const WishStore = {
         })
         .then(response => {
           if (response.message == "success") {
-            context.commit("setWishListId", response.follow_id);
+            context.commit("setWishId", response.follow_id);
             return true;
           } else return false;
         })
@@ -69,7 +69,7 @@ const WishStore = {
           })
           .then(response => {
             if (response.message == "success") {
-              context.commit("setWishListId", response.follow_id);
+              context.commit("setWishId", response.follow_id);
               return true;
             } else return false;
           })
@@ -86,7 +86,7 @@ const WishStore = {
           })
           .then(response => {
             if (response.message == "success") {
-              context.commit("setWishListId", response.follow_id);
+              context.commit("setWishId", response.follow_id);
               return true;
             } else return false;
           })
@@ -102,7 +102,7 @@ const WishStore = {
         .delete("/wish/" + wish_id)
         .then(response => {
           if (response.message == "success") {
-            context.commit("setWishListId", "");
+            context.commit("setWishId", "");
             return true;
           } else return false;
         })

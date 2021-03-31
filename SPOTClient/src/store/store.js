@@ -9,6 +9,7 @@ import SpotInfoStore from "./modules/SpotInfoStore";
 import CourseStore from "./modules/CourseStore";
 import WishStore from "./modules/WishStore";
 import ThemeStore from "./modules/ThemeStore";
+import ReviewStore from "./modules/ReviewStore";
 
 Vue.use(Vuex);
 
@@ -20,7 +21,8 @@ export default new Vuex.Store({
     SpotInfoStore,
     CourseStore,
     WishStore,
-    ThemeStore
+    ThemeStore,
+    ReviewStore
   },
   plugins: []
 });
