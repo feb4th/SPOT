@@ -1,4 +1,8 @@
-<template> </template>
+<template>
+  <v-container>
+    map
+  </v-container>
+</template>
 
 <script>
 export default {};

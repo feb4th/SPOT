@@ -9,6 +9,7 @@ import Login from "../views/Login.vue";
 //import exampleRoute from "./routers/ExampleRouter";
 import memberRoute from "./routers/MemberRouter";
 import spotRoute from "./routers/SpotRouter";
+import courseRoute from "./routers/CourseRouter";
 
 Vue.use(VueRouter);
 
@@ -40,7 +41,8 @@ const routes = [
 ]
   .concat(findRoute)
   .concat(memberRoute)
-  .concat(spotRoute);
+  .concat(spotRoute)
+  .concat(courseRoute);
 
 const router = new VueRouter({
   mode: "history",

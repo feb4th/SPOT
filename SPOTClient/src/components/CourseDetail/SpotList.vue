@@ -1,4 +1,8 @@
-<template> </template>
+<template>
+  <v-container>
+    spotlist
+  </v-container>
+</template>
 
 <script>
 export default {};
