@@ -4,7 +4,23 @@ const CourseStore = {
   namespaced: true,
   state: {
     courseList: [],
-    courseInfo: {}
+    courseInfo: [
+      {
+        spot_id: "1",
+        latitude: "37.570425",
+        longitude: "126.991316",
+        name: "스팟명",
+        course_name: "기본코스"
+      },
+      {
+        spot_id: "2",
+        latitude: "37.571525",
+        longitude: "126.991316",
+        name: "두번째 스팟",
+        course_name: "기본코스"
+      }
+    ],
+    modify: false //현재 수정중인지 여부
   },
   getters: {
     getCourseList(state) {
@@ -14,6 +30,9 @@ const CourseStore = {
     getCourseInfo(state) {
       //코스의 상세정보 받아오기
       return state.courseInfo;
+    },
+    getModify(state) {
+      return state.modify;
     }
   },
   mutations: {
@@ -22,6 +41,9 @@ const CourseStore = {
     },
     setCourseInfo(state, payload) {
       state.courseInfo = payload;
+    },
+    setModify(state) {
+      state.modify = !state.modify;
     }
   },
   actions: {
@@ -41,7 +63,20 @@ const CourseStore = {
         });
     },
     //코스 상세정보 조회
-    reqCourseInfo() {},
+    reqCourseInfo(context, course_id) {
+      return axios
+        .get("/course/detail/" + course_id)
+        .then(response => {
+          console.log(response.data);
+          if (response.message == "success") {
+            context.commit("setCourseInfo", response.data.course);
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
 
     //코스 생성
     reqCreateCourse() {},
