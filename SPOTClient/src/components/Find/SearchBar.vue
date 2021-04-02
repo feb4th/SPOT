@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="space-around">
-      <v-col cols="6" align="center">
+      <v-col cols="8" align="center">
         <v-text-field
           v-model="msg"
           label="검색어"

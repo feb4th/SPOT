@@ -1,11 +1,9 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2"> </v-col>
-
-          <v-col cols="12" sm="8">
+          <v-col style="margin-top : 0.75em;">
             <v-sheet min-height="70vh" rounded="lg">
               <v-row>
                 <profile />
@@ -31,8 +29,6 @@
               </v-row>
             </v-sheet>
           </v-col>
-
-          <v-col cols="12" sm="2"> </v-col>
         </v-row>
       </v-container>
     </v-main>

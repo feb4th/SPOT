@@ -1,97 +1,89 @@
 <template>
   <v-container>
     <v-card elevation="0">
-      <v-card-title class="justify-end mx-auto"
+      <!-- <v-card-title class="justify-end mx-auto"
         ><v-btn color="primary" text @click="toModify()"
           >프로필편집</v-btn
         ></v-card-title
-      >
+      > -->
       <v-card-text>
-        <v-row justify="center">
-          <v-col cols="4"
-            ><v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-hover v-slot="{ hover }" class="ma-auto">
-                  <v-card
-                    v-bind="attrs"
-                    v-on="on"
+        <v-row justify="center" class="ma-7">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-hover v-slot="{ hover }" class="ma-auto">
+                <v-card
+                  v-bind="attrs"
+                  v-on="on"
+                  height="100"
+                  width="100"
+                  id="rounded-card"
+                  :elevation="hover ? 8 : 1"
+                  :class="{ 'on-hover': !hover }"
+                >
+                  <!-- 프로필 이미지가 없을 때 -->
+                  <v-img
+                    v-if="
+                      getMemberInfo.img == null || getMemberInfo.img == ''
+                    "
+                    class="ma-auto mp-4 align-center"
                     height="100"
                     width="100"
-                    id="rounded-card"
-                    :elevation="hover ? 8 : 1"
-                    :class="{ 'on-hover': !hover }"
+                    style="border-radius: 50%"
+                    src="../../assets/logo.png"
+                    @click="onClickImageUpload"
                   >
-                    <!-- 프로필 이미지가 없을 때 -->
-                    <v-img
-                      v-if="
-                        getMemberInfo.img == null || getMemberInfo.img == ''
-                      "
-                      class="ma-auto mp-4 align-center"
-                      height="100"
-                      width="100"
-                      style="border-radius: 50%"
-                      src="../../assets/logo.png"
-                    >
-                      <input
-                        ref="imageInput"
-                        accept="image/*"
-                        type="file"
-                        hidden
-                        @change="onChangeImages"
-                      />
-                      <v-card-text>
-                        <v-btn v-if="hover" @click="onClickImageUpload"
-                          >Edit
-                        </v-btn>
-                      </v-card-text>
-                    </v-img>
+                    <input
+                      ref="imageInput"
+                      accept="image/*"
+                      type="file"
+                      hidden
+                      @change="onChangeImages"
+                    />
+                    <!-- <v-card-text>
+                      <v-btn v-if="hover" @click="onClickImageUpload"
+                        >Edit
+                      </v-btn>
+                    </v-card-text> -->
+                  </v-img>
 
-                    <!-- 프로필 이미지가 있을 때 -->
-                    <v-img
-                      v-else
-                      class="ma-auto mp-4 align-center "
-                      height="100"
-                      width="100"
-                      style="border-radius: 50%"
-                      :src="getMemberInfo.img"
-                    >
-                      <input
-                        ref="imageInput"
-                        accept="image/*"
-                        type="file"
-                        hidden
-                        @change="onChangeImages"
-                      />
-                      <v-card-text class="justify-center">
-                        <v-btn v-if="hover" @click="onClickImageUpload"
-                          >Edit
-                        </v-btn>
-                      </v-card-text>
-                    </v-img>
-                  </v-card>
-                </v-hover>
-              </template>
-              <span>
-                <div>100 X 100 px</div>
-                <div>사이즈로 넣어주세요</div>
-              </span>
-            </v-tooltip>
-          </v-col>
-          <v-col cols="5"
-            ><v-text-field
-              solo
-              readonly
-              label="닉네임"
-              v-model="getMemberInfo.nickname"
-            ></v-text-field>
-            <v-text-field
-              solo
-              readonly
-              label="이메일"
-              v-model="getMemberInfo.email"
-            ></v-text-field
-          ></v-col>
-          <v-col cols="3"></v-col>
+                  <!-- 프로필 이미지가 있을 때 -->
+                  <v-img
+                    v-else
+                    class="ma-auto mp-4 align-center "
+                    height="100"
+                    width="100"
+                    style="border-radius: 50%"
+                    :src="getMemberInfo.img"
+                    @click="onClickImageUpload"
+                  >
+                    <input
+                      ref="imageInput"
+                      accept="image/*"
+                      type="file"
+                      hidden
+                      @change="onChangeImages"
+                    />
+                    <!-- <v-card-text class="justify-center">
+                      <v-btn v-if="hover" @click="onClickImageUpload"
+                        >Edit
+                      </v-btn>
+                    </v-card-text> -->
+                  </v-img>
+                </v-card>
+              </v-hover>
+            </template>
+            <span>
+              <div>100 X 100 px</div>
+              <div>사이즈로 넣어주세요</div>
+            </span>
+          </v-tooltip>
+        </v-row>
+        <v-row justify="center">
+          <p style="font-size: 40px;">{{ getMemberInfo.nickname }}</p>
+          <v-icon style="margin: 0px -15px 15px 5px;" @click="toModify()">mdi-pencil-outline</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <p style="font-size: 15px;">{{ getMemberInfo.email }}</p>
         </v-row>
       </v-card-text>
       <v-snackbar centered v-model="snackbar" timeout="2000" :color="color">
