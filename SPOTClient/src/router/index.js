@@ -10,6 +10,7 @@ import Login from "../views/Login.vue";
 import memberRoute from "./routers/MemberRouter";
 import mapRoute from "./routers/MapRouter";
 import spotRoute from "./routers/SpotRouter";
+import courseRoute from "./routers/CourseRouter";
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,7 @@ const routes = [
 ]
   .concat(findRoute)
   .concat(memberRoute)
+  .concat(courseRoute)
   .concat(mapRoute)
   .concat(spotRoute);
 
