@@ -8,6 +8,7 @@ import findRoute from "./routers/FindRouter";
 import Login from "../views/Login.vue";
 //import exampleRoute from "./routers/ExampleRouter";
 import memberRoute from "./routers/MemberRouter";
+import mapRoute from "./routers/MapRouter";
 import spotRoute from "./routers/SpotRouter";
 import courseRoute from "./routers/CourseRouter";
 
@@ -41,8 +42,9 @@ const routes = [
 ]
   .concat(findRoute)
   .concat(memberRoute)
-  .concat(spotRoute)
-  .concat(courseRoute);
+  .concat(courseRoute)
+  .concat(mapRoute)
+  .concat(spotRoute);
 
 const router = new VueRouter({
   mode: "history",
