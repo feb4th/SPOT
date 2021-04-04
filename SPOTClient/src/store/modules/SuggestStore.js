@@ -1,11 +1,18 @@
 import axios from "../../axios/axios-common";
 
-const FindStore = {
+const SuggestStore = {
   namespaced: true, // 모듈 개발사용 가능
   state: {
-    isSearch: false,
-    searchList: {},
     suggestList: [
+      {
+        spot_id: "1",
+        name: "좋은 장소",
+        lat: "33.450705",
+        lng: "126.570677",
+        img: ""
+      }
+    ],
+    wishList: [
       {
         spot_id: "1",
         name: "좋은 장소",
@@ -15,49 +22,39 @@ const FindStore = {
       }
     ]
   },
-
   getters: {
-    getIsSearched(state) {
-      return state.isSearch;
-    },
-    getSearchList(state) {
-      return state.searchList;
-    },
     getSuggestList(state) {
       return state.suggestList;
+    },
+    getWishList(state) {
+      return state.wishList;
     }
   },
   mutations: {
-    setIsSearched(state, isSearch) {
-      state.isSearch = isSearch;
-    },
-    setSearchList(state, searchList) {
-      state.searchList = searchList;
-    },
     setSuggestList(state, suggestList) {
       state.suggestList = suggestList;
+    },
+    setWishList(state, wishList) {
+      state.wishList = wishList;
     }
   },
 
   actions: {
-    reqSearch(context, name) {
+    reqWish(context, memberid) {
       return axios
-        .get("/placelist", {
-          name: name
-        })
+        .get("/user/wish/" + memberid)
         .then(response => {
           if (response.status === 200 && response.data.status === true) {
-            context.commit("setIsSearched", true); // 검색된 상태로 변경
-            context.commit("setSearchList", response.data.object.stores);
+            context.commit("setWishList", response.data.object.place_list); // 여기 데이터 리턴 변수명 확인해야함.
             return {
               result: true,
-              msg: "검색 되었습니다",
+              msg: "위시리스트 가져왔습니다.",
               color: "success"
             };
           } else {
             return {
               result: false,
-              msg: "검색에 실패하였습니다.",
+              msg: "위시리스트가 없습니다.",
               color: "warning"
             };
           }
@@ -71,18 +68,14 @@ const FindStore = {
           };
         });
     },
-    reqSuggest(context, email) {
+    reqSuggest(context, list) {
       return axios
-        .post("/recommend/place", {
-          email: email
+        .post("/place", {
+          list: list
         })
         .then(response => {
           if (response.status === 200 && response.data.status === true) {
-            context.commit(
-              "setSuggestList",
-              response.data.object.recommend_place_list
-            );
-
+            context.commit("setSuggestList", response.data.object.place_list);
             return {
               result: true,
               msg: "추천 데이터 가져왔습니다.",
@@ -108,4 +101,4 @@ const FindStore = {
   }
 };
 
-export default FindStore;
+export default SuggestStore;
