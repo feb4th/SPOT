@@ -6,6 +6,7 @@ const CourseStore = {
     courseList: [],
     courseInfo: [
       {
+        course_id: "1",
         spot_id: "1",
         latitude: "37.570425",
         longitude: "126.991316",
@@ -77,12 +78,27 @@ const CourseStore = {
           console.log(error);
         });
     },
-
+    reqChangeStatus(context) {
+      return context.commit("setModify");
+    },
     //코스 생성
     reqCreateCourse() {},
 
     //코스 정보 수정
-    reqModifyCourse() {},
+    reqModifyCourse(context, info) {
+      return axios
+        .put("/course/detail/" + info.course_id, { info: info })
+        .then(response => {
+          console.log(response.data);
+          if (response.message == "success") {
+            context.commit("setModify");
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
 
     //코스 삭제
     reqDeleteCourse() {}
