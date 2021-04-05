@@ -1,16 +1,13 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2"> </v-col>
-
-          <v-col cols="12" sm="8">
+          <v-col>
             <v-sheet min-height="70vh" rounded="lg">
               <v-card class="pu-10 px-10 mu-10">
                 <v-card-title class="headline justify-space-between">
                   <v-btn
-                    class="ml-4"
                     icon
                     large
                     @click="
@@ -19,25 +16,33 @@
                       }
                     "
                   >
-                    <v-icon size="50">mdi-undo-variant</v-icon>
+                    <v-icon size="50">mdi-arrow-left</v-icon>
                   </v-btn>
 
-                  회원정보 수정
+                  <p>회원정보 수정</p>
 
                   <v-btn disabled text><v-spacer></v-spacer></v-btn
                 ></v-card-title>
                 <v-card-text class="mu-5">
                   <v-row>
                     <v-col>
-                      <v-text-field
+                      <!-- <v-text-field
                         v-model="getMemberInfo.email"
                         disabled
                         label="이메일"
                         solo
-                      ></v-text-field>
+                      ></v-text-field> -->
+                      <span>이메일</span>
+                      <p></p>
+                      <p style="font-size : 20px; margin-top: 1em; margin-bottom: 1em;">{{ getMemberInfo.email }}</p>
                     </v-col>
                   </v-row>
                   <v-form ref="form" v-model="NicknameValid" lazy-validation>
+                    <v-row>
+                      <v-col>
+                        <span>닉네임</span>
+                      </v-col>
+                    </v-row>
                     <v-row>
                       <v-col cols="10">
                         <v-text-field
@@ -66,45 +71,57 @@
                     </v-row>
                   </v-form>
                   <v-form ref="form" v-model="PWValid" lazy-validation>
-                    <v-text-field
-                      v-model="pw"
-                      :counter="20"
-                      :rules="[
-                        v => !!v || '비밀번호를 입력해 주세요',
-                        v =>
-                          (v && v.length > 7 && v.length <= 20) ||
-                          '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
-                      ]"
-                      type="password"
-                      label="비밀번호"
-                      solo
-                    ></v-text-field>
+                    <v-row>
+                      <v-col>
+                        <span>비밀번호</span>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                      <v-text-field
+                        v-model="pw"
+                        :counter="20"
+                        :rules="[
+                          v => !!v || '비밀번호를 입력해 주세요',
+                          v =>
+                            (v && v.length > 7 && v.length <= 20) ||
+                            '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
+                        ]"
+                        type="password"
+                        label="비밀번호"
+                        solo
+                      ></v-text-field>
+                      </v-col>
 
-                    <v-text-field
-                      v-model="pwvaild"
-                      :rules="[
-                        v => !!v || '비밀번호를 입력해 주세요',
-                        v => v === pw || '입력한 비밀번호와 다릅니다'
-                      ]"
-                      type="password"
-                      label="비밀번호 확인"
-                      solo
-                    ></v-text-field>
+                    </v-row>
+
+                    <v-row>
+                      <v-col>
+                        <span>비밀번호 확인</span>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="pwvaild"
+                          :rules="[
+                            v => !!v || '비밀번호를 입력해 주세요',
+                            v => v === pw || '입력한 비밀번호와 다릅니다'
+                          ]"
+                          type="password"
+                          label="비밀번호 확인"
+                          solo
+                        ></v-text-field>
+                      </v-col>
+
+                    </v-row>
+
                   </v-form>
                   <!-- 회원탈퇴 모달창 -->
                   <v-row justify="end">
                     <v-col cols="auto">
+                      <p style="color: #b71c1c;" @click="dialog = true;">회원 탈퇴</p>
                       <v-dialog v-model="dialog" persistent max-width="290">
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            color="error"
-                            v-bind="attrs"
-                            v-on="on"
-                            class="white--text"
-                          >
-                            회원탈퇴
-                          </v-btn>
-                        </template>
                         <v-card style="opacity: 1">
                           <v-card-title class="headline">
                             회원탈퇴
@@ -113,14 +130,14 @@
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn
-                              color="green darken-1"
+                              color="secondary"
                               text
                               @click="remove()"
                             >
                               예
                             </v-btn>
                             <v-btn
-                              color="green darken-1"
+                              color="secondary"
                               text
                               @click="dialog = false"
                             >
@@ -132,17 +149,17 @@
                     </v-col>
                   </v-row>
                   <v-row class="my-1">
-                    <v-col cols="8"
+                    <v-col
                       ><v-btn
                         block
-                        color="success"
+                        color="primary"
                         class="mr-4"
                         @click="onModify"
                       >
                         수정하기
                       </v-btn></v-col
                     >
-                    <v-col cols="4"
+                    <!-- <v-col cols="4"
                       ><v-btn
                         block
                         color="warning"
@@ -155,14 +172,12 @@
                       >
                         다시쓰기
                       </v-btn></v-col
-                    >
+                    > -->
                   </v-row>
                 </v-card-text>
               </v-card>
             </v-sheet>
           </v-col>
-
-          <v-col cols="12" sm="2"> </v-col>
         </v-row>
 
         <v-snackbar centered v-model="snackbar" timeout="2000" :color="color">
