@@ -4,7 +4,12 @@ const MemberStore = {
   namespaced: true, // 모듈 개발사용 가능
   state: {
     isLogin: false, // 로그인 여부
-    memberInfo: { member_id: "ssafy", email: "ssafy@ssafy.com", nickname: "김싸피", img: "" }
+    memberInfo: {
+      member_id: "ssafy",
+      email: "ssafy@ssafy.com",
+      nickname: "김싸피",
+      img: ""
+    }
   },
 
   getters: {
@@ -40,20 +45,20 @@ const MemberStore = {
     // 로그인
     Login(context, member) {
       return axios
-        .post("/user/login", {
+        .post("/login", {
           //유저정보를 보냄
           email: member.email,
-          pw: member.pw
+          password: member.pw
         })
         .then(response => {
           //성공 시 변수 재설정
-          if (response.status === 200 && response.data.status === true) {
+          if (response.data.message == "success") {
             //토큰생성 및 저장
-            let token = response.data["access-token"];
+            let token = response.data["auth-token"];
             sessionStorage.setItem("access-token", token); //로컬스토리지에 토큰저장
 
             context.commit("setIsLogined", true); //로그인 상태 true로 변환
-            context.commit("setMemberInfo", response.data.object); //멤버정보 저장
+            context.commit("setMemberInfo", response.data.result); //멤버정보 저장
 
             return {
               result: true,
@@ -106,7 +111,7 @@ const MemberStore = {
         .get("/user/email/" + email)
         .then(response => {
           console.log(response.data);
-          if (response.status === 200 && response.data.status === true) {
+          if (response.data.message == "success") {
             return true;
           }
         })
@@ -124,7 +129,7 @@ const MemberStore = {
         .get("/user/nickname/" + nickname)
         .then(response => {
           console.log(response.data);
-          if (response.status === 200 && response.data.status === true) {
+          if (response.data.message == "success") {
             return true;
           }
         })
@@ -148,7 +153,7 @@ const MemberStore = {
         })
         .then(response => {
           console.log(response.data);
-          if (response.status === 200 && response.data.status === true) {
+          if (response.data.message == "success") {
             return true;
           }
         })
@@ -164,7 +169,7 @@ const MemberStore = {
       return axios
         .post("/signup/validation", email)
         .then(response => {
-          if (response.status) return true;
+          if (response.data.message == "success") return true;
           return false;
         })
         .catch(error => {
@@ -179,7 +184,7 @@ const MemberStore = {
           authkey: info.authkey
         })
         .then(response => {
-          if (response.status) return true;
+          if (response.data.message == "success") return true;
           return false;
         })
         .catch(error => {
@@ -198,7 +203,7 @@ const MemberStore = {
           nickname: info.nickname
         })
         .then(response => {
-          if (response.data.status) {
+          if (response.data.message == "success") {
             // 데이터 존재
             return {
               result: true,
@@ -214,12 +219,12 @@ const MemberStore = {
         });
     },
 
-    reqMemberInfo(context, email) {
+    reqMemberInfo(context, user_id) {
       return axios
-        .get("/user/" + email)
+        .get("/user/" + user_id)
         .then(response => {
-          if (response.data.status) {
-            context.commit("setMemberInfo", response.data.object);
+          if (response.data.message == "success") {
+            context.commit("setMemberInfo", response.data.result);
             return { result: true, msg: "회원정보조회 성공" };
           }
           return { result: false, msg: "회원정보가 존재하지 않습니다" };
@@ -229,14 +234,16 @@ const MemberStore = {
         });
     },
 
+    //회원정보 수정
     reqModifyMember(context, member) {
       return axios
-        .put("/user", {
+        .put("/user/update", {
           nickname: member.nickname,
-          pwd: member.pwd
+          password: member.pw,
+          user_id: member.id
         })
         .then(response => {
-          if (response.message == "success") return true;
+          if (response.data.message == "success") return true;
           else return false;
         })
         .catch(error => {
@@ -244,13 +251,11 @@ const MemberStore = {
         });
     },
 
-    reqRemoveMember(context, memberid) {
+    reqRemoveMember(context, member_id) {
       return axios
-        .delete("/user", {
-          member_id: memberid
-        })
+        .delete("/user/" + member_id)
         .then(response => {
-          if (response.message == "success") {
+          if (response.data.message == "success") {
             context.commit("logout");
             sessionStorage.removeItem("access-token");
             return true;

@@ -3,17 +3,13 @@
     <v-row>
       <v-card elevation="0">
         <v-card-title style="margin-left: 2em;">
-            <v-icon x-large>mdi-check</v-icon>
-            <strong>리뷰</strong>
+          <v-icon x-large>mdi-check</v-icon>
+          <strong>리뷰</strong>
         </v-card-title>
       </v-card>
     </v-row>
-    <v-card
-      class="mx-auto"
-      max-width="750"
-      elevation="0"
-    >
-    <v-row class="mt-2"
+    <v-card class="mx-auto" max-width="750" elevation="0">
+      <v-row class="mt-2"
         ><v-col cols="auto"
           ><v-avatar>
             <v-img
@@ -37,22 +33,16 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-card
-      class="mx-auto"
-      max-width="750"
-      elevation="0"
-    >
-      <v-list-item
-        v-for="comment in getReviewList"
-        :key="comment.review_id">
-          <v-col cols="auto"
-            ><v-avatar>
-              <v-img
-                v-if="comment.img == '' || comment.img == null"
-                src="../../assets/logo.png"
-              />
-              <v-img v-else :src="getMemberInfo.img" /> </v-avatar
-          ></v-col>
+    <v-card class="mx-auto" max-width="750" elevation="0">
+      <v-list-item v-for="comment in getReviewList" :key="comment.review_id">
+        <v-col cols="auto"
+          ><v-avatar>
+            <v-img
+              v-if="comment.img == '' || comment.img == null"
+              src="../../assets/logo.png"
+            />
+            <v-img v-else :src="getMemberInfo.img" /> </v-avatar
+        ></v-col>
         <v-col cols="4">
           <v-list-item-content>
             <div class="overline">
@@ -69,9 +59,8 @@
           </v-list-item-content>
         </v-col>
         <v-col>
-          {{ comment.content}}
+          {{ comment.content }}
         </v-col>
-
       </v-list-item>
     </v-card>
   </v-container>
