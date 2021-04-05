@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService{
 	public void updateUser(UserUpdate req) {
 		dao.updateUser(req);
 	}
+
+	@Override
+	public void insertImage(String user_id, String timeurl) {
+		dao.insertImage(user_id, timeurl);
+	}
 	
 	
 	

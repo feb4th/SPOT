@@ -25,4 +25,8 @@
 		]]>
 	</select>
 	
+	<select id="findImage" resultType="String" parameterType="string">
+		select image_path from TourSightImages where toursight_id = #{id}
+	</select>
+	
 </mapper>

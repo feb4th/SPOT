@@ -8,4 +8,5 @@ public interface TourSightMapper {
 	public TourSight findById(String id);
 	public List<TourSight> findByName(String name);
 	public List<TourSight> findByRange(String lat, String lng, String range);
+	public List<String> findImage(String id);
 }
