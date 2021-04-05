@@ -9,5 +9,16 @@ export default new Vuetify({
   //아이콘 추가
   icons: {
     iconfont: "md"
-  }
+  },
+  theme: {
+    themes: {
+      light: {
+        primary: '#f7cac9',
+        secondary: '#92a8d1',
+        accent: '#8c9eff',
+        error: '#b71c1c',
+        header: '#616161'
+      },
+    },
+  },
 });

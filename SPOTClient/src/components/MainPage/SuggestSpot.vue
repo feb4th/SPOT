@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row class="mx-auto">
-      <v-col>
-        <h2>추천SPOT</h2>
+    <v-row class="mx-auto" style="margin: 1.5em;">
+      <v-col style="margin: auto;">
+        <span style="font-size: 2em;">🔥추천 SPOT🔥</span>
       </v-col>
     </v-row>
     <v-sheet class="mx-auto" elevation="0" max-width="1000">
