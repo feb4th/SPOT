@@ -50,5 +50,10 @@ public class UserDaoImpl implements UserDao{
 	public void updateUser(UserUpdate req) {
 		mapper.updateUser(req);
 	}
+
+	@Override
+	public void insertImage(String user_id, String timeurl) {
+		mapper.insertImage(user_id, timeurl);
+	}
 	
 }

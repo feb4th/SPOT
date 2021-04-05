@@ -6,7 +6,7 @@
 <mapper namespace="com.ssafy.spot.mapper.UserMapper">
 	
 	<insert id="insertUser" parameterType="SignupReq">
-		insert into User values(null, #{email}, #{password}, #{nickname}, #{gender}, #{birth}, null, 1)
+		insert into User values(null, #{email}, #{password}, #{nickname}, #{gender}, #{birth}, null, null, 1)
   	</insert>
 	
 	<select id="findByEmail" resultType="User">
@@ -31,5 +31,9 @@
 	
 	<update id="updateUser">
     	update User set nickname=#{nickname}, password=#{password} where user_id = #{user_id}
+	</update>
+	
+	<update id="insertImage">
+		update User set url=#{timeurl} where user_id=#{user_id}
 	</update>
 </mapper>
