@@ -11,6 +11,9 @@
 import * as d3 from "d3";
 const MAP_GEOJSON = require("./map3.json");
 
+import { mapActions } from "vuex";
+const SuggestStore = "SuggestStore";
+
 export default {
   components: {},
   props: {},
@@ -55,6 +58,7 @@ export default {
     this.drawMap();
   },
   methods: {
+    ...mapActions(SuggestStore, ["reqSuggest"]),
     onClick() {
       this.finalList = [];
       for (var i = 0; i < 17; i++) {
@@ -65,9 +69,19 @@ export default {
       if (this.finalList.length == 0) {
         alert("0이면 못보냄");
       }
-      console.log(this.finalList);
+      // console.log(this.finalList);
       const finalData = JSON.parse(JSON.stringify(this.finalList));
       console.log(finalData); // 요 형식으로 보내면 됨.
+
+      // 여기서 추천 리스트를 받기 위한 요청을 보내고 라우터 처리를 해야할 듯.
+      // 일단 백으로 추천 리스트를 받아와야함.
+      this.reqSuggest(finalData).then(response => {
+        // 정상적인 요청이라면,
+        if (response) {
+          // 느낌표가 맞나? 테스트 해봐야 할 듯.
+          this.$router.push("/areasuggest");
+        } else alert(response.msg);
+      });
     },
     drawMap() {
       // 지도정보
