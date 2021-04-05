@@ -35,8 +35,8 @@
                       card.name
                     }}</v-card-title>
                   </v-card>
-                  <v-row justify="center">
-                    <v-tooltip bottom nudge-bottom="20">
+                  <v-row justify="center" class="ma-auto">
+                    <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn icon :color="color" v-bind="attrs" v-on="on">
                           <v-icon
@@ -95,8 +95,8 @@
                 card.name
               }}</v-card-title>
             </v-card>
-            <v-row justify="center">
-              <v-tooltip bottom nudge-bottom="20">
+            <v-row justify="center" class="ma-auto">
+              <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon :color="color" v-bind="attrs" v-on="on">
                     <v-icon
@@ -135,6 +135,8 @@
 import { mapActions, mapGetters } from "vuex";
 const SuggestStore = "SuggestStore";
 const MemberStore = "MemberStore";
+const CourseStore = "CourseStore";
+
 export default {
   data() {
     return {
@@ -142,7 +144,8 @@ export default {
       btnNumber: 0,
       suggestFlag: [],
       wishFlag: [],
-      finalList: []
+      finalList: [],
+      orders: []
     };
   },
   created() {
@@ -154,26 +157,54 @@ export default {
   },
   methods: {
     ...mapActions(SuggestStore, ["reqWish"]),
+    ...mapActions(CourseStore, ["reqCreateCourse", "reqCourseInfo"]),
+
     onSelect(spot_id) {
       this.$router.push("/spotdetail/" + spot_id); // 상세 보기.
     },
     onClick() {
+      // 위시리스트와 추천리스트에서 선택한 것만 리스트에 넣어줌.
       for (var i = 0; i < this.getSuggestList.length; i++) {
         if (this.suggestFlag[i] == true) {
           this.finalList.push(this.getSuggestList.spot_id);
+        }
+      }
+
+      for (i = 0; i < this.getWishList.length; i++) {
+        if (this.suggestFlag[i] == true) {
+          this.finalList.push(this.getWishList.spot_id);
         }
       }
       // console.log(this.finalList);
       const finalData = JSON.parse(JSON.stringify(this.finalList));
       console.log(finalData); // 요 형식으로 보내면 됨.
 
+      for (i = 0; i < this.finalList.length; i++) {
+        this.orders[i] = i;
+      }
       // 여기서 선택한 곳만 리스트로 보내고, 코스 선택으로 넘겨야 함.
       // 여기부터 작업하면 됨. 코스로 보내는 곳
-      this.reqSuggest().then(response => {
+      let formData = new FormData();
+      formData.append("email", this.getMemberInfo.email);
+      formData.append("spot_id", finalData);
+      formData.append("orders", this.orders);
+
+      this.reqCreateCourse(formData).then(response => {
         // 정상적인 요청이라면,
         if (response) {
           // 느낌표가 맞나? 테스트 해봐야 할 듯.
-          this.$router.push("/makecourse");
+
+          // 백에서 코스 이름 넘겨줘야함.
+          const courseName = response.data.name;
+          let formData2 = new FormData();
+
+          formData2.append("name", courseName);
+          formData2.append("user_id", this.getMemberInfo.email);
+
+          this.reqCourseInfo(formData2).then(res => {
+            this.$router.push("/makecourse");
+            console.log(res);
+          });
         } else alert(response.msg);
       });
     },

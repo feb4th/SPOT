@@ -7,12 +7,12 @@
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon
                 v-if="getWishId != ''"
-                size="100"
+                size="50"
                 @click="unFollow()"
                 color="red"
                 >mdi-heart
               </v-icon>
-              <v-icon v-else size="80" @click="setFollow()" color="gray"
+              <v-icon v-else size="50" @click="setFollow()" color="gray"
                 >mdi-heart
               </v-icon>
             </v-btn>

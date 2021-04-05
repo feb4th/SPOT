@@ -2,7 +2,7 @@
   <v-container>
     <!-- 위시리스트가 없을 때 -->
     <v-row justify="center" v-if="getWishList.length == 0">
-      <v-col cols="6">
+      <v-col cols="9">
         <v-spacer />
         <v-alert
           align="center"

@@ -8,7 +8,11 @@ const SpotInfoStore = {
       latitude: "37.570425",
       longitude: "126.991316",
       address: "서울시 종로구 종로3가",
-      bhour_list: [],
+      bhour_list: [
+        {
+          etc: "1월 1일부터 12월 31일까지 쉽니다 ^^"
+        }
+      ],
       menu_list: [
         {
           menu: "엄마손국밥",

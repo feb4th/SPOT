@@ -1,5 +1,7 @@
 package com.ssafy.spot.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,13 +18,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.spot.dto.SignupReq;
 import com.ssafy.spot.dto.User;
 import com.ssafy.spot.dto.UserUpdate;
 import com.ssafy.spot.dto.loginReq;
 import com.ssafy.spot.model.BasicResponse;
+import com.ssafy.spot.service.FilesStorageService;
 import com.ssafy.spot.service.JwtService;
 import com.ssafy.spot.service.MailService;
 import com.ssafy.spot.service.UserService;
@@ -40,6 +45,9 @@ public class UserController {
 	
 	@Autowired
 	MailService mailService;
+	
+	@Autowired
+	FilesStorageService storageService;
 	
 	@Autowired
 	private JwtService jwtservice;
@@ -155,6 +163,28 @@ public class UserController {
 			else {
 				service.updateUser(req);
 			}
+			result.message = "success";
+		} catch (Exception e) {
+			status=HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status= HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+	}
+	
+	@PostMapping(value = "/user/image/{user_id}")
+	@ApiOperation(value = "프로필사진 생성")
+	public Object insertimage(@PathVariable String user_id, @RequestParam("file") MultipartFile file) {
+		SimpleDateFormat format= new SimpleDateFormat("yyyyMMddHHmmss");
+		Date time = new Date();
+		String timeurl=format.format(time);
+		
+		
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		try {
+			storageService.saveimage(file,timeurl);
+			service.insertImage(user_id, timeurl);
 			result.message = "success";
 		} catch (Exception e) {
 			status=HttpStatus.INTERNAL_SERVER_ERROR;

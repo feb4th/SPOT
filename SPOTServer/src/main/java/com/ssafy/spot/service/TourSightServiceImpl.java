@@ -28,4 +28,9 @@ public class TourSightServiceImpl implements TourSightService {
 	public List<TourSight> findByRange(String lat, String lng, String range) {
 		return dao.findByRange(lat, lng, range);
 	}
+
+	@Override
+	public List<String> findImage(String id) {
+		return dao.findImage(id);
+	}
 }

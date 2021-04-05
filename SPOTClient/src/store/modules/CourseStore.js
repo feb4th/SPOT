@@ -14,14 +14,14 @@ const CourseStore = {
         course_name: "기본코스"
       },
       {
+        course_id: "1",
         spot_id: "2",
         latitude: "37.571525",
         longitude: "126.991316",
         name: "두번째 스팟",
         course_name: "기본코스"
       }
-    ],
-    modify: false //현재 수정중인지 여부
+    ]
   },
   getters: {
     getCourseList(state) {
@@ -31,9 +31,6 @@ const CourseStore = {
     getCourseInfo(state) {
       //코스의 상세정보 받아오기
       return state.courseInfo;
-    },
-    getModify(state) {
-      return state.modify;
     }
   },
   mutations: {
@@ -42,9 +39,6 @@ const CourseStore = {
     },
     setCourseInfo(state, payload) {
       state.courseInfo = payload;
-    },
-    setModify(state) {
-      state.modify = !state.modify;
     }
   },
   actions: {
@@ -64,13 +58,15 @@ const CourseStore = {
         });
     },
     //코스 상세정보 조회
-    reqCourseInfo(context, course_id) {
+    reqCourseInfo(context, fd) {
       return axios
-        .get("/course/detail/" + course_id)
+        .get("/course/" + fd.user_id, {
+          name: fd.name
+        })
         .then(response => {
           console.log(response.data);
           if (response.message == "success") {
-            context.commit("setCourseInfo", response.data.course);
+            context.commit("setCourseInfo", response.data.course); //여기서 코스 정보 store에 넣어줌.
             return true;
           } else return false;
         })
@@ -78,30 +74,40 @@ const CourseStore = {
           console.log(error);
         });
     },
-    reqChangeStatus(context) {
-      return context.commit("setModify");
-    },
+
     //코스 생성
-    reqCreateCourse() {},
-
-    //코스 정보 수정
-    reqModifyCourse(context, info) {
+    reqCreateCourse(context, fd) {
       return axios
-        .put("/course/detail/" + info.course_id, { info: info })
+        .post("/course", {
+          spotid: fd.spot_id,
+          email: fd.email,
+          orders: fd.orders
+        })
         .then(response => {
           console.log(response.data);
           if (response.message == "success") {
-            context.commit("setModify");
             return true;
+            //context.commit("setCourseInfo", response.data.course);
           } else return false;
         })
         .catch(error => {
           console.log(error);
         });
     },
-
     //코스 삭제
-    reqDeleteCourse() {}
+    reqDeleteCourse(context, course_id) {
+      return axios
+        .delete("/course/" + course_id)
+        .then(response => {
+          if (response.message == "success") {
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+          return false;
+        });
+    }
   }
 };
 

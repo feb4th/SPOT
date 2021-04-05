@@ -1,5 +1,7 @@
 package com.ssafy.spot.controller;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,10 @@ public class TourSightController {
 		HttpStatus status;
 		
 		try {
-			result.result = service.findById(id);
+			List<Object> ob = new LinkedList<Object>();
+			ob.add(service.findById(id));
+			ob.add(service.findImage(id));
+			result.result = ob;
 			result.message = "success";
 		}catch(Exception e) {
 			result.message = "fail";

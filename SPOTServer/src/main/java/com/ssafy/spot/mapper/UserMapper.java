@@ -15,4 +15,5 @@ public interface UserMapper {
 	public HashMap<String, String> findById(String user_id);
 	public void updateNickname(UserUpdate req);
 	public void updateUser(UserUpdate req);
+	public void insertImage(String user_id, String timeurl);
 }
