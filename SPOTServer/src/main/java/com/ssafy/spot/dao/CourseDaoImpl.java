@@ -36,13 +36,13 @@ public class CourseDaoImpl implements CourseDao{
 	}
 
 	@Override
-	public List<String> findIdByName(String user_id, String name) {
-		return mapper.findIdByName(user_id, name);
+	public List<String> findIdByName(String user_id, String course_id) {
+		return mapper.findIdByName(user_id, course_id);
 	}
 
 	@Override
-	public String findDateByName(String user_id, String name) {
-		return mapper.findDateByName(user_id, name);
+	public String findDateByName(String user_id, String course_id) {
+		return mapper.findDateByName(user_id, course_id);
 	}
 
 	@Override
@@ -51,14 +51,30 @@ public class CourseDaoImpl implements CourseDao{
 	}
 
 	@Override
-	public List<Course> readCourse(String user_id, String name) {
-		return mapper.readCourse(user_id, name);
+	public List<Course> readCourse(String user_id, String course_id) {
+		return mapper.readCourse(user_id, course_id);
 	}
 
 	@Override
-	public void deleteCourseList(String user_id, String name) {
-		mapper.deleteCourseList(user_id, name);
+	public void deleteCourseList(String user_id, String course_id) {
+		mapper.deleteCourseList(user_id, course_id);
 	}
+
+	@Override
+	public void insertCourseId(String user_id) {
+		mapper.insertCourseId(user_id);
+	}
+
+	@Override
+	public int findCourseId() {
+		return mapper.findCourseId();
+	}
+
+	@Override
+	public void reset(String course_id) {
+		mapper.reset(course_id);
+	}
+
 
 	
 }

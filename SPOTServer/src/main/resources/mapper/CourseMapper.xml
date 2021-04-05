@@ -5,7 +5,7 @@
 
 <mapper namespace="com.ssafy.spot.mapper.CourseMapper">
 	<insert id="insertCourse" parameterType="CourseReq">
-		insert into Course values(null, #{name}, #{user_id}, #{spot_id}, #{orders}, #{memo}, #{time}, #{type}, #{date})
+		insert into Course values(null, #{course_id}, #{name}, #{user_id}, #{spot_id}, #{orders}, #{memo}, #{time}, #{type}, #{date})
   	</insert>
   	
   	<select id="findById" parameterType="String" resultType="Integer">
@@ -13,19 +13,19 @@
   	</select>
   	
   	<select id="courseList" parameterType="String" resultType="java.util.Map">
-  		select distinct name from Course where user_id=#{user_id};
+  		select distinct course_id,name from Course where user_id=#{user_id};
   	</select>
   	
   	<update id="updateCourse">
-  		update Course set spot_id=#{spot_id}, orders=#{orders}, memo=#{memo}, time=#{time}, type=#{type} where user_id=#{user_id} and name=#{name} and course_id=#{course_id}
+  		update Course set spot_id=#{spot_id}, orders=#{orders}, memo=#{memo}, time=#{time}, type=#{type} where user_id=#{user_id} and course_id=#{course_id}
   	</update>
   	
   	<select id="findIdByName" parameterType="String" resultType="String">
-  		select course_id from Course where user_id=#{user_id} and name=#{name}
+  		select course_id from Course where user_id=#{user_id} and course_id=#{course_id}
   	</select>
   	
   	<select id="findDateByName" parameterType="String" resultType="String">
-  		select distinct date from Course where user_id=#{user_id} and name=#{name}
+  		select distinct date from Course where user_id=#{user_id} and course_id=#{course_id}
   	</select>
   	
   	<delete id="deleteCourse">
@@ -33,10 +33,22 @@
   	</delete>
   	
   	<select id="readCourse" resultType="Course">
-  		select * from Course where user_id=#{user_id} and name=#{name} order by orders
+  		select * from Course where user_id=#{user_id} and course_id=#{course_id} order by orders
   	</select>
   	
   	<delete id="deleteCourseList" parameterType="String">
-  		delete from Course where user_id=#{user_id} and name=#{name}
+  		delete from Course where user_id=#{user_id} and course_id=#{course_id}
+  	</delete>
+  	
+  	<insert id="insertCourseId" parameterType="String">
+  		insert into CourseIndex values(null, #{user_id})
+  	</insert>
+  	
+  	<select id="findCourseId" resultType="Integer">
+  		select max(course_id) from CourseIndex
+  	</select>
+  	
+  	<delete id="reset">
+  		delete from Course where course_id=#{course_id}
   	</delete>
 </mapper>
