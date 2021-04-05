@@ -10,6 +10,7 @@ import CourseStore from "./modules/CourseStore";
 import WishStore from "./modules/WishStore";
 import ThemeStore from "./modules/ThemeStore";
 import ReviewStore from "./modules/ReviewStore";
+import SuggestStore from "./modules/SuggestStore";
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ export default new Vuex.Store({
     CourseStore,
     WishStore,
     ThemeStore,
-    ReviewStore
+    ReviewStore,
+    SuggestStore
   },
   plugins: []
 });

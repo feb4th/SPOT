@@ -58,13 +58,15 @@ const CourseStore = {
         });
     },
     //코스 상세정보 조회
-    reqCourseInfo(context, course_id) {
+    reqCourseInfo(context, fd) {
       return axios
-        .get("/course/detail/" + course_id)
+        .get("/course/" + fd.user_id, {
+          name: fd.name
+        })
         .then(response => {
           console.log(response.data);
           if (response.message == "success") {
-            context.commit("setCourseInfo", response.data.course);
+            context.commit("setCourseInfo", response.data.course); //여기서 코스 정보 store에 넣어줌.
             return true;
           } else return false;
         })
@@ -74,23 +76,24 @@ const CourseStore = {
     },
 
     //코스 생성
-    reqCreateCourse() {},
-
-    //코스 정보 수정
-    reqModifyCourse(context, info) {
+    reqCreateCourse(context, fd) {
       return axios
-        .put("/course/detail/" + info.course_id, { info: info })
+        .post("/course", {
+          spotid: fd.spot_id,
+          email: fd.email,
+          orders: fd.orders
+        })
         .then(response => {
           console.log(response.data);
           if (response.message == "success") {
             return true;
+            //context.commit("setCourseInfo", response.data.course);
           } else return false;
         })
         .catch(error => {
           console.log(error);
         });
     },
-
     //코스 삭제
     reqDeleteCourse(context, course_id) {
       return axios
