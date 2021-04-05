@@ -4,7 +4,7 @@ const MemberStore = {
   namespaced: true, // 모듈 개발사용 가능
   state: {
     isLogin: false, // 로그인 여부
-    memberInfo: { member_id: "ssafy", email: "ssafy@ssafy.com", nickname: "김싸피" }
+    memberInfo: { member_id: "ssafy", email: "ssafy@ssafy.com", nickname: "김싸피", img: "" }
   },
 
   getters: {

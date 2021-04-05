@@ -8,15 +8,15 @@ const ReviewStore = {
         review_id: 1,
         img: "",
         member_id: "123",
-        content: "댓글 내용 1",
+        content: "아빠발국밥이 맛있어요!",
         rating: 4.5
       },
       {
         review_id: 2,
         img: "",
         member_id: "123",
-        content: "댓글 내용 2",
-        rating: 4.0
+        content: "제 취향 아닙니다 우웩 ㅠㅠ",
+        rating: 2.0
       }
     ]
   },

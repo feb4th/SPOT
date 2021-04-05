@@ -16,14 +16,14 @@
                       }
                     "
                   >
-                    <v-icon size="50">mdi-arrow-left</v-icon>
+                    <v-icon large>mdi-arrow-left</v-icon>
                   </v-btn>
 
-                  <p>회원정보 수정</p>
+                  <h2>회원정보 수정</h2>
 
                   <v-btn disabled text><v-spacer></v-spacer></v-btn
                 ></v-card-title>
-                <v-card-text class="mu-5">
+                <v-card-text style="margin: auto;">
                   <v-row>
                     <v-col>
                       <!-- <v-text-field
@@ -48,7 +48,7 @@
                         <v-text-field
                           solo
                           v-model="nickname"
-                          @change="nicknamecheck = false"
+                          @keydown="nicknamecheck = false"
                           :counter="10"
                           :rules="[
                             v => !!v || '닉네임을 입력해 주세요',
@@ -61,7 +61,7 @@
                       </v-col>
                       <v-col cols="2">
                         <v-btn
-                          color="success"
+                          color="primary"
                           block
                           @click="checkNickname()"
                           :disabled="nicknamecheck"

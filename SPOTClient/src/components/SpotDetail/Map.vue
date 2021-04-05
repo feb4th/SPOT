@@ -1,8 +1,24 @@
 <template>
   <v-container>
-    <v-row justify="center">
+    <v-row>
+      <v-card elevation="0">
+        <v-card-title style="margin-left: 2em;">
+          <v-icon x-large>mdi-check</v-icon>
+          <strong>주소</strong>
+        </v-card-title>
+      </v-card>
+    </v-row>
+    <v-row justify="center" class="ma-6">
       <div id="map" class="map"></div>
     </v-row>
+    <v-row style="margin-left: 1.5em;">
+      <v-card elevation="0">
+        <v-card-title>
+          <v-card-text> {{ getSpot.address }} </v-card-text>
+        </v-card-title>
+      </v-card>
+    </v-row>
+
   </v-container>
 </template>
 

@@ -1,17 +1,13 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2"> </v-col>
-
-          <v-col cols="12" sm="8">
+          <v-col>
             <v-sheet min-height="70vh" rounded="lg">
-              <!--  -->
               <v-card class="pu-10 px-10 mu-10" elevation="0">
                 <v-card-title class="headline justify-space-between">
                   <v-btn
-                    class="ml-4"
                     icon
                     large
                     @click="
@@ -20,23 +16,31 @@
                       }
                     "
                   >
-                    <v-icon size="50">mdi-undo-variant</v-icon>
+                    <v-icon large>mdi-arrow-left</v-icon>
                   </v-btn>
 
-                  {{ getSpot.name }}
+                  <h2>{{ getSpot.name }}</h2>
+
+                  <!-- <v-btn
+                    icon
+                    x-large>
+                    <v-icon v-if="wishlist">mdi-cards-heart</v-icon>
+                    <v-icon v-else style="color: red;">mdi-cards-heart</v-icon>
+                  </v-btn> -->
+                  <div>
+                    <like />
+                  </div>
 
                   <v-btn disabled text><v-spacer></v-spacer></v-btn
                 ></v-card-title>
               </v-card>
               <photo />
               <spot-map />
-              <like />
+              <!-- <like /> -->
               <detail />
               <review />
             </v-sheet>
           </v-col>
-
-          <v-col cols="12" sm="2"> </v-col>
         </v-row>
       </v-container>
     </v-main>

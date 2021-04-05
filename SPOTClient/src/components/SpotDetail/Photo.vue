@@ -4,7 +4,7 @@
       <v-window-item v-for="image in getImage" :key="image.image_id">
         <v-card color="grey">
           <v-row align="center" justify="center">
-            <v-img contain src="../../assets/logo.png" height="200"></v-img>
+            <v-img contain src="../../assets/logo.png" height="400"></v-img>
           </v-row>
         </v-card>
       </v-window-item>

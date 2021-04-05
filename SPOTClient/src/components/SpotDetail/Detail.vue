@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card elevation="0" class="ma-10">
+    <v-card elevation="0" style="margin-left: 1.5em;">
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>영업시간</strong>
@@ -10,7 +10,7 @@
       </v-card-title>
     </v-card>
 
-    <v-card elevation="0" class="ma-10">
+    <v-card elevation="0" style="margin-left: 1.5em;">
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>대표메뉴</strong>
@@ -20,7 +20,7 @@
       </v-card-title>
     </v-card>
 
-    <v-card elevation="0" class="ma-10">
+    <v-card elevation="0" style="margin-left: 1.5em;">
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>전화번호</strong>
