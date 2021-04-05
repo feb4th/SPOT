@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card class="pu-10 px-10 mu-10" elevation="0">
-      <v-card-title class="headline justify-space-between">
+      <v-card-title class="headline justify-space-between" v-if="getIsLogined">
         <v-btn
           class="ml-4"
           icon
@@ -14,22 +14,21 @@
         >
           <v-icon size="50">mdi-undo-variant</v-icon>
         </v-btn>
-        <strong v-if="!getModify">
+        <strong>
           {{ getCourseInfo[0].course_name }}
         </strong>
-        <v-text-field
-          v-else
-          label="코스명"
-          v-model="getCourseInfo[0].course_name"
-          solo
-        >
-        </v-text-field>
 
         <v-btn class="mr-4" icon large>
           <v-icon class="kakao-link" size="50" @click="onShare()"
             >mdi-share-variant
           </v-icon>
         </v-btn>
+      </v-card-title>
+
+      <v-card-title class="headline justify-center" v-else>
+        <strong>
+          {{ getCourseInfo[0].course_name }}
+        </strong>
       </v-card-title>
     </v-card>
   </v-container>
@@ -38,10 +37,12 @@
 <script>
 import { mapGetters } from "vuex";
 const CourseStore = "CourseStore";
+const MemberStore = "MemberStore";
 
 export default {
   computed: {
-    ...mapGetters(CourseStore, ["getCourseInfo", "getModify"])
+    ...mapGetters(CourseStore, ["getCourseInfo"]),
+    ...mapGetters(MemberStore, ["getIsLogined"])
   },
   methods: {
     onShare() {

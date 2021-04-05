@@ -14,14 +14,14 @@ const CourseStore = {
         course_name: "기본코스"
       },
       {
+        course_id: "1",
         spot_id: "2",
         latitude: "37.571525",
         longitude: "126.991316",
         name: "두번째 스팟",
         course_name: "기본코스"
       }
-    ],
-    modify: false //현재 수정중인지 여부
+    ]
   },
   getters: {
     getCourseList(state) {
@@ -31,9 +31,6 @@ const CourseStore = {
     getCourseInfo(state) {
       //코스의 상세정보 받아오기
       return state.courseInfo;
-    },
-    getModify(state) {
-      return state.modify;
     }
   },
   mutations: {
@@ -42,9 +39,6 @@ const CourseStore = {
     },
     setCourseInfo(state, payload) {
       state.courseInfo = payload;
-    },
-    setModify(state) {
-      state.modify = !state.modify;
     }
   },
   actions: {
@@ -78,9 +72,7 @@ const CourseStore = {
           console.log(error);
         });
     },
-    reqChangeStatus(context) {
-      return context.commit("setModify");
-    },
+
     //코스 생성
     reqCreateCourse() {},
 
@@ -91,7 +83,6 @@ const CourseStore = {
         .then(response => {
           console.log(response.data);
           if (response.message == "success") {
-            context.commit("setModify");
             return true;
           } else return false;
         })
@@ -101,7 +92,19 @@ const CourseStore = {
     },
 
     //코스 삭제
-    reqDeleteCourse() {}
+    reqDeleteCourse(context, course_id) {
+      return axios
+        .delete("/course/" + course_id)
+        .then(response => {
+          if (response.message == "success") {
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+          return false;
+        });
+    }
   }
 };
 
