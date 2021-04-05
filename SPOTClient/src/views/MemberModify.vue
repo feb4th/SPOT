@@ -34,7 +34,11 @@
                       ></v-text-field> -->
                       <span>이메일</span>
                       <p></p>
-                      <p style="font-size : 20px; margin-top: 1em; margin-bottom: 1em;">{{ getMemberInfo.email }}</p>
+                      <p
+                        style="font-size : 20px; margin-top: 1em; margin-bottom: 1em;"
+                      >
+                        {{ getMemberInfo.email }}
+                      </p>
                     </v-col>
                   </v-row>
                   <v-form ref="form" v-model="NicknameValid" lazy-validation>
@@ -78,21 +82,20 @@
                     </v-row>
                     <v-row>
                       <v-col cols="12">
-                      <v-text-field
-                        v-model="pw"
-                        :counter="20"
-                        :rules="[
-                          v => !!v || '비밀번호를 입력해 주세요',
-                          v =>
-                            (v && v.length > 7 && v.length <= 20) ||
-                            '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
-                        ]"
-                        type="password"
-                        label="비밀번호"
-                        solo
-                      ></v-text-field>
+                        <v-text-field
+                          v-model="pw"
+                          :counter="20"
+                          :rules="[
+                            v => !!v || '비밀번호를 입력해 주세요',
+                            v =>
+                              (v && v.length > 7 && v.length <= 20) ||
+                              '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
+                          ]"
+                          type="password"
+                          label="비밀번호"
+                          solo
+                        ></v-text-field>
                       </v-col>
-
                     </v-row>
 
                     <v-row>
@@ -113,14 +116,14 @@
                           solo
                         ></v-text-field>
                       </v-col>
-
                     </v-row>
-
                   </v-form>
                   <!-- 회원탈퇴 모달창 -->
                   <v-row justify="end">
                     <v-col cols="auto">
-                      <p style="color: #b71c1c;" @click="dialog = true;">회원 탈퇴</p>
+                      <p style="color: #b71c1c;" @click="dialog = true">
+                        회원 탈퇴
+                      </p>
                       <v-dialog v-model="dialog" persistent max-width="290">
                         <v-card style="opacity: 1">
                           <v-card-title class="headline">
@@ -129,11 +132,7 @@
                           <v-card-text>정말 탈퇴하시겠습니까?</v-card-text>
                           <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn
-                              color="secondary"
-                              text
-                              @click="remove()"
-                            >
+                            <v-btn color="secondary" text @click="remove()">
                               예
                             </v-btn>
                             <v-btn
@@ -208,7 +207,7 @@ export default {
     };
   },
   created() {
-    this.reqMemberInfo(this.$route.params.email);
+    this.reqMemberInfo(this.$route.params.memberid);
     this.nickname = this.getMemberInfo.nickname;
   },
   computed: {
@@ -219,7 +218,8 @@ export default {
       "reqMemberInfo",
       "reqCheckNickname",
       "reqModifyMember",
-      "reqRemoveMember"
+      "reqRemoveMember",
+      "Logout"
     ]),
     onModify() {
       if (this.nickname != this.getMemberInfo.nickname) {
@@ -234,7 +234,11 @@ export default {
         if (this.pw == "" && this.pwvaild == "") {
           //2.비밀번호가 변경되지 않았다면 비밀번호에 0을 넣어 보내줌
           //닉네임만 변경될 때
-          this.reqModifyMember({ nickname: this.nickname, pwd: "0" })
+          this.reqModifyMember({
+            nickname: this.nickname,
+            pw: "0",
+            id: this.$route.params.memberid
+          })
             .then(response => {
               if (response) {
                 this.msg = "닉네임이 변경되었습니다!";
@@ -262,7 +266,11 @@ export default {
           }
           //3.회원정보 수정
           //닉네임과 비밀번호가 변경될 때
-          this.reqModifyMember({ nickname: this.nickname, pwd: this.pw })
+          this.reqModifyMember({
+            nickname: this.nickname,
+            pw: this.pw,
+            id: this.$route.params.memberid
+          })
             .then(response => {
               if (response) {
                 this.msg = "닉네임, 비밀번호가 변경되었습니다!";
@@ -293,7 +301,11 @@ export default {
         } else {
           //2.닉네임 그대로 회원 정보 수정
           //비밀번호만 변경될 때
-          this.reqModifyMember({ nickname: this.nickname, pwd: this.pw })
+          this.reqModifyMember({
+            nickname: this.nickname,
+            pw: this.pw,
+            id: this.$route.params.memberid
+          })
             .then(response => {
               if (response) {
                 this.msg = "비밀번호가 변경되었습니다!";
@@ -338,7 +350,9 @@ export default {
     },
     remove() {
       //회원탈퇴
-      this.reqRemoveMember(this.getMemberInfo.member_id);
+      this.reqRemoveMember(this.$route.params.memberid);
+      this.Logout();
+      this.$router.push({ name: "main" });
     }
   }
 };

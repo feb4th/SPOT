@@ -18,7 +18,6 @@
         </v-card-title>
       </v-card>
     </v-row>
-
   </v-container>
 </template>
 

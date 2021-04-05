@@ -43,13 +43,10 @@ const WishStore = {
     // 위시리스트 여부 조회
     reqCheckWish(context, info) {
       return axios
-        .post("/followcheck", {
-          store_id: info.store_id,
-          user_id: info.email
-        })
+        .get("/wishcheck?spot_id=" + info.spot_id + "&user_id=" + info.user_id)
         .then(response => {
-          if (response.message == "success") {
-            context.commit("setWishId", response.follow_id);
+          if (response.data.message == "success") {
+            context.commit("setWishId", response.data.result.wishlist_id);
             return true;
           } else return false;
         })

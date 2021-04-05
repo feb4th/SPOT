@@ -22,9 +22,7 @@
                 >
                   <!-- 프로필 이미지가 없을 때 -->
                   <v-img
-                    v-if="
-                      getMemberInfo.img == null || getMemberInfo.img == ''
-                    "
+                    v-if="getMemberInfo.img == null || getMemberInfo.img == ''"
                     class="ma-auto mp-4 align-center"
                     height="100"
                     width="100"
@@ -80,7 +78,9 @@
         </v-row>
         <v-row justify="center">
           <p style="font-size: 40px;">{{ getMemberInfo.nickname }}</p>
-          <v-icon style="margin: 0px -15px 15px 5px;" @click="toModify()">mdi-pencil-outline</v-icon>
+          <v-icon style="margin: 0px -15px 15px 5px;" @click="toModify()"
+            >mdi-pencil-outline</v-icon
+          >
         </v-row>
         <v-row justify="center">
           <p style="font-size: 15px;">{{ getMemberInfo.email }}</p>
@@ -107,7 +107,7 @@ export default {
     };
   },
   created() {
-    this.reqMemberInfo(this.$route.params.email);
+    this.reqMemberInfo(this.$route.params.memberid);
   },
   computed: {
     ...mapGetters(MemberStore, ["getMemberInfo"])
@@ -117,7 +117,7 @@ export default {
 
     toModify() {
       //회원정보 수정 페이지로 이동
-      this.$router.push("/member/modify/" + this.$route.params.email);
+      this.$router.push("/member/modify/" + this.$route.params.memberid);
     },
     onClickImageUpload() {
       //이미지 업로드 버튼 클릭시

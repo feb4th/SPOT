@@ -39,8 +39,8 @@ export default {
   },
   created() {
     let formData = new FormData();
-    formData.append("store_id", this.$route.params.storeid);
-    formData.append("email", this.getMemberInfo.email);
+    formData.append("spot_id", this.$route.params.storeid);
+    formData.append("user_id", this.getMemberInfo.user_id);
     this.reqCheckWish(formData);
   },
   computed: {

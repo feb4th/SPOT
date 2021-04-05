@@ -41,6 +41,7 @@ export default {
   },
   created() {
     this.reqCourseInfo(this.$route.params.course_id);
+    console.log();
   },
   computed: {
     ...mapGetters(CourseStore, ["getCourseInfo"]),
