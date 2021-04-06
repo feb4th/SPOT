@@ -1,10 +1,31 @@
 <template>
-  <v-container>
-    <div id="map-wrapper" class="map-wrapper"></div>
-
-    <!-- 선택한 내용이 1개 이상일 때만 버튼 활성화 -->
-    <v-btn depressed :disabled="btnNumber <= 0" @click="onClick"> 전달 </v-btn>
-  </v-container>
+  <v-app style="position:fixed; overflow:hidden; scroll:no">
+    <v-main class="grey lighten-3">
+      <v-container>
+        <v-row>
+          <v-col>
+            <v-sheet min-height="70vh" rounded="lg">
+              <div class="ml-3">
+                <h1>지역을</h1>
+                <h1>선택해주세요!</h1>
+              </div>
+              <v-row style="height:90%;">
+                <v-col cols="1"></v-col>
+                <v-col cols="10"
+                  ><div id="map-wrapper" class="map-wrapper"></div
+                ></v-col>
+                <v-col cols="1" class="ma-auto"
+                  ><v-btn depressed icon v-if="btnNumber > 0" @click="onClick"
+                    ><v-icon x-large>mdi-arrow-right</v-icon></v-btn
+                  ></v-col
+                >
+              </v-row>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -94,7 +115,7 @@ export default {
       // 현재의 브라우저의 크기 계산
       const divWidth = document.getElementById("map-wrapper").clientWidth;
       const width = divWidth < 1000 ? divWidth * 0.9 : 1000;
-      const height = width * 1;
+      const height = width * 0.9;
 
       // 지도를 그리기 위한 svg 생성
       const svg = d3
@@ -143,7 +164,7 @@ export default {
         .scaleLinear()
         .domain([1, 20])
         .clamp(true)
-        .range(["#d5708b", "#d5708b"]); // 지도색 바뀜.
+        .range(["white", "white"]); // 지도색 바뀜.
 
       // Get province name length
       function nameLength(d) {
@@ -173,7 +194,7 @@ export default {
         // console.log(self.selectRoom[selectIdx]);
         if (self.selectRoom[selectIdx] == 0) {
           // 선택되지 않은 곳을 활성화
-          d3.select(this).style("fill", "#1483ce"); //활성화 시의 색
+          d3.select(this).style("fill", "#f7cac9"); //활성화 시의 색
           self.selectRoom[selectIdx] = 1;
           self.selectName.push(
             d3.select(this)._groups[0][0].__data__.properties.CTP_KOR_NM // 선택한 지역 이름.
@@ -181,7 +202,7 @@ export default {
           self.btnNumber++;
         } else {
           //선택 된 곳을 비활성화
-          d3.select(this).style("fill", "#D5708B"); //비활성화 시의 색
+          d3.select(this).style("fill", "white"); //비활성화 시의 색
           self.selectRoom[selectIdx] = 0;
           self.btnNumber--;
         }
@@ -260,15 +281,15 @@ export default {
   text-align: center;
 
   .background {
-    fill: #021019;
+    fill: white;
     //fill: transparent;
     pointer-events: all;
   }
 
   .map-layer {
-    fill: #d5708b;
-    stroke: #021019;
-    stroke-width: 1px;
+    fill: grey;
+    stroke: grey;
+    stroke-width: 2px;
   }
 }
 </style>

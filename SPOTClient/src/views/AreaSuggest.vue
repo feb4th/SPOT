@@ -1,134 +1,181 @@
 <template>
-  <v-container>
-    <v-row class="mx-auto">
-      <v-col>
-        <h2>선택한 지역 SPOT</h2>
-      </v-col>
-    </v-row>
-    <!-- 위시리스트 팝업 부분 -->
-    <v-row justify="end">
-      <v-btn color="primary" dark @click.stop="dialog = true">
-        위시리스트에서 가져오기
-      </v-btn>
+  <v-app>
+    <v-main class="grey lighten-3">
+      <v-container>
+        <v-row style="height:100%;">
+          <v-col>
+            <v-sheet min-height="70vh" rounded="lg">
+              <div class="ml-3">
+                <h1>당신에게 추천하는</h1>
+                <span style="font-size: 3em;"><strong>SPOT</strong></span>
+                <span style="font-size: 2.5em;">🚩</span>
+              </div>
+              <!-- 위시리스트 팝업 부분 -->
+              <v-row class="justify-end mr-8">
+                <v-btn color="grey" dark @click.stop="dialog = true">
+                  나의 위시리스트
+                </v-btn>
 
-      <v-dialog v-model="dialog" max-width="580">
-        <v-card>
-          <v-card-title class="headline">
-            위시리스트
-          </v-card-title>
+                <v-dialog v-model="dialog" max-width="580">
+                  <v-card>
+                    <v-card-title class="headline">
+                      <h3 class="mt-2">나의 위시리스트</h3>
+                    </v-card-title>
 
-          <v-card-text>
-            <v-slide-group class="pa-4" active-class="success" show-arrows>
-              <v-slide-item v-for="(card, idx) in getWishList" :key="idx">
-                <div>
-                  <v-card
-                    class="ma-4"
-                    height="200"
-                    width="200"
-                    @click="onSelect(card.spot_id)"
-                  >
-                    <!-- 이미지 데이터가 없을 때 -->
-                    <v-img v-if="card.img == '' || car.img == null"> </v-img>
-                    <v-img v-else :src="card.img"> </v-img>
+                    <v-card-text>
+                      <v-slide-group
+                        class="pa-4"
+                        active-class="primary"
+                        show-arrows
+                      >
+                        <v-slide-item
+                          v-for="(card, idx) in getWishList"
+                          :key="idx"
+                        >
+                          <div>
+                            <v-card
+                              class="ma-4"
+                              height="200"
+                              width="200"
+                              @click="onSelect(card.spot_id)"
+                            >
+                              <!-- 이미지 데이터가 없을 때 -->
+                              <v-img v-if="card.img == '' || car.img == null">
+                              </v-img>
+                              <v-img v-else :src="card.img"> </v-img>
 
-                    <v-card-title class="text-no-wrap text-truncate">{{
-                      card.name
-                    }}</v-card-title>
+                              <v-card-title
+                                class="text-no-wrap text-truncate"
+                                >{{ card.name }}</v-card-title
+                              >
+                            </v-card>
+                            <v-row justify="center" class="ma-auto">
+                              <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn
+                                    icon
+                                    :color="color"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  >
+                                    <v-icon
+                                      v-if="wishFlag[idx] == true"
+                                      size="50"
+                                      @click="wishFlag[idx] = false"
+                                      color="primary"
+                                      >mdi-playlist-check</v-icon
+                                    >
+                                    <v-icon
+                                      v-else
+                                      size="40"
+                                      @click="wishFlag[idx] = true"
+                                      color="gray"
+                                      >mdi-check</v-icon
+                                    >
+                                  </v-btn>
+                                </template>
+                                <span v-if="wishFlag[idx] == true">취소</span>
+                                <span v-else>추가</span>
+                              </v-tooltip>
+                            </v-row>
+                            <!-- 왜 짤리는 거지... 세로로 크기 조정 필요 -->
+                          </div>
+                        </v-slide-item>
+                      </v-slide-group>
+                    </v-card-text>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+
+                      <v-btn color="secondary" text @click="dialog = false">
+                        닫기
+                      </v-btn>
+                    </v-card-actions>
                   </v-card>
-                  <v-row justify="center" class="ma-auto">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon :color="color" v-bind="attrs" v-on="on">
-                          <v-icon
-                            v-if="wishFlag[idx] == true"
-                            size="60"
-                            @click="wishFlag[idx] = false"
-                            color="red"
-                            >mdi-heart</v-icon
-                          >
-                          <v-icon
-                            v-else
-                            size="40"
-                            @click="wishFlag[idx] = true"
-                            color="gray"
-                            >mdi-heart</v-icon
-                          >
-                        </v-btn>
-                      </template>
-                      <span v-if="wishFlag[idx] == true">취소</span>
-                      <span v-else>추가</span>
-                    </v-tooltip>
-                  </v-row>
-                  <!-- 왜 짤리는 거지... 세로로 크기 조정 필요 -->
-                </div>
-              </v-slide-item>
-            </v-slide-group>
-          </v-card-text>
+                </v-dialog>
+              </v-row>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn color="green darken-1" text @click="dialog = false">
-              닫기
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-row>
-
-    <!-- 추천 지역 list -->
-    <v-sheet class="mx-auto" elevation="0" max-width="1000">
-      <v-slide-group class="pa-4" active-class="success" show-arrows>
-        <v-slide-item v-for="(card, idx) in getSuggestList" :key="idx">
-          <div>
-            <v-card
-              class="ma-4"
-              height="180"
-              width="200"
-              @click="onSelect(card.spot_id)"
-            >
-              <!-- 이미지 데이터가 없을 때 -->
-              <v-img v-if="card.img == '' || car.img == null"> </v-img>
-              <v-img v-else :src="card.img"> </v-img>
-
-              <v-card-title class="text-no-wrap text-truncate">{{
-                card.name
-              }}</v-card-title>
-            </v-card>
-            <v-row justify="center" class="ma-auto">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon :color="color" v-bind="attrs" v-on="on">
-                    <v-icon
-                      v-if="suggestFlag[idx] == true"
-                      size="60"
-                      @click="onSuggestClick(idx)"
-                      color="red"
-                      >mdi-heart</v-icon
+              <!-- 추천 지역 list -->
+              <v-row style="height:90%;">
+                <v-col cols="1"></v-col>
+                <v-col cols="10">
+                  <v-sheet class="mx-auto" elevation="0" max-width="1000">
+                    <v-slide-group
+                      class="pa-4"
+                      active-class="success"
+                      show-arrows
                     >
-                    <v-icon
-                      v-else
-                      size="40"
-                      @click="onSuggestUnclick(idx)"
-                      color="gray"
-                      >mdi-heart</v-icon
-                    >
-                  </v-btn>
-                </template>
-                <span v-if="suggestFlag[idx] == true">취소</span>
-                <span v-else>추가</span>
-              </v-tooltip>
-            </v-row>
-          </div>
-        </v-slide-item>
-      </v-slide-group>
-    </v-sheet>
-    <v-row justify="center">
-      <v-btn depressed :disabled="btnNumber <= 0" @click="onClick">
-        다음
-      </v-btn>
-    </v-row>
-  </v-container>
+                      <v-slide-item
+                        v-for="(card, idx) in getSuggestList"
+                        :key="idx"
+                      >
+                        <div>
+                          <v-card
+                            class="ma-4"
+                            height="180"
+                            width="200"
+                            @click="onSelect(card.spot_id)"
+                          >
+                            <!-- 이미지 데이터가 없을 때 -->
+                            <v-img v-if="card.img == '' || car.img == null">
+                            </v-img>
+                            <v-img v-else :src="card.img"> </v-img>
+
+                            <v-card-title class="text-no-wrap text-truncate">{{
+                              card.name
+                            }}</v-card-title>
+                          </v-card>
+                          <v-row justify="center" class="ma-auto">
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  icon
+                                  :color="color"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                >
+                                  <v-icon
+                                    v-if="suggestFlag[idx] == true"
+                                    size="50"
+                                    @click="onSuggestClick(idx)"
+                                    color="primary"
+                                    >mdi-playlist-check</v-icon
+                                  >
+                                  <v-icon
+                                    v-else
+                                    size="40"
+                                    @click="onSuggestUnclick(idx)"
+                                    color="gray"
+                                    >mdi-check</v-icon
+                                  >
+                                </v-btn>
+                              </template>
+                              <span v-if="suggestFlag[idx] == true">취소</span>
+                              <span v-else>추가</span>
+                            </v-tooltip>
+                          </v-row>
+                        </div>
+                      </v-slide-item>
+                    </v-slide-group>
+                  </v-sheet>
+                </v-col>
+                <v-col cols="1" class="ma-auto"
+                  ><v-btn depressed icon v-if="btnNumber > 0" @click="onClick"
+                    ><v-icon x-large>mdi-arrow-right</v-icon></v-btn
+                  ></v-col
+                >
+                <!-- <v-col cols="1" class="ma-auto">
+                  <v-btn depressed :disabled="btnNumber <= 0" @click="onClick">
+                    다음
+                  </v-btn></v-col
+                > -->
+              </v-row>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
