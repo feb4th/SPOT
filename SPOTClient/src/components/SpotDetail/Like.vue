@@ -38,10 +38,11 @@ export default {
     };
   },
   created() {
-    let formData = new FormData();
-    formData.append("spot_id", this.$route.params.spotid);
-    formData.append("user_id", this.getMemberInfo.user_id);
-    this.reqCheckWish(formData);
+    this.reqCheckWish({
+      spot_id: this.$route.params.spotid,
+      user_id: this.getMemberInfo.user_id
+    });
+    console.log("wish: " + this.getWishId);
   },
   computed: {
     ...mapGetters(WishStore, ["getWishId"]),
@@ -54,10 +55,10 @@ export default {
       this.reqDeleteWish(this.getWishId);
     },
     setFollow() {
-      let formData = new FormData();
-      formData.append("store_id", this.$route.params.storeid);
-      formData.append("user_id", this.getMemberInfo.user_id);
-      this.reqAddWish(formData);
+      this.reqAddWish({
+        spot_id: this.$route.params.spotid,
+        user_id: this.getMemberInfo.user_id
+      });
     }
   }
 };

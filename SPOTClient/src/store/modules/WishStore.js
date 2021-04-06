@@ -42,16 +42,10 @@ const WishStore = {
     // 위시리스트 여부 조회
     reqCheckWish(context, info) {
       return axios
-        .get(
-          "/wishcheck?spot_id=" +
-            info.get("spot_id") +
-            "&user_id=" +
-            info.get("user_id")
-        )
+        .get("/wishcheck?spot_id=" + info.spot_id + "&user_id=" + info.user_id)
         .then(response => {
           if (response.data.message == "success") {
             context.commit("setWishId", response.data.result.wishlist_id);
-            console.log("조회성공" + response.data.result.wishlist_id);
             return true;
           } else return false;
         })
@@ -62,12 +56,11 @@ const WishStore = {
 
     // 위시리스트 추가(관광지)
     reqAddWish(context, info) {
+      let frm = new FormData();
+      frm.append("spot_id", info.spot_id);
+      frm.append("user_id", info.user_id);
       return axios
-        .post("/wish", {
-          spot_id: info.spot_id,
-          type: "0",
-          user_id: info.user_id
-        })
+        .post("/wish", frm)
         .then(response => {
           if (response.data.message == "success") {
             context.commit("setWishId", response.data.result.wishlist_id);
@@ -84,7 +77,7 @@ const WishStore = {
       return axios
         .delete("/wish/" + wishlist_id)
         .then(response => {
-          if (response.data.message == "success") {
+          if (response.data.message == "del wish success") {
             context.commit("setWishId", "");
             return true;
           } else return false;
