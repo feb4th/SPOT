@@ -1,9 +1,11 @@
 <template>
   <v-container>
-    <v-card class="pu-10 px-10 mu-10" elevation="0">
-      <v-card-title class="headline justify-space-between" v-if="getIsLogined">
+    <v-card elevation="0">
+      <v-card-title
+        class="headline justify-space-between my-2"
+        v-if="!getIsLogined"
+      >
         <v-btn
-          class="ml-4"
           icon
           large
           @click="
@@ -12,14 +14,14 @@
             }
           "
         >
-          <v-icon size="50">mdi-undo-variant</v-icon>
+          <v-icon large>mdi-arrow-left</v-icon>
         </v-btn>
-        <strong>
+        <h2>
           {{ getCourseInfo[0].course_name }}
-        </strong>
+        </h2>
 
-        <v-btn class="mr-4" icon large>
-          <v-icon class="kakao-link" size="50" @click="onShare()"
+        <v-btn icon large>
+          <v-icon class="kakao-link" large @click="onShare()"
             >mdi-share-variant
           </v-icon>
         </v-btn>

@@ -60,7 +60,6 @@
                               (v && v.length > 1 && v.length <= 10) ||
                               '닉네임은 2자리 이상 10자리 이하로 입력해야 합니다'
                           ]"
-                          label="닉네임"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="2">
@@ -92,12 +91,11 @@
                               '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
                           ]"
                           type="password"
-                          label="비밀번호"
+                          placeholder="비밀번호를 입력해주세요."
                           solo
                         ></v-text-field>
                       </v-col>
                     </v-row>
-
                     <v-row>
                       <v-col>
                         <span>비밀번호 확인</span>
@@ -112,7 +110,7 @@
                             v => v === pw || '입력한 비밀번호와 다릅니다'
                           ]"
                           type="password"
-                          label="비밀번호 확인"
+                          placeholder="비밀번호를 한 번 더 입력해주세요."
                           solo
                         ></v-text-field>
                       </v-col>

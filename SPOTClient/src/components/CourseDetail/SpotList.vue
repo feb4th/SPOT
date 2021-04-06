@@ -3,7 +3,7 @@
     <!-- 카드들 -->
     <v-row justify="center" v-for="(course, idx) in getCourseInfo" :key="idx">
       <v-col cols="6">
-        <v-card class="my-5 rounded-tl-xl rounded-br-xl">
+        <v-card class="my-2 rounded-tl-xl rounded-br-xl">
           <v-row class="px-10" align="center">
             <v-col cols="3">
               <!-- order에 따른 이미지로 수정 예정 -->
@@ -18,7 +18,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="ma-auto" justify="center" v-if="getIsLogined">
+    <v-row class="ma-auto" justify="center" v-if="!getIsLogined">
       <v-col cols="auto">
         <v-btn x-large icon @click="onModify()"
           ><v-icon>mdi-pencil</v-icon></v-btn
@@ -40,12 +40,15 @@ export default {
     };
   },
   created() {
-    this.reqCourseInfo(this.$route.params.course_id);
+    this.reqCourseInfo({
+      course_id: this.$route.params.course_id,
+      user_id: this.getMemberInfo.user_id
+    });
     console.log();
   },
   computed: {
     ...mapGetters(CourseStore, ["getCourseInfo"]),
-    ...mapGetters(MemberStore, ["getIsLogined"])
+    ...mapGetters(MemberStore, ["getIsLogined", "getMemberInfo"])
   },
   methods: {
     ...mapActions(CourseStore, ["reqCourseInfo"]),
@@ -54,7 +57,7 @@ export default {
       this.$router.push("/spotdetail/" + spot_id);
     },
     onModify() {
-      //this.$router.push("/makecourse/"+this.$route.params.course_id);
+      this.$router.push("/makecourse/" + this.$route.params.course_id);
     },
     getSrc(order) {
       return require("../../assets/numbers/" + order + ".png");

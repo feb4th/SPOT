@@ -40,6 +40,11 @@ import { mapGetters } from "vuex";
 const MemberStore = "MemberStore";
 
 export default {
+  data() {
+    return {
+      tab: ""
+    };
+  },
   computed: {
     ...mapGetters(MemberStore, ["getMemberInfo"])
   },

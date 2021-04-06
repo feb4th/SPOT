@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <v-card class="pu-10 px-10 mx-10" elevation="0">
+    <v-card elevation="0">
       <v-card-title class="justify-end">
         <v-tooltip bottom nudge-bottom="20">
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon
                 v-if="getWishId != ''"
-                size="50"
+                size="60"
                 @click="unFollow()"
                 color="red"
                 >mdi-heart
@@ -38,10 +38,11 @@ export default {
     };
   },
   created() {
-    let formData = new FormData();
-    formData.append("spot_id", this.$route.params.storeid);
-    formData.append("user_id", this.getMemberInfo.user_id);
-    this.reqCheckWish(formData);
+    this.reqCheckWish({
+      spot_id: this.$route.params.spotid,
+      user_id: this.getMemberInfo.user_id
+    });
+    console.log("wish: " + this.getWishId);
   },
   computed: {
     ...mapGetters(WishStore, ["getWishId"]),
@@ -54,11 +55,10 @@ export default {
       this.reqDeleteWish(this.getWishId);
     },
     setFollow() {
-      let formData = new FormData();
-      formData.append("store_id", this.$route.params.storeid);
-      formData.append("email", this.getMemberInfo.email);
-      formData.append("type", this.getSpot.type);
-      this.reqCheckWish(formData);
+      this.reqAddWish({
+        spot_id: this.$route.params.spotid,
+        user_id: this.getMemberInfo.user_id
+      });
     }
   }
 };
