@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
 import "./assets/style.css";
 import Footer from "./views/Footer";
 export default {
@@ -24,14 +23,13 @@ export default {
 </script>
 
 <style>
-
-#contents{
-    left: 0;
-    right: 0;
-    top: 0;
-    margin-bottom: 6rem;
+#contents {
+  left: 0;
+  right: 0;
+  top: 0;
+  margin-bottom: 6rem;
 }
-#footer{
+#footer {
   position: fixed;
   left: 0;
   right: 0;

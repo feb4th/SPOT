@@ -11,9 +11,12 @@ public interface CourseMapper {
 	public int findById(String user_id, String name);
 	public List<HashMap<String, String>> courseList(String user_id);
 	public void updateCourse(CourseReq list);
-	public List<String> findIdByName(String user_id, String name);
-	public String findDateByName(String user_id, String name);
+	public List<String> findIdByName(String user_id, String course_id);
+	public String findDateByName(String user_id, String course_id);
 	public void deleteCourse(String course_id);
-	public List<Course> readCourse(String user_id, String name);
-	public void deleteCourseList(String user_id, String name);
+	public List<Course> readCourse(String user_id, String course_id);
+	public void deleteCourseList(String user_id, String course_id);
+	public void insertCourseId(String user_id);
+	public int findCourseId();
+	public void reset(String course_id);
 }

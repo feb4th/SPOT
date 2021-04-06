@@ -36,13 +36,13 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public List<String> findIdByName(String user_id, String name) {
-		return dao.findIdByName(user_id, name);
+	public List<String> findIdByName(String user_id, String course_id) {
+		return dao.findIdByName(user_id, course_id);
 	}
 
 	@Override
-	public String findDateByName(String user_id, String name) {
-		return dao.findDateByName(user_id, name);
+	public String findDateByName(String user_id, String course_id) {
+		return dao.findDateByName(user_id, course_id);
 	}
 
 	@Override
@@ -51,13 +51,28 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public List<Course> readCourse(String user_id, String name) {
-		return dao.readCourse(user_id, name);
+	public List<Course> readCourse(String user_id, String course_id) {
+		return dao.readCourse(user_id, course_id);
 	}
 
 	@Override
-	public void deleteCourseList(String user_id, String name) {
-		dao.deleteCourseList(user_id, name);
+	public void deleteCourseList(String user_id, String course_id) {
+		dao.deleteCourseList(user_id, course_id);
+	}
+
+	@Override
+	public void insertCourseId(String user_id) {
+		dao.insertCourseId(user_id);
+	}
+
+	@Override
+	public int findCourseId() {
+		return dao.findCourseId();
+	}
+
+	@Override
+	public void reset(String course_id) {
+		dao.reset(course_id);
 	}
 	
 }

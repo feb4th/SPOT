@@ -64,13 +64,15 @@ export default {
     Review
   },
   created() {
-    this.reqSpot(this.$route.params.spotid);
+    if (this.$route.params.spotid < 500000)
+      this.reqSpot(this.$route.params.spotid);
+    else this.reqTourSight(this.$route.params.spotid);
   },
   computed: {
     ...mapGetters(SpotInfoStore, ["getSpot"])
   },
   methods: {
-    ...mapActions(SpotInfoStore, ["reqSpot"])
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"])
   }
 };
 </script>

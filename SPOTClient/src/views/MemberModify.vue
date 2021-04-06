@@ -205,7 +205,7 @@ export default {
     };
   },
   created() {
-    this.reqMemberInfo(this.$route.params.email);
+    this.reqMemberInfo(this.$route.params.memberid);
     this.nickname = this.getMemberInfo.nickname;
   },
   computed: {
@@ -216,7 +216,8 @@ export default {
       "reqMemberInfo",
       "reqCheckNickname",
       "reqModifyMember",
-      "reqRemoveMember"
+      "reqRemoveMember",
+      "Logout"
     ]),
     onModify() {
       if (this.nickname != this.getMemberInfo.nickname) {
@@ -231,7 +232,11 @@ export default {
         if (this.pw == "" && this.pwvaild == "") {
           //2.비밀번호가 변경되지 않았다면 비밀번호에 0을 넣어 보내줌
           //닉네임만 변경될 때
-          this.reqModifyMember({ nickname: this.nickname, pwd: "0" })
+          this.reqModifyMember({
+            nickname: this.nickname,
+            pw: "0",
+            id: this.$route.params.memberid
+          })
             .then(response => {
               if (response) {
                 this.msg = "닉네임이 변경되었습니다!";
@@ -259,7 +264,11 @@ export default {
           }
           //3.회원정보 수정
           //닉네임과 비밀번호가 변경될 때
-          this.reqModifyMember({ nickname: this.nickname, pwd: this.pw })
+          this.reqModifyMember({
+            nickname: this.nickname,
+            pw: this.pw,
+            id: this.$route.params.memberid
+          })
             .then(response => {
               if (response) {
                 this.msg = "닉네임, 비밀번호가 변경되었습니다!";
@@ -290,7 +299,11 @@ export default {
         } else {
           //2.닉네임 그대로 회원 정보 수정
           //비밀번호만 변경될 때
-          this.reqModifyMember({ nickname: this.nickname, pwd: this.pw })
+          this.reqModifyMember({
+            nickname: this.nickname,
+            pw: this.pw,
+            id: this.$route.params.memberid
+          })
             .then(response => {
               if (response) {
                 this.msg = "비밀번호가 변경되었습니다!";
@@ -335,7 +348,9 @@ export default {
     },
     remove() {
       //회원탈퇴
-      this.reqRemoveMember(this.getMemberInfo.member_id);
+      this.reqRemoveMember(this.$route.params.memberid);
+      this.Logout();
+      this.$router.push({ name: "main" });
     }
   }
 };

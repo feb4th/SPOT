@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="findById" resultType="java.util.Map">
-		select email, nickname,gender,birth from User where user_id=#{user_id}
+		select user_id, email, nickname,gender,birth from User where user_id=#{user_id}
 	</select>
 	
 	<update id="updateNickname">
