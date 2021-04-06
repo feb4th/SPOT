@@ -40,12 +40,15 @@ export default {
     };
   },
   created() {
-    this.reqCourseInfo(this.$route.params.course_id);
+    this.reqCourseInfo({
+      course_id: this.$route.params.course_id,
+      user_id: this.getMemberInfo.user_id
+    });
     console.log();
   },
   computed: {
     ...mapGetters(CourseStore, ["getCourseInfo"]),
-    ...mapGetters(MemberStore, ["getIsLogined"])
+    ...mapGetters(MemberStore, ["getIsLogined", "getMemberInfo"])
   },
   methods: {
     ...mapActions(CourseStore, ["reqCourseInfo"]),

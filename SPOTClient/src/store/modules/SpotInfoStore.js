@@ -27,20 +27,7 @@ const SpotInfoStore = {
       review_cnt: 1,
       type: 1
     },
-    images: [
-      {
-        image_id: "1",
-        src: "../../assets/logo.png"
-      },
-      {
-        image_id: "2",
-        src: "../../assets/logo.png"
-      },
-      {
-        image_id: "3",
-        src: "../../assets/logo.png"
-      }
-    ],
+    images: {},
     closespot: []
   },
 
@@ -101,7 +88,8 @@ const SpotInfoStore = {
         .get("/toursight/" + id)
         .then(response => {
           if (response.data.message == "success") {
-            context.commit("setSpot", response.data.result);
+            context.commit("setSpot", response.data.result[0]);
+            context.commit("setImage", response.data.result[1]);
             return {
               result: true,
               msg: "세부 사항으로 이동"

@@ -7,7 +7,7 @@
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon
                 v-if="getWishId != ''"
-                size="50"
+                size="60"
                 @click="unFollow()"
                 color="red"
                 >mdi-heart
@@ -39,7 +39,7 @@ export default {
   },
   created() {
     let formData = new FormData();
-    formData.append("spot_id", this.$route.params.storeid);
+    formData.append("spot_id", this.$route.params.spotid);
     formData.append("user_id", this.getMemberInfo.user_id);
     this.reqCheckWish(formData);
   },
@@ -56,9 +56,8 @@ export default {
     setFollow() {
       let formData = new FormData();
       formData.append("store_id", this.$route.params.storeid);
-      formData.append("email", this.getMemberInfo.email);
-      formData.append("type", this.getSpot.type);
-      this.reqCheckWish(formData);
+      formData.append("user_id", this.getMemberInfo.user_id);
+      this.reqAddWish(formData);
     }
   }
 };

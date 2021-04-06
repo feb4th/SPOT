@@ -59,7 +59,7 @@ const MemberStore = "MemberStore";
 
 export default {
   created() {
-    this.reqWishList(this.$route.params.email);
+    this.reqWishList(this.$route.params.memberid);
   },
   computed: {
     ...mapGetters(WishStore, ["getWishList"]),

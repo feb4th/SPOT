@@ -43,13 +43,12 @@ const CourseStore = {
   },
   actions: {
     //회원 코스 이력 조회
-    reqCourseList(context, email) {
+    reqCourseList(context, user_id) {
       return axios
-        .get("/user/course/" + email)
+        .get("/courselist/" + user_id)
         .then(response => {
-          console.log(response.data);
-          if (response.message == "success") {
-            context.commit("setCourseList", response.data.courses);
+          if (response.data.message == "course list") {
+            context.commit("setCourseList", response.data.result);
             return true;
           } else return false;
         })
@@ -60,13 +59,11 @@ const CourseStore = {
     //코스 상세정보 조회
     reqCourseInfo(context, fd) {
       return axios
-        .get("/course/" + fd.user_id, {
-          name: fd.name
-        })
+        .get("/course/" + fd.user_id + "?course_id=" + fd.course_id)
         .then(response => {
           console.log(response.data);
-          if (response.message == "success") {
-            context.commit("setCourseInfo", response.data.course); //여기서 코스 정보 store에 넣어줌.
+          if (response.data.message == "course list info") {
+            context.commit("setCourseInfo", response.data.result); //여기서 코스 정보 store에 넣어줌.
             return true;
           } else return false;
         })

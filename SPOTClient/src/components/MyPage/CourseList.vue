@@ -30,7 +30,7 @@
           class="mb-15 rounded-tl-xl rounded-br-xl"
           color="rgba(255, 255, 255, 0.9)"
         >
-          <v-btn x-large block text @click="onCourse(course_id)"
+          <v-btn x-large block text @click="onCourse(course.course_id)"
             ><h2>{{ course.name }}</h2></v-btn
           >
         </v-card>
@@ -46,7 +46,7 @@ const MemberStore = "MemberStore";
 
 export default {
   created() {
-    this.reqCourseList(this.$route.params.email);
+    this.reqCourseList(this.$route.params.memberid);
   },
   computed: {
     ...mapGetters(CourseStore, ["getCourseList"]),

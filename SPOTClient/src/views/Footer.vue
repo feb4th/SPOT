@@ -40,6 +40,11 @@ import { mapGetters } from "vuex";
 const MemberStore = "MemberStore";
 
 export default {
+  data() {
+    return {
+      tab: ""
+    };
+  },
   computed: {
     ...mapGetters(MemberStore, ["getMemberInfo"])
   },
@@ -48,12 +53,12 @@ export default {
       if (val == "main") {
         this.$router.push("/main");
       } else if (val == "course") {
-        this.$router.push("/course");
+        this.$router.push("/areaselect");
       } else if (val == "search") {
         this.$router.push("/find");
       } else {
         console.log(this.getMemberInfo);
-        this.$router.push("/mypage/" + this.getMemberInfo.email);
+        this.$router.push("/mypage/" + this.getMemberInfo.user_id);
       }
     }
   }
