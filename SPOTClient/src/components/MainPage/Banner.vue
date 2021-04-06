@@ -1,8 +1,12 @@
 <template>
   <v-container>
-    <v-row class="mx-auto">
-      <v-col>
-        <h1>{{ getMemberInfo.nickname }}님 환영합니다</h1>
+    <v-row class="mx-4">
+      <v-col clas="mt-2" align="end">
+        <p style="font-size : 2.5em;">
+          {{ getMemberInfo.nickname }}
+          <span style="font-size : 20px; margin-left: -10px;">님,</span>
+        </p>
+        <p style="font-size: 2.5em;">환영합니다!</p>
       </v-col>
     </v-row>
   </v-container>

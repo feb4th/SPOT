@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="pu-10 px-10 mx-10" elevation="0">
+    <v-card elevation="0">
       <v-card-title class="justify-end">
         <v-tooltip bottom nudge-bottom="20">
           <template v-slot:activator="{ on, attrs }">

@@ -53,12 +53,12 @@ export default {
       if (val == "main") {
         this.$router.push("/main");
       } else if (val == "course") {
-        this.$router.push("/areaselect");
+        this.$router.push("/course");
       } else if (val == "search") {
         this.$router.push("/find");
       } else {
         console.log(this.getMemberInfo);
-        this.$router.push("/mypage/" + this.getMemberInfo.user_id);
+        this.$router.push("/mypage/" + this.getMemberInfo.email);
       }
     }
   }
