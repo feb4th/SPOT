@@ -1,28 +1,37 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2"> </v-col>
-
-          <v-col cols="12" sm="8">
+          <v-col>
             <v-sheet min-height="70vh" rounded="lg">
-              <v-card min-height="70vh" rounded="lg">
-                <v-card-title class="headline justify-center">
-                  비밀번호 찾기</v-card-title
-                >
-                <v-card-text>
+              <v-card class="pu-10 px-10 mu-10" elevation="0">
+                <v-card-title class="headline justify-space-between">
+                  <v-btn
+                    icon
+                    large
+                    @click="
+                      () => {
+                        this.$router.go(-1);
+                      }
+                    "
+                  >
+                    <v-icon large>mdi-arrow-left</v-icon>
+                  </v-btn>
+
+                  <h2>비밀번호 찾기</h2>
+                  <v-btn disabled text><v-spacer></v-spacer></v-btn>
+                </v-card-title>
+                <v-card-text class="mt-10">
                   <v-form ref="pw_form" v-model="pwvalid" lazy-validation>
                     <v-row>
                       <v-col cols="12">
                         <v-text-field
-                          label="이메일"
-                          placeholder="SPOT@email.com"
+                          placeholder="이메일"
                           v-model="pw.email"
                           solo
                           required
                           clearable
-                          :counter="50"
                           :rules="[
                             v => !!v || '이메일을 입력하세요',
                             v =>
@@ -33,13 +42,11 @@
                       </v-col>
                       <v-col cols="12">
                         <v-text-field
-                          label="닉네임"
-                          placeholder="별명"
+                          placeholder="닉네임"
                           v-model="pw.nickname"
                           required
                           solo
                           clearable
-                          :counter="10"
                           :rules="[
                             v => !!v || '닉네임을 입력하세요',
                             v =>
@@ -48,7 +55,7 @@
                           ]"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6">
+                      <v-col>
                         <!-- PW Modal -->
                         <v-dialog v-model="pwModal" max-width="500">
                           <template v-slot:activator="{ on, attrs }">
@@ -56,7 +63,7 @@
                               primary
                               block
                               large
-                              color="success"
+                              color="primary"
                               :disabled="!pwvalid"
                               :attr="attrs"
                               v-on="on"
@@ -92,24 +99,12 @@
                           </v-card>
                         </v-dialog>
                       </v-col>
-                      <v-col cols="6"
-                        ><v-btn
-                          block
-                          large
-                          color="warning"
-                          router-link
-                          to="/login"
-                          >돌아가기</v-btn
-                        >
-                      </v-col>
                     </v-row>
                   </v-form>
                 </v-card-text>
               </v-card>
             </v-sheet>
           </v-col>
-
-          <v-col cols="12" sm="2"> </v-col>
         </v-row>
       </v-container>
     </v-main>

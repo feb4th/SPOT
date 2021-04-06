@@ -1,20 +1,25 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2"> </v-col>
-
-          <v-col cols="12" sm="8">
+          <v-col justify="center" align="center" cols="12">
             <v-sheet min-height="70vh" rounded="lg" class="align-center">
-              <v-row justify="center" aligh="center" class="ma-10">
-                <v-col cols="6">
-                  <v-alert border="left" type="success" v-if="result">
-                    <div class="title">회원가입이 완료되었습니다.</div>
-                    <div>로그인 후 이용이 가능합니다.</div>
-                    <div class="mt-10">
-                      <v-btn rounded router-link to="/" color="warning"
-                        >홈으로</v-btn
+              <v-row
+                class="align-center justify-center text-center"
+                style="margin-top:0.15em;"
+              >
+                <v-col cols="auto">
+                  <v-alert type="secondary" v-if="result">
+                    <div class="title ma-10">
+                      <h1 style="color:white;">회원가입이 완료되었습니다!</h1>
+                    </div>
+                    <div style="text-align: center;">
+                      로그인 후 이용이 가능합니다.
+                    </div>
+                    <div class="mt-9" style="margin-bottom: 20px;">
+                      <v-btn rounded router-link to="/" color="primary"
+                        >메인으로</v-btn
                       >
                     </div>
                   </v-alert>
@@ -34,8 +39,6 @@
               </v-row>
             </v-sheet>
           </v-col>
-
-          <v-col cols="12" sm="2"> </v-col>
         </v-row>
       </v-container>
     </v-main>
