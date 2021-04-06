@@ -5,6 +5,7 @@ import pymysql
 import random
 from rest_framework.decorators import api_view
 from django.core.exceptions import ImproperlyConfigured
+import re
 
 secret_file = os.path.abspath('secrets.json')
 
@@ -181,3 +182,32 @@ def reviewInsert(request):
         return HttpResponse(json.dumps(res, ensure_ascii=False), status=500)
     return HttpResponse(json.dumps(res, ensure_ascii=False), status=200)
 
+def search(request, keyword):
+    MongoDB_URL = get_secret('MongoDB_URL')
+    MongoDB_NAME = get_secret('MongoDB_NAME')
+    res = {}
+    data = []
+    try:
+        if request.method == 'GET':
+            # MongoDB
+            my_client = MongoClient(MongoDB_URL)
+            ssafy = my_client[MongoDB_NAME]
+            bigdata = ssafy['bigdata']
+            # keyword = '^' + keyword
+            # print(keyword)
+            # data = bigdata.find({'name': re.compile('/^Agal/')})
+            query = {"name" : { "$regex" : keyword}}
+            # print(query)
+            result = bigdata.find(query)
+
+            for i in result:
+                del i['_id']
+                # print(i)
+                data.append(i)
+            res['message'] = 'success'
+            res['contents'] = data
+    except Exception as e:
+        res['message'] = 'fail'
+        print(e)
+        return HttpResponse(json.dumps(res, ensure_ascii=False), status=500)
+    return HttpResponse(json.dumps(res, ensure_ascii=False), status=200)
