@@ -34,7 +34,11 @@
                       ></v-text-field> -->
                       <span>이메일</span>
                       <p></p>
-                      <p style="font-size : 20px; margin-top: 1em; margin-bottom: 1em;">{{ getMemberInfo.email }}</p>
+                      <p
+                        style="font-size : 20px; margin-top: 1em; margin-bottom: 1em;"
+                      >
+                        {{ getMemberInfo.email }}
+                      </p>
                     </v-col>
                   </v-row>
                   <v-form ref="form" v-model="NicknameValid" lazy-validation>
@@ -56,7 +60,6 @@
                               (v && v.length > 1 && v.length <= 10) ||
                               '닉네임은 2자리 이상 10자리 이하로 입력해야 합니다'
                           ]"
-                          label="닉네임"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="2">
@@ -78,23 +81,21 @@
                     </v-row>
                     <v-row>
                       <v-col cols="12">
-                      <v-text-field
-                        v-model="pw"
-                        :counter="20"
-                        :rules="[
-                          v => !!v || '비밀번호를 입력해 주세요',
-                          v =>
-                            (v && v.length > 7 && v.length <= 20) ||
-                            '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
-                        ]"
-                        type="password"
-                        label="비밀번호"
-                        solo
-                      ></v-text-field>
+                        <v-text-field
+                          v-model="pw"
+                          :counter="20"
+                          :rules="[
+                            v => !!v || '비밀번호를 입력해 주세요',
+                            v =>
+                              (v && v.length > 7 && v.length <= 20) ||
+                              '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
+                          ]"
+                          type="password"
+                          placeholder="비밀번호를 입력해주세요."
+                          solo
+                        ></v-text-field>
                       </v-col>
-
                     </v-row>
-
                     <v-row>
                       <v-col>
                         <span>비밀번호 확인</span>
@@ -109,18 +110,18 @@
                             v => v === pw || '입력한 비밀번호와 다릅니다'
                           ]"
                           type="password"
-                          label="비밀번호 확인"
+                          placeholder="비밀번호를 한 번 더 입력해주세요."
                           solo
                         ></v-text-field>
                       </v-col>
-
                     </v-row>
-
                   </v-form>
                   <!-- 회원탈퇴 모달창 -->
                   <v-row justify="end">
                     <v-col cols="auto">
-                      <p style="color: #b71c1c;" @click="dialog = true;">회원 탈퇴</p>
+                      <p style="color: #b71c1c;" @click="dialog = true">
+                        회원 탈퇴
+                      </p>
                       <v-dialog v-model="dialog" persistent max-width="290">
                         <v-card style="opacity: 1">
                           <v-card-title class="headline">
@@ -129,11 +130,7 @@
                           <v-card-text>정말 탈퇴하시겠습니까?</v-card-text>
                           <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn
-                              color="secondary"
-                              text
-                              @click="remove()"
-                            >
+                            <v-btn color="secondary" text @click="remove()">
                               예
                             </v-btn>
                             <v-btn

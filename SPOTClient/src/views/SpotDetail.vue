@@ -30,9 +30,7 @@
                   <div>
                     <like />
                   </div>
-
-                  <v-btn disabled text><v-spacer></v-spacer></v-btn
-                ></v-card-title>
+                </v-card-title>
               </v-card>
               <photo />
               <spot-map />
