@@ -25,13 +25,12 @@ const WishStore = {
   },
   actions: {
     //회원 위시리스트 조회
-    reqWishList(context, email) {
+    reqWishList(context, user_id) {
       return axios
-        .get("/user/wish/" + email)
+        .get("/wish/" + user_id)
         .then(response => {
-          console.log(response.data);
-          if (response.message == "success") {
-            context.commit("setWishList", response.data.wishlist);
+          if (response.data.message == "success") {
+            context.commit("setWishList", response.data.result);
             return true;
           } else return false;
         })
@@ -57,48 +56,28 @@ const WishStore = {
 
     // 위시리스트 추가(관광지)
     reqAddWish(context, info) {
-      // 식당일때
-      if (info.type == "1") {
-        return axios
-          .post("/wishrestraunt", {
-            id: info.spot_id,
-            email: info.email
-          })
-          .then(response => {
-            if (response.message == "success") {
-              context.commit("setWishId", response.follow_id);
-              return true;
-            } else return false;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-      // 관광지 일때
-      else {
-        return axios
-          .post("/wishplace", {
-            id: info.spot_id,
-            email: info.email
-          })
-          .then(response => {
-            if (response.message == "success") {
-              context.commit("setWishId", response.follow_id);
-              return true;
-            } else return false;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
+      let frm = new FormData();
+      frm.append("spot_id", info.spot_id);
+      frm.append("user_id", info.user_id);
+      return axios
+        .post("/wish", frm)
+        .then(response => {
+          if (response.data.message == "success") {
+            context.commit("setWishId", response.data.result.wishlist_id);
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
 
     // wish 취소
-    reqDeleteWish(context, wish_id) {
+    reqDeleteWish(context, wishlist_id) {
       return axios
-        .delete("/wish/" + wish_id)
+        .delete("/wish/" + wishlist_id)
         .then(response => {
-          if (response.message == "success") {
+          if (response.data.message == "del wish success") {
             context.commit("setWishId", "");
             return true;
           } else return false;

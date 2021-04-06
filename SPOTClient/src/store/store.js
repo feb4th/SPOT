@@ -12,6 +12,9 @@ import ThemeStore from "./modules/ThemeStore";
 import ReviewStore from "./modules/ReviewStore";
 import SuggestStore from "./modules/SuggestStore";
 
+//yarn add vuex-persistedstate 필요
+import createPersistedState from "vuex-persistedstate"; //새로고침해도 store 정보가 사라지지 않게 해줌
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -26,5 +29,10 @@ export default new Vuex.Store({
     ReviewStore,
     SuggestStore
   },
-  plugins: []
+  plugins: [
+    createPersistedState({
+      //store 내부 정보가 날아가지 않도록 해줌
+      paths: ["MemberStore"] //원하는 모듈별로 추가가능
+    })
+  ]
 });

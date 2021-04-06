@@ -34,7 +34,7 @@ const ReviewStore = {
     //리뷰리스트 조회
     reqReviewList(context, spot_id) {
       return axios
-        .get("/reviewlist/" + spot_id)
+        .get("/review/" + spot_id)
         .then(response => {
           if (response.message == "success") {
             context.commit("setReviewList", response.reviews);
@@ -46,15 +46,25 @@ const ReviewStore = {
         });
     },
 
+    //관광지 리뷰리스트 조회
+    reqTourReviewList(context, spot_id) {
+      return axios
+        .get("/review/" + spot_id)
+        .then(response => {
+          if (response.data.message == "success") {
+            context.commit("setReviewList", response.data.result);
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
     //리뷰작성
     reqCreateReview(context, review) {
       return axios
-        .post("/review", {
-          store_id: review.spot_id,
-          email: review.email,
-          context: review.context,
-          score: review.score
-        })
+        .post("/review", review)
         .then(response => {
           if (response.message == "success") {
             return true;

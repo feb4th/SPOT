@@ -7,7 +7,6 @@ import MakeCourse from "../../views/MakeCourse";
 // ExampleRouter 정의 부분
 const spotRoute = [
   {
-    // 회원가입 route
     path: "/spotdetail/:spotid",
     name: "spotdetail",
     component: SpotDetail,
