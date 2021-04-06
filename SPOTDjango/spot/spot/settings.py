@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
+CORS_ALLOW_CREDENTIALS = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
