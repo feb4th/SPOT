@@ -26,7 +26,7 @@ SECRET_KEY = '1!xv25kybbj-7g3@^on@8hfgkoqf!959xfv*$*(ch__iupdz*p'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "j4a102.p.ssafy.io"
+    '*'
 ]
 
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
 
 MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'spot.urls'
