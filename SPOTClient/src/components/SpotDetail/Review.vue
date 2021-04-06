@@ -55,7 +55,7 @@
             <div class="overline">
               <span style="margin-left: 1em;">{{ comment.member_id }}</span>
               <v-rating
-                :v-model="parseInt(comment.score)"
+                :v-model="comment.score"
                 color="yellow darken-3"
                 background-color="grey darken-1"
                 empty-icon="$ratingFull"
@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       context: "",
-      score: "",
+      score: 0,
       review_id: "",
       tmpComment: {},
       Dialog: {
@@ -116,17 +116,19 @@ export default {
       if (this.$route.params.spotid < 500000) {
         formData.append("store_id", this.$route.params.spotid);
       } else {
-        formData.append("toursight_id", this.$route.params.spotid);
-        formData.append("user_id", this.getMemberInfo.user_id);
-        formData.append("content", String(this.context));
-        formData.append("score", this.score);
-        formData.append("tour_review_id", "");
         let date =
           new Date().toISOString().substr(0, 10) +
           " " +
           new Date().toTimeString().substr(0, 8);
-        formData.append("date", date);
-        this.reqCreateReview(formData);
+        this.reqCreateReview({
+          toursight_id: this.$route.params.spotid,
+          user_id: this.getMemberInfo.user_id,
+          content: this.context,
+          score: this.score,
+          date: date
+        }).then(response => {
+          if (response) this.reqTourReviewList(this.$route.params.spotid);
+        });
       }
     },
     openModify(comment) {

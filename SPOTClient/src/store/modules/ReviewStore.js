@@ -64,7 +64,14 @@ const ReviewStore = {
     //리뷰작성
     reqCreateReview(context, review) {
       return axios
-        .post("/review", review)
+        .post("/review", {
+          content: review.content,
+          date: review.date,
+          score: review.score,
+          tour_review_id: "0",
+          toursight_id: review.toursight_id,
+          user_id: review.user_id
+        })
         .then(response => {
           if (response.message == "success") {
             return true;

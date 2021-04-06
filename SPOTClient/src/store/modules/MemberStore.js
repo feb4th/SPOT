@@ -108,11 +108,13 @@ const MemberStore = {
     //이메일 중복체크
     reqCheckEmail(context, email) {
       return axios
-        .get("/user/email/" + email)
+        .get("/user/email?email=" + email)
         .then(response => {
           console.log(response.data);
-          if (response.data.message == "success") {
-            return true;
+          if (response.data.result == "0") {
+            return { msg: "사용 가능한 이메일입니다.", status: true };
+          } else if (response.data.result == "1") {
+            return { msg: "이미 존재하는 이메일입니다.", status: false };
           }
         })
         .catch(error => {
@@ -126,11 +128,13 @@ const MemberStore = {
     //닉네임 중복체크
     reqCheckNickname(context, nickname) {
       return axios
-        .get("/user/nickname/" + nickname)
+        .get("/user/nickname?nickname=" + nickname)
         .then(response => {
           console.log(response.data);
-          if (response.data.message == "success") {
-            return true;
+          if (response.data.result == "0") {
+            return { msg: "사용 가능한 닉네임입니다.", status: true };
+          } else if (response.data.result == "1") {
+            return { msg: "이미 존재하는 닉네임입니다.", status: false };
           }
         })
         .catch(error => {
@@ -144,12 +148,12 @@ const MemberStore = {
     // 회원가입
     reqSignup(context, info) {
       return axios
-        .post("/user", {
+        .post("/signup", {
           email: info.email,
-          nickname: info.nickname,
-          pwd: info.pwd,
+          password: info.pw,
+          birth: info.birth,
           gender: info.gender,
-          birth: info.birth
+          nickname: info.nickname
         })
         .then(response => {
           console.log(response.data);
