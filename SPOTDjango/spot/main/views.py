@@ -108,7 +108,7 @@ def recommendation(request, id):
         try:
             # 유저의 위시리스트에서 맛집id를 가져온다
             cursor = db.cursor()
-            sql = f"SELECT spot_id FROM WishList WHERE type = '0' and user_id = {id}"
+            sql = f"SELECT id FROM WishList WHERE type = '0' and user_id = {id}"
             cursor.execute(sql)
             result = cursor.fetchall()
            #위시리스트에서 랜덤으로 하나의 값을 가져와서 해당 store로 추천해줌 랜덤추천 아님
