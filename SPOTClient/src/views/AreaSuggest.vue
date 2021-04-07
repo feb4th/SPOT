@@ -40,7 +40,7 @@
                               @click="onSelect(card.spot_id)"
                             >
                               <!-- 이미지 데이터가 없을 때 -->
-                              <v-img v-if="card.img == '' || car.img == null">
+                              <v-img v-if="card.img == '' || card.img == null">
                               </v-img>
                               <v-img v-else :src="card.img"> </v-img>
 
@@ -61,14 +61,14 @@
                                     <v-icon
                                       v-if="wishFlag[idx] == true"
                                       size="50"
-                                      @click="wishFlag[idx] = false"
+                                      @click="onWishClick(idx)"
                                       color="primary"
                                       >mdi-playlist-check</v-icon
                                     >
                                     <v-icon
                                       v-else
                                       size="40"
-                                      @click="wishFlag[idx] = true"
+                                      @click="onWishUnclick(idx)"
                                       color="gray"
                                       >mdi-check</v-icon
                                     >
@@ -106,7 +106,7 @@
                       show-arrows
                     >
                       <v-slide-item
-                        v-for="(card, idx) in getSuggestList"
+                        v-for="(card, idx) in getSuggestTourList"
                         :key="idx"
                       >
                         <div>
@@ -114,10 +114,10 @@
                             class="ma-4"
                             height="180"
                             width="200"
-                            @click="onSelect(card.spot_id)"
+                            @click="onSelect(card.id)"
                           >
                             <!-- 이미지 데이터가 없을 때 -->
-                            <v-img v-if="card.img == '' || car.img == null">
+                            <v-img v-if="card.img == '' || card.img == null">
                             </v-img>
                             <v-img v-else :src="card.img"> </v-img>
 
@@ -183,6 +183,7 @@ import { mapActions, mapGetters } from "vuex";
 const SuggestStore = "SuggestStore";
 const MemberStore = "MemberStore";
 const CourseStore = "CourseStore";
+const WishStore = "WishStore";
 
 export default {
   data() {
@@ -190,69 +191,74 @@ export default {
       dialog: false,
       btnNumber: 0,
       suggestFlag: [],
-      wishFlag: [],
-      finalList: [],
-      orders: []
+      wishFlag: []
     };
   },
   created() {
-    this.reqWish(this.getMemberInfo.email); // 이메일 정보를 통해서 위시List 받아옴.
+    this.reqWishList(this.getMemberInfo.user_id); // 유저 아이디를 통해서 위시List 받아옴.
   },
   computed: {
-    ...mapGetters(SuggestStore, ["getSuggestList", "getWishList"]), // 추천이랑 위시리스트 들고옴.
+    ...mapGetters(SuggestStore, ["getSuggestTourList"]), // 추천이랑 위시리스트 들고옴.
+    ...mapGetters(WishStore, ["getWishList"]),
     ...mapGetters(MemberStore, ["getMemberInfo"])
   },
   methods: {
-    ...mapActions(SuggestStore, ["reqWish"]),
-    ...mapActions(CourseStore, ["reqCreateCourse", "reqCourseInfo"]),
+    ...mapActions(WishStore, ["reqWishList"]),
+    ...mapActions(CourseStore, ["reqCreateCourse", "reqCreate"]),
 
-    onSelect(spot_id) {
-      this.$router.push("/spotdetail/" + spot_id); // 상세 보기.
+    onSelect(id) {
+      this.$router.push("/spotdetail/" + id); // 상세 보기.
     },
     onClick() {
       // 위시리스트와 추천리스트에서 선택한 것만 리스트에 넣어줌.
-      for (var i = 0; i < this.getSuggestList.length; i++) {
+      let formData = new FormData();
+      let tmpIdx = 0;
+      for (var i = 0; i < this.getSuggestTourList.length; i++) {
         if (this.suggestFlag[i] == true) {
-          this.finalList.push(this.getSuggestList.spot_id);
+          const tmp = this.getSuggestTourList[i];
+          let formData2 = new FormData();
+          formData2.append("course_id", 0);
+          formData2.append("date", 0);
+          formData2.append("memo", 0);
+          formData2.append("name", tmp.name);
+          formData2.append("orders", tmpIdx++);
+          formData2.append("spot_id", tmp.spot_id);
+          formData2.append("time", 0);
+          formData2.append("type", 0);
+          formData2.append("user_id", this.getMemberInfo.user_id);
+          formData.append("", formData2);
         }
       }
 
       for (i = 0; i < this.getWishList.length; i++) {
-        if (this.suggestFlag[i] == true) {
-          this.finalList.push(this.getWishList.spot_id);
+        if (this.wishFlag[i] == true) {
+          const tmp = this.wishFlag[i];
+          let formData2 = new FormData();
+          formData2.append("course_id", 0);
+          formData2.append("date", 0);
+          formData2.append("memo", 0);
+          formData2.append("name", tmp.name);
+          formData2.append("orders", tmpIdx++);
+          formData2.append("spot_id", tmp.spot_id);
+          formData2.append("time", 0);
+          formData2.append("type", 0);
+          formData2.append("user_id", this.getMemberInfo.user_id);
+          formData.append("", formData2);
         }
       }
-      // console.log(this.finalList);
-      const finalData = JSON.parse(JSON.stringify(this.finalList));
-      console.log(finalData); // 요 형식으로 보내면 됨.
 
-      for (i = 0; i < this.finalList.length; i++) {
-        this.orders[i] = i;
-      }
       // 여기서 선택한 곳만 리스트로 보내고, 코스 선택으로 넘겨야 함.
       // 여기부터 작업하면 됨. 코스로 보내는 곳
-      let formData = new FormData();
-      formData.append("email", this.getMemberInfo.email);
-      formData.append("spot_id", finalData);
-      formData.append("orders", this.orders);
 
-      this.reqCreateCourse(formData).then(response => {
-        // 정상적인 요청이라면,
-        if (response) {
-          // 느낌표가 맞나? 테스트 해봐야 할 듯.
-
-          // 백에서 코스 이름 넘겨줘야함.
-          const courseName = response.data.name;
-          let formData2 = new FormData();
-
-          formData2.append("name", courseName);
-          formData2.append("user_id", this.getMemberInfo.email);
-
-          this.reqCourseInfo(formData2).then(res => {
+      this.reqCreateCourse(this.getMemberInfo.user_id).then(response => {
+        // 아이디로 코스 만듦
+        const courseNum = response.result;
+        this.reqCreate(courseNum, formData).then(res => {
+          if (res.result) {
             this.$router.push("/makecourse");
             console.log(res);
-          });
-        } else alert(response.msg);
+          } else alert(response.msg);
+        });
       });
     },
     onSuggestClick(idx) {
@@ -261,6 +267,14 @@ export default {
     },
     onSuggestUnclick(idx) {
       this.suggestFlag[idx] = true;
+      this.btnNumber++;
+    },
+    onWishClick(idx) {
+      this.wishFlag[idx] = false;
+      this.btnNumber--;
+    },
+    onWishUnclick(idx) {
+      this.wish[idx] = true;
       this.btnNumber++;
     }
   }

@@ -1,4 +1,5 @@
 import axios from "../../axios/axios-common";
+import axios2 from "../../axios/axios-common2";
 
 const SuggestStore = {
   namespaced: true, // 모듈 개발사용 가능
@@ -355,49 +356,42 @@ const SuggestStore = {
         ]
       }
     ],
-    wishList: [
-      {
-        spot_id: "1",
-        name: "좋은 장소",
-        lat: "33.450705",
-        lng: "126.570677",
-        img: ""
-      }
-    ]
+    // 관광지 추천 정보 담김
+    SuggestTourList: []
   },
   getters: {
     getSuggestList(state) {
       return state.suggestList;
     },
-    getWishList(state) {
-      return state.wishList;
+    getSuggestTourList(state) {
+      return state.SuggestTourList;
     }
   },
   mutations: {
     setSuggestList(state, suggestList) {
       state.suggestList = suggestList;
     },
-    setWishList(state, wishList) {
-      state.wishList = wishList;
+    setSuggestTourList(state, SuggestTourList) {
+      state.SuggestTourList = SuggestTourList;
     }
   },
 
   actions: {
-    reqWish(context, memberid) {
+    reqSuggestTour(context, area) {
       return axios
-        .get("/user/wish/" + memberid)
+        .get("/toursight/list/" + area)
         .then(response => {
-          if (response.status === 200 && response.data.status === true) {
-            context.commit("setWishList", response.data.object.place_list); // 여기 데이터 리턴 변수명 확인해야함.
+          if (response.data.message == "success") {
+            context.commit("setSuggestTourList", response.data.result); // 여기 데이터 리턴 변수명 확인해야함.
             return {
               result: true,
-              msg: "위시리스트 가져왔습니다.",
+              msg: "관광지 가져왔습니다.",
               color: "success"
             };
           } else {
             return {
               result: false,
-              msg: "위시리스트가 없습니다.",
+              msg: "관광지가 없습니다.",
               color: "warning"
             };
           }
@@ -411,14 +405,13 @@ const SuggestStore = {
           };
         });
     },
-    reqSuggest(context, list) {
-      return axios
-        .post("/place", {
-          list: list
-        })
+    reqSuggest(context, user_id) {
+      //console.log(user_id);
+      return axios2
+        .get("/recommendation/" + user_id)
         .then(response => {
-          if (response.status === 200 && response.data.status === true) {
-            context.commit("setSuggestList", response.data.object.place_list);
+          if (response.message == "success") {
+            context.commit("setSuggestList", response.contents);
             return {
               result: true,
               msg: "추천 데이터 가져왔습니다.",
