@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.spot.dto.AddWish;
 import com.ssafy.spot.dto.WishList;
 import com.ssafy.spot.model.BasicResponse;
 import com.ssafy.spot.service.WishService;
@@ -29,13 +30,19 @@ public class WishController {
 	
 	@PostMapping(value= "/wish")
 	@ApiOperation(value = "Wishlist 추가", notes= "Wishlist 추가 요청")
-	public Object wish(@RequestBody WishList wish) {
+	public Object wish(@RequestBody AddWish wish) {
 		
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
 		try {
+			if(wish.getId().compareTo("500000")<0) {
+				wish.setType("0");
+			}
+			else if(wish.getId().compareTo("500000")>0) {
+				wish.setType("1");
+			}
 			service.insertWish(wish);
-			HashMap<String, String> wish_id=service.checkWish(wish.getUser_id(),wish.getSpot_id());
+			HashMap<String, String> wish_id=service.checkWish(wish.getUser_id(), wish.getId());
 			result.message = "add wish";
 			result.result=wish_id;
 		} catch (Exception e) {
@@ -68,6 +75,7 @@ public class WishController {
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
 		try {
+			System.out.println(service.findLat("500012"));
 			List<HashMap<String, String>> list= service.wishlist(user_id);
 			if(list!=null) {
 				result.message = "success";

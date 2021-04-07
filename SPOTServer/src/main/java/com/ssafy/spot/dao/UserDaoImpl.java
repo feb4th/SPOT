@@ -55,5 +55,30 @@ public class UserDaoImpl implements UserDao{
 	public void insertImage(String user_id, String timeurl) {
 		mapper.insertImage(user_id, timeurl);
 	}
+
+	@Override
+	public void emailLink(User u) {
+		mapper.emailLink(u);
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return mapper.getUserByEmail(email);
+	}
+
+	@Override
+	public void updateAuth(String user_id) {
+		mapper.updateAuth(user_id);
+	}
+
+	@Override
+	public int findNickname(String Nickname) {
+		return mapper.findNickname(Nickname);
+	}
+
+	@Override
+	public int findEmail(String email) {
+		return mapper.findEmail(email);
+	}
 	
 }

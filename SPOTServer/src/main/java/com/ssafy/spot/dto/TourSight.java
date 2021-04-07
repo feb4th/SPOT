@@ -2,32 +2,35 @@ package com.ssafy.spot.dto;
 
 public class TourSight {
 	
-	private String toursight_id;
+	private String id;
 	private String name;
 	private String new_address;
 	private String old_address;
-	private String lat;
-	private String lng;
+	private String latitude;
+	private String longitude;
 	private String facilities;
 	private String park;
 	private String info;
 	private String tel;
+	private String img;
 	
+	
+
 	public TourSight() {}
-	
+
 	@Override
 	public String toString() {
-		return "TourSight [toursight_id=" + toursight_id + ", name=" + name + ", new_address=" + new_address
-				+ ", old_address=" + old_address + ", lat=" + lat + ", lng=" + lng + ", facilities=" + facilities
+		return "TourSight [id=" + id + ", name=" + name + ", new_address=" + new_address + ", old_address="
+				+ old_address + ", latitude=" + latitude + ", longitude=" + longitude + ", facilities=" + facilities
 				+ ", park=" + park + ", info=" + info + ", tel=" + tel + "]";
 	}
 
-	public String getToursight_id() {
-		return toursight_id;
+	public String getId() {
+		return id;
 	}
 
-	public void setToursight_id(String toursight_id) {
-		this.toursight_id = toursight_id;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -54,20 +57,20 @@ public class TourSight {
 		this.old_address = old_address;
 	}
 
-	public String getLat() {
-		return lat;
+	public String getLatitude() {
+		return latitude;
 	}
 
-	public void setLat(String lat) {
-		this.lat = lat;
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
-	public String getLng() {
-		return lng;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setLng(String lng) {
-		this.lng = lng;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 	public String getFacilities() {
@@ -100,6 +103,14 @@ public class TourSight {
 
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 }

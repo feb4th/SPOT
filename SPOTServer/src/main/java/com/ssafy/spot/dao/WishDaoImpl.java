@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.spot.dto.AddWish;
 import com.ssafy.spot.dto.WishList;
 import com.ssafy.spot.mapper.WishMapper;
 
@@ -15,7 +16,7 @@ public class WishDaoImpl implements WishDao{
 	WishMapper mapper;
 	
 	@Override
-	public void insertWish(WishList wish) {
+	public void insertWish(AddWish wish) {
 		mapper.insertWish(wish);
 	}
 
@@ -32,6 +33,11 @@ public class WishDaoImpl implements WishDao{
 	@Override
 	public List<HashMap<String, String>> wishlist(String user_id) {
 		return mapper.wishlist(user_id);
+	}
+
+	@Override
+	public HashMap<String, String> findLat(String spot_id) {
+		return mapper.findLat(spot_id);
 	}
 	
 }
