@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.spot.dao.WishDao;
+import com.ssafy.spot.dto.AddWish;
 import com.ssafy.spot.dto.WishList;
 
 @Service
@@ -15,7 +16,7 @@ public class WishServiceImpl implements WishService{
 	WishDao dao;
 	
 	@Override
-	public void insertWish(WishList wish) {
+	public void insertWish(AddWish wish) {
 		dao.insertWish(wish);
 	}
 
@@ -32,6 +33,11 @@ public class WishServiceImpl implements WishService{
 	@Override
 	public List<HashMap<String, String>> wishlist(String user_id) {
 		return dao.wishlist(user_id);
+	}
+
+	@Override
+	public HashMap<String, String> findLat(String spot_id) {
+		return dao.findLat(spot_id);
 	}
 	
 	

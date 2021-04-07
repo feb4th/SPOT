@@ -54,10 +54,10 @@ public class CourseController {
 	}
 	
 	
-	@PostMapping(value = "/course")
+	@PostMapping(value = "/course/add/{course_id}")
 	@ApiOperation(value = "코스생성", notes = "성공 시 코스생성 완료")
 	
-	public Object insertCourse(@RequestBody List<CourseReq> list) {
+	public Object insertCourse(@PathVariable String course_id, @RequestBody List<CourseReq> list) {
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
 		String user_id=list.get(0).getUser_id();
@@ -69,6 +69,7 @@ public class CourseController {
 				String timeurl=format.format(time);
 				
 				for (int i = 0; i < list.size(); i++) {
+					list.get(i).setCourse_id(course_id);
 					list.get(i).setDate(timeurl);
 					service.insertCourse(list.get(i));
 				}

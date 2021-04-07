@@ -16,4 +16,9 @@ public interface UserDao {
 	public void updateNickname(UserUpdate req);
 	public void updateUser(UserUpdate req);
 	public void insertImage(String user_id, String timeurl);
+	public void emailLink(User u);
+	public User getUserByEmail(String email);
+	public void updateAuth(String user_id);
+	public int findNickname(String Nickname);
+	public int findEmail(String email);
 }

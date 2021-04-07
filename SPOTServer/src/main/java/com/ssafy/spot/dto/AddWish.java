@@ -1,7 +1,6 @@
 package com.ssafy.spot.dto;
 
-public class WishList {
-	private String wishlist_id;
+public class AddWish {
 	private String user_id;
 	private String id;
 	private String type;
@@ -10,15 +9,13 @@ public class WishList {
 	private String longitude;
 	private String img;
 	
-	public WishList() {
+	public AddWish() {
 	}
 
 	
 
-	public WishList(String wishlist_id, String user_id, String id, String type, String name, String latitude,
-			String longitude, String img) {
+	public AddWish(String user_id, String id, String type, String name, String latitude, String longitude, String img) {
 		super();
-		this.wishlist_id = wishlist_id;
 		this.user_id = user_id;
 		this.id = id;
 		this.type = type;
@@ -29,14 +26,6 @@ public class WishList {
 	}
 
 
-
-	public String getWishlist_id() {
-		return wishlist_id;
-	}
-
-	public void setWishlist_id(String wishlist_id) {
-		this.wishlist_id = wishlist_id;
-	}
 
 	public String getUser_id() {
 		return user_id;

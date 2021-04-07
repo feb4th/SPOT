@@ -36,4 +36,24 @@
 	<update id="insertImage">
 		update User set url=#{timeurl} where user_id=#{user_id}
 	</update>
+	
+	<update id="emailLink" parameterType="User">
+  		update User set authkey=#{authkey} where user_id=#{user_id}
+  	</update>
+  	
+  	<select id="getUserByEmail" resultType="User">
+		select * from User where email=#{email}
+	</select>
+	
+	<update id="updateAuth" parameterType="string">
+  		update User set emailcheck=1 where user_id=#{user_id}
+  	</update>
+  	
+  	<select id="findNickname" parameterType="string" resultType="Integer">
+  		select count(*) from User where Nickname=#{Nickname}
+  	</select>
+  	
+  	<select id="findEmail" parameterType="string" resultType="Integer">
+  		select count(*) from User where email=#{email}
+  	</select>
 </mapper>

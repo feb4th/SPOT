@@ -55,6 +55,31 @@ public class UserServiceImpl implements UserService{
 	public void insertImage(String user_id, String timeurl) {
 		dao.insertImage(user_id, timeurl);
 	}
+
+	@Override
+	public void emailLink(User u) {
+		dao.emailLink(u);
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return dao.getUserByEmail(email);
+	}
+
+	@Override
+	public void updateAuth(String user_id) {
+		dao.updateAuth(user_id);
+	}
+
+	@Override
+	public int findNickname(String Nickname) {
+		return dao.findNickname(Nickname);
+	}
+
+	@Override
+	public int findEmail(String email) {
+		return dao.findEmail(email);
+	}
 	
 	
 	
