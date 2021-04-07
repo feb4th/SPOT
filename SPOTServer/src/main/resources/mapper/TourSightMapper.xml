@@ -6,7 +6,7 @@
 <mapper namespace="com.ssafy.spot.mapper.TourSightMapper">
 
 	<select id="findById" resultType="TourSight" parameterType="string">
-		select * from TourSight where toursight_id = #{id};
+		select * from TourSight where id = #{id};
 	</select>
 	
 	<select id="findByName" resultType="TourSight" parameterType="string">
@@ -16,8 +16,8 @@
 	<select id="findByRange" resultType="TourSight" parameterType="string">
 	<![CDATA[
 		SELECT *,
-		(6371 * acos(cos(radians(#{lat}))*cos(radians(lat))*cos(radians(lng)
-		-radians(#{lng}))+sin(radians(#{lat}))*sin(radians(lat))))
+		(6371 * acos(cos(radians(#{latitude}))*cos(radians(latitude))*cos(radians(longitude)
+		-radians(#{longitude}))+sin(radians(#{latitude}))*sin(radians(latitude))))
 		AS distance
 		FROM TourSight
 		HAVING distance <= #{range}
@@ -26,7 +26,15 @@
 	</select>
 	
 	<select id="findImage" resultType="String" parameterType="string">
-		select image_path from TourSightImages where toursight_id = #{id}
+		select image_path from TourSightImages where id = #{id}
+	</select>
+	
+	<select id="tourSightList" resultType="TourSight" parameterType="string">
+		select * from TourSight where new_address like CONCAT(#{area},'%') or old_address like CONCAT(#{area},'%') order by rand() limit 10; 
+	</select>
+	
+	<select id="findOneImage" resultType="String" parameterType="string">
+		select image_path from TourSightImages where id=#{id} limit 1
 	</select>
 	
 </mapper>

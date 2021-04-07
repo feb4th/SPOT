@@ -3,6 +3,7 @@ package com.ssafy.spot.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -73,6 +74,51 @@ public class UserController {
 			}
 			else {	
 				result.message = "exist email";
+			}
+		} catch (Exception e) {
+			status=HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status= HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+	}
+	
+	/**
+	 * 이메일 인증 요청
+	 * @param email
+	 * @return ResponseEntity<>(null, HttpStatus)
+	 */
+	@PostMapping(value = "/signup/validation")
+	public Object signupValidate(@RequestParam String email){
+		// 임의의 authkey 생성
+	    String authkey = new TempKey().getKey(50, false);
+	    System.out.println(email);
+	    String subject = "SPOT 회원가입 승인 메일 링크";
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("링크를 클릭하시면 이메일 인증이 완료됩니다.\n\n").append("http://j4a102.p.ssafy.io/validated?email=").append(email)
+	            .append("&authkey=").append(authkey);
+	    User target = service.getUserByEmail(email);
+	    target.setAuthkey(authkey);
+	    service.emailLink(target);
+	    mailService.send(subject, sb.toString(), "anonymous@spot.com", email);
+	    
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	/**
+	 * 이메일 링크 클릭 후 회원 가입 완료
+	 * @param authkey
+	 * @return ResponseEntity<>(null, HttpStatus)
+	 */
+	@PostMapping(value = "/signup/validated")
+	public Object signupValidated(@RequestBody Map<String, String> info) {
+		User target = service.getUserByEmail(info.get("email"));
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		
+		try {
+			if(target.getAuthkey().equals(info.get("authkey"))) {
+				service.updateAuth(target.getUser_id());
 			}
 		} catch (Exception e) {
 			status=HttpStatus.INTERNAL_SERVER_ERROR;
@@ -157,11 +203,17 @@ public class UserController {
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
 		try {
+//			String s="김사피";
+//			System.out.println(service.findNickname(s));
 			if(req.getPassword().equals("0")) {
-				service.updateNickname(req);
+				if(service.findNickname(req.getNickname())==0) {
+					service.updateNickname(req);
+				}
 			}
 			else {
-				service.updateUser(req);
+				if(service.findNickname(req.getNickname())==0) {
+					service.updateNickname(req);
+				}
 			}
 			result.message = "success";
 		} catch (Exception e) {
@@ -192,5 +244,41 @@ public class UserController {
 		}
 		status= HttpStatus.ACCEPTED;
         return new ResponseEntity<>(result, status);
+	}
+	
+	@GetMapping(value = "/user/email")
+	@ApiOperation(value = "email 중복체크")
+	public Object findEmail(@RequestParam String email) {
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		try {
+			Integer i= service.findEmail(email);
+			result.message = "success";
+			result.result=i;
+		} catch (Exception e) {
+			status=HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status= HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+		
+	}
+	
+	@GetMapping(value = "/user/nickname")
+	@ApiOperation(value = "nickname 중복체크")
+	public Object findNickname(@RequestParam String nickname) {
+		BasicResponse result = new BasicResponse();
+		HttpStatus status;
+		try {
+			Integer i= service.findNickname(nickname);
+			result.message = "success";
+			result.result=i;
+		} catch (Exception e) {
+			status=HttpStatus.INTERNAL_SERVER_ERROR;
+			e.printStackTrace();
+		}
+		status= HttpStatus.ACCEPTED;
+        return new ResponseEntity<>(result, status);
+		
 	}
 }

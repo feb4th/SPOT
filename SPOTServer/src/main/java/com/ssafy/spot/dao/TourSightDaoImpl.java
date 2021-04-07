@@ -25,12 +25,22 @@ public class TourSightDaoImpl implements TourSightDao {
 	}
 	
 	@Override
-	public List<TourSight> findByRange(String lat, String lng, String range) {
-		return mapper.findByRange(lat, lng, range);
+	public List<TourSight> findByRange(String latitude, String longitude, String range) {
+		return mapper.findByRange(latitude, longitude, range);
 	}
 
 	@Override
 	public List<String> findImage(String id) {
 		return mapper.findImage(id);
+	}
+
+	@Override
+	public List<TourSight> tourSightList(String area) {
+		return mapper.tourSightList(area);
+	}
+
+	@Override
+	public String findOneImage(String id) {
+		return mapper.findOneImage(id);
 	}
 }
