@@ -1,5 +1,5 @@
-import axios from "../../axios/axios-common";
-import axios2 from "../../axios/axios-common2";
+import axios from "axios";
+import axios2 from "axios";
 
 const SuggestStore = {
   namespaced: true, // 모듈 개발사용 가능

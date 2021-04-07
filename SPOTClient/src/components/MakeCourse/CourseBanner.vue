@@ -15,7 +15,7 @@
           <v-icon size="50">mdi-undo-variant</v-icon>
         </v-btn>
         <strong>
-          {{ getCourseInfo[0].course_name }}
+          {{ getCourseInfo[0].name }}
         </strong>
 
         <v-btn class="mr-4" icon large>
