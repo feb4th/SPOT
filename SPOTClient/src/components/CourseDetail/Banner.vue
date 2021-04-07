@@ -1,39 +1,30 @@
 <template>
-  <v-container>
-    <v-card elevation="0">
-      <v-card-title
-        class="headline justify-space-between my-2"
-        v-if="getIsLogined"
-      >
-        <v-btn
-          icon
-          large
-          @click="
-            () => {
-              this.$router.go(-1);
-            }
-          "
-        >
-          <v-icon large>mdi-arrow-left</v-icon>
-        </v-btn>
-        <h2>
-          {{ getCourseInfo[0].name }}
-        </h2>
+  <v-row>
+    <v-col>
+      <v-card class="pu-10 px-10 mu-10" elevation="0">
+        <v-card-title class="headline justify-space-between">
+          <v-btn
+            icon
+            large
+            @click="
+              () => {
+                this.$router.go(-1);
+              }
+            "
+          >
+            <v-icon large>mdi-arrow-left</v-icon>
+          </v-btn>
 
-        <v-btn icon large>
-          <v-icon class="kakao-link" large @click="onShare()"
-            >mdi-share-variant
-          </v-icon>
-        </v-btn>
-      </v-card-title>
-
-      <v-card-title class="headline justify-center" v-else>
-        <strong>
           {{ getCourseInfo[0].name }}
-        </strong>
-      </v-card-title>
-    </v-card>
-  </v-container>
+          <v-btn icon large v-if="getIsLogined">
+            <v-icon class="kakao-link" large @click="onShare()"
+              >mdi-share-variant
+            </v-icon>
+          </v-btn>
+        </v-card-title>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
