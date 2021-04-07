@@ -72,20 +72,52 @@ const CourseStore = {
         });
     },
 
-    //코스 생성
-    reqCreateCourse(context, fd) {
+    //코스 번호 생성
+    reqCreateCourse(context, id) {
       return axios
-        .post("/course", {
-          spotid: fd.spot_id,
-          email: fd.email,
-          orders: fd.orders
+        .post("/course/" + id)
+        .then(response => {
+          console.log(response.data);
+          if (response.message == "success") {
+            return {
+              result: response.data.result,
+              msg: "코스 값 가져왔습니다.",
+              color: "success"
+            };
+          } else {
+            return {
+              result: false,
+              msg: "코스 값 못 가져옴.",
+              color: "success"
+            };
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    //코스 생성
+    reqCreate(context, id, list) {
+      return axios
+        .post("/course/add/" + id, {
+          list: list
         })
         .then(response => {
           console.log(response.data);
           if (response.message == "success") {
-            return true;
-            //context.commit("setCourseInfo", response.data.course);
-          } else return false;
+            context.commit("setCourseInfo", response.data.result);
+            return {
+              result: true,
+              msg: "코스 가져왔습니다.",
+              color: "success"
+            };
+          } else {
+            return {
+              result: false,
+              msg: "코스 못 가져옴.",
+              color: "success"
+            };
+          }
         })
         .catch(error => {
           console.log(error);
