@@ -109,18 +109,44 @@ export default {
       "reqCreateReview",
       "reqModifyReview",
       "reqDeleteReview",
-      "reqTourReviewList"
+      "reqTourReviewList",
+      "reqCreateTourReview"
     ]),
     onWrite() {
       let formData = new FormData();
       if (this.$route.params.spotid < 500000) {
-        formData.append("store_id", this.$route.params.spotid);
-      } else {
+        //맛집일때
+
+        //작성자정보
+        let writer_info = new FormData();
+        writer_info.append("id", "1");
+        if (this.getMemberInfo.gender == 0) writer_info.append("gender", "남");
+        else writer_info.append("gender", "여");
+        writer_info.append("born_year", this.getMemberInfo.birth);
+
+        //리뷰정보
+        let review_info = new FormData();
+        review_info.append("id", "1");
+        formData.append("score", this.score);
+        formData.append("content", this.context);
         let date =
           new Date().toISOString().substr(0, 10) +
           " " +
           new Date().toTimeString().substr(0, 8);
-        this.reqCreateReview({
+        formData.append("reg_time", date);
+
+        formData.append("writer_info", writer_info);
+        formData.append("review_info", review_info);
+        formData.append("id", this.$route.params.spotid);
+
+        this.reqCreateReview(formData);
+      } else {
+        //관광지일때
+        let date =
+          new Date().toISOString().substr(0, 10) +
+          " " +
+          new Date().toTimeString().substr(0, 8);
+        this.reqCreateTourReview({
           toursight_id: this.$route.params.spotid,
           user_id: this.getMemberInfo.user_id,
           content: this.context,

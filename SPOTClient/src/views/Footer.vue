@@ -58,7 +58,7 @@ export default {
         this.$router.push("/find");
       } else {
         console.log(this.getMemberInfo);
-        this.$router.push("/mypage/" + this.getMemberInfo.email);
+        this.$router.push("/mypage/" + this.getMemberInfo.user_id);
       }
     }
   }

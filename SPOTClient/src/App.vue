@@ -9,6 +9,7 @@
 <script>
 import "./assets/style.css";
 import Footer from "./views/Footer";
+
 export default {
   name: "App",
 

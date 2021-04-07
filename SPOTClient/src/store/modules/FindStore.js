@@ -1,4 +1,5 @@
 import axios from "../../axios/axios-common";
+import axios2 from "../../axios/axios-common2";
 
 const FindStore = {
   namespaced: true, // 모듈 개발사용 가능
@@ -48,35 +49,38 @@ const FindStore = {
 
   actions: {
     reqSearch(context, name) {
-      return axios
-        .get("/placelist", {
-          name: name
-        })
-        .then(response => {
-          if (response.status === 200 && response.data.status === true) {
-            context.commit("setIsSearched", true); // 검색된 상태로 변경
-            context.commit("setSearchList", response.data.object.stores);
-            return {
-              result: true,
-              msg: "검색 되었습니다",
-              color: "success"
-            };
-          } else {
+      console.log(name);
+      return (
+        axios2
+          //.get("/search/" + name)
+          .get("/rank")
+          .then(response => {
+            console.log(response);
+            if (response.status === 200 && response.data.status === true) {
+              context.commit("setIsSearched", true); // 검색된 상태로 변경
+              context.commit("setSearchList", response.data.object.stores);
+              return {
+                result: true,
+                msg: "검색 되었습니다",
+                color: "success"
+              };
+            } else {
+              return {
+                result: false,
+                msg: "검색에 실패하였습니다.",
+                color: "warning"
+              };
+            }
+          })
+          .catch(error => {
+            console.log(error);
             return {
               result: false,
-              msg: "검색에 실패하였습니다.",
+              msg: "에러 발생",
               color: "warning"
             };
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          return {
-            result: false,
-            msg: "에러 발생",
-            color: "warning"
-          };
-        });
+          })
+      );
     },
     reqSuggest(context, email) {
       return axios

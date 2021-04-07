@@ -1,4 +1,5 @@
 import axios from "../../axios/axios-common";
+import axios2 from "../../axios/axios-common2";
 
 const ReviewStore = {
   namespaced: true,
@@ -63,6 +64,20 @@ const ReviewStore = {
 
     //리뷰작성
     reqCreateReview(context, review) {
+      return axios2
+        .post("/review", { review })
+        .then(response => {
+          if (response.message == "success") {
+            return true;
+          } else return false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+    //리뷰작성
+    reqCreateTourReview(context, review) {
       return axios
         .post("/review", {
           content: review.content,

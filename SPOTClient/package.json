@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "d3": "^6.6.2",
     "eslint-loader": "^4.0.2",
     "eslint-webpack-plugin": "^2.5.2",
