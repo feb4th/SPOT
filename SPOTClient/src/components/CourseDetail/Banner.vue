@@ -3,7 +3,7 @@
     <v-card elevation="0">
       <v-card-title
         class="headline justify-space-between my-2"
-        v-if="!getIsLogined"
+        v-if="getIsLogined"
       >
         <v-btn
           icon
@@ -17,7 +17,7 @@
           <v-icon large>mdi-arrow-left</v-icon>
         </v-btn>
         <h2>
-          {{ getCourseInfo[0].course_name }}
+          {{ getCourseInfo[0].name }}
         </h2>
 
         <v-btn icon large>
@@ -29,7 +29,7 @@
 
       <v-card-title class="headline justify-center" v-else>
         <strong>
-          {{ getCourseInfo[0].course_name }}
+          {{ getCourseInfo[0].name }}
         </strong>
       </v-card-title>
     </v-card>
