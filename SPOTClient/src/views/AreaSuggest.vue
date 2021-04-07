@@ -117,13 +117,31 @@
                             @click="onSelect(card.id)"
                           >
                             <!-- 이미지 데이터가 없을 때 -->
-                            <v-img v-if="card.img == '' || card.img == null">
+                            <v-img
+                              v-if="card.img == '' || card.img == null"
+                              contain
+                              aspect-ratio="1.1"
+                              src="@/assets/logo.png"
+                              class="white--text align-end"
+                              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                              ><v-card-title
+                                class="text-no-wrap text-truncate"
+                                >{{ card.name }}</v-card-title
+                              >
                             </v-img>
-                            <v-img v-else :src="card.img"> </v-img>
-
-                            <v-card-title class="text-no-wrap text-truncate">{{
-                              card.name
-                            }}</v-card-title>
+                            <v-img
+                              v-else
+                              contain
+                              aspect-ratio="1.1"
+                              :src="getSrc(card.img)"
+                              class="white--text align-end"
+                              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                            >
+                              <v-card-title
+                                class="text-no-wrap text-truncate"
+                                >{{ card.name }}</v-card-title
+                              ></v-img
+                            >
                           </v-card>
                           <v-row justify="center" class="ma-auto">
                             <v-tooltip bottom>
@@ -276,6 +294,9 @@ export default {
     onWishUnclick(idx) {
       this.wish[idx] = true;
       this.btnNumber++;
+    },
+    getSrc(img) {
+      return "http:/" + img;
     }
   }
 };
