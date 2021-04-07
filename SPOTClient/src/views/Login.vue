@@ -1,80 +1,91 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2"> </v-col>
-          <v-col cols="12" sm="8">
-            <v-card min-height="70vh" rounded="lg">
-              <v-card-title class="headline justify-center"
-                >로그인</v-card-title
-              >
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        label="이메일"
-                        placeholder="SPOT@email.com"
-                        v-model="member.email"
-                        required
-                        clearable
-                        :counter="50"
-                        :rules="[
-                          v => !!v || '이메일을 입력하세요',
-                          v => /.+@.+\..+/.test(v) || '이메일 형식이 아닙니다',
-                          v => v.length <= 50 || '이메일이 너무 깁니다'
-                        ]"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-text-field
-                        label="비밀번호"
-                        type="password"
-                        v-model="member.pw"
-                        required
-                        clearable
-                        :rules="[
-                          v => !!v || '비밀번호를 입력해 주세요',
-                          v =>
-                            (v && v.length > 7 && v.length <= 20) ||
-                            '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
-                        ]"
-                        @keypress.enter="onSubmit()"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-btn color="success" block @click="onSubmit()"
-                        >로그인</v-btn
-                      >
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-col cols="7" class="text-end">아직 회원이 아니신가요?</v-col>
-                <v-btn col-4 color="blue darken-1" text @click="signup()">
-                  회원가입
-                </v-btn>
-              </v-card-actions>
-              <v-card-actions class="pb-5">
-                <v-col cols="7" class="text-end">비밀번호를 잊으셨나요?</v-col>
-                <v-btn col-4 color="blue darken-1" text @click="findpw()">
-                  비밀번호 찾기
-                </v-btn>
-              </v-card-actions>
-              <v-snackbar
-                centered
-                v-model="snackbar"
-                timeout="2000"
-                :color="color"
-              >
-                {{ msg }}
-              </v-snackbar>
-            </v-card>
-          </v-col>
+          <v-col>
+            <v-sheet min-height="70vh" rounded="lg">
+              <v-card class="pu-10 px-10 mu-10" elevation="0">
+                <v-card-title class="headline justify-space-between">
+                  <v-btn
+                    icon
+                    large
+                    @click="
+                      () => {
+                        this.$router.go(-1);
+                      }
+                    "
+                  >
+                    <v-icon large>mdi-arrow-left</v-icon>
+                  </v-btn>
 
-          <v-col cols="12" sm="2"> </v-col>
+                  <h2>로그인</h2>
+                  <v-btn disabled text><v-spacer></v-spacer></v-btn>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row class="ma-8">
+                      <v-col>
+                        <v-text-field
+                          placeholder="이메일"
+                          v-model="member.email"
+                          required
+                          clearable
+                          :rules="[
+                            v => !!v || '이메일을 입력하세요',
+                            v =>
+                              /.+@.+\..+/.test(v) || '이메일 형식이 아닙니다',
+                            v => v.length <= 50 || '이메일이 너무 깁니다'
+                          ]"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          type="password"
+                          placeholder="비밀번호"
+                          v-model="member.pw"
+                          required
+                          clearable
+                          :rules="[
+                            v => !!v || '비밀번호를 입력해 주세요',
+                            v =>
+                              (v && v.length > 7 && v.length <= 20) ||
+                              '비밀번호는 8자리 이상 20자리 이하로 입력해야 합니다'
+                          ]"
+                          @keypress.enter="onSubmit()"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" class="mt-10">
+                        <v-btn color="primary" block @click="onSubmit()"
+                          >로그인</v-btn
+                        >
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions class="pb-5 justify-center">
+                  <div class="text-center">아직 회원이 아니신가요?</div>
+                  <v-btn color="secondary" text @click="signup()">
+                    회원가입
+                  </v-btn>
+                </v-card-actions>
+                <v-card-actions class="pb-5 justify-center">
+                  <div class="text-center">비밀번호를 잊으셨나요?</div>
+                  <v-btn color="secondary" text @click="findpw()">
+                    비밀번호 찾기
+                  </v-btn>
+                </v-card-actions>
+                <v-snackbar
+                  centered
+                  v-model="snackbar"
+                  timeout="2000"
+                  :color="color"
+                >
+                  {{ msg }}
+                </v-snackbar>
+              </v-card>
+            </v-sheet>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>

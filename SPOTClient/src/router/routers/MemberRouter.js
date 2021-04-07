@@ -23,14 +23,14 @@ const memberRoute = [
   },
   {
     // 마이페이지 route
-    path: "/mypage/:email",
+    path: "/mypage/:memberid",
     name: "mypage",
     component: MyPage,
     props: false
   },
   {
     // 회원정보수정 route
-    path: "/member/modify/:email",
+    path: "/member/modify/:memberid",
     name: "membermodify",
     component: MemberModify,
     props: false

@@ -12,6 +12,13 @@ const FindStore = {
         lat: "33.450705",
         lng: "126.570677",
         img: ""
+      },
+      {
+        spot_id: "500001",
+        name: "관광지",
+        latitude: "33.450705",
+        longitude: "126.570677",
+        img: ""
       }
     ]
   },

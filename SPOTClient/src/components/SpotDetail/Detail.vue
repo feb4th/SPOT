@@ -1,6 +1,10 @@
 <template>
   <v-container>
-    <v-card elevation="0" style="margin-left: 1.5em;">
+    <v-card
+      elevation="0"
+      style="margin-left: 1.5em;"
+      v-if="getSpot.spot_id < 500000"
+    >
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>영업시간</strong>
@@ -10,12 +14,26 @@
       </v-card-title>
     </v-card>
 
-    <v-card elevation="0" style="margin-left: 1.5em;">
+    <v-card
+      elevation="0"
+      style="margin-left: 1.5em;"
+      v-if="getSpot.spot_id < 500000"
+    >
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>대표메뉴</strong>
         <v-card-text v-for="menus in getSpot.menu_list" :key="menus.menu">
           {{ menus.menu }} : {{ menus.price }} 원
+        </v-card-text>
+      </v-card-title>
+    </v-card>
+
+    <v-card elevation="0" style="margin-left: 1.5em;" v-else>
+      <v-card-title>
+        <v-icon x-large>mdi-check</v-icon>
+        <strong>관광지정보</strong>
+        <v-card-text>
+          {{ getSpot.info }}
         </v-card-text>
       </v-card-title>
     </v-card>

@@ -9,7 +9,7 @@
   <v-card>
     <v-tabs
       v-model="tab"
-      background-color="#92A8D1"
+      background-color="#ffce86"
       height="100px"
       centered
       dark
@@ -32,7 +32,6 @@
         <v-icon x-large>mdi-account-circle-outline</v-icon>
       </v-tab>
     </v-tabs>
-
   </v-card>
 </template>
 
@@ -41,19 +40,24 @@ import { mapGetters } from "vuex";
 const MemberStore = "MemberStore";
 
 export default {
+  data() {
+    return {
+      tab: ""
+    };
+  },
   computed: {
     ...mapGetters(MemberStore, ["getMemberInfo"])
   },
   methods: {
     clickTab(val) {
-      if (val == 'main') {
+      if (val == "main") {
         this.$router.push("/main");
-      } else if (val == 'course') {
+      } else if (val == "course") {
         this.$router.push("/course");
-      } else if (val == 'search') {
+      } else if (val == "search") {
         this.$router.push("/find");
       } else {
-        console.log(this.getMemberInfo)
+        console.log(this.getMemberInfo);
         this.$router.push("/mypage/" + this.getMemberInfo.email);
       }
     }

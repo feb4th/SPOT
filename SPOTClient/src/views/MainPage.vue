@@ -6,9 +6,9 @@
           <v-col>
             <v-sheet min-height="70vh" rounded="lg">
               <banner />
-              <main-map />
-              <suggest-spot />
               <suggest-theme />
+              <suggest-spot />
+              <main-map class="mt-8" />
             </v-sheet>
           </v-col>
         </v-row>
