@@ -3,7 +3,7 @@ import axios from "../../axios/axios-common";
 const MemberStore = {
   namespaced: true, // 모듈 개발사용 가능
   state: {
-    isLogin: false, // 로그인 여부
+    isLogin: true, // 로그인 여부
     memberInfo: {
       user_id: "ssafy",
       email: "ssafy@ssafy.com",

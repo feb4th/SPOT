@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <v-row class="mx-4">
-      <v-col clas="mt-2">
-        <p style="font-size : 2.5em;">
-          {{ getMemberInfo.nickname }}
-          <span style="font-size : 20px; margin-left: -10px;">님,</span>
-        </p>
-        <p style="font-size: 2.5em;">
+    <v-row class="mx-2 mt-1 mb-2">
+      <v-col cols="4"><v-img src="@/assets/spot.png"></v-img></v-col>
+      <v-col align="end" class="mt-4">
+        <span style="font-size : 2em;">{{ getMemberInfo.nickname }}</span>
+        <span class="ma-1 mr-3" style="font-size : 15px;">님,</span>
+        <v-spacer></v-spacer>
+        <span class="mr-1" style="font-size : 1.5em;">
           환영합니다!
           <v-btn depressed icon @click="logout"
             ><v-icon>mdi-logout</v-icon></v-btn
           >
-        </p>
+        </span>
       </v-col>
     </v-row>
   </v-container>
