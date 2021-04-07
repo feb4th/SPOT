@@ -32,7 +32,7 @@
             v-if="spot.imgdata == null || spot.imgdata == ''"
             src="../../assets/logo.png"
             style="cursor: pointer"
-            @click="onSpot(spot.spot_id)"
+            @click="onSpot(spot.id)"
           >
           </v-img>
 
@@ -41,7 +41,7 @@
             v-else
             :src="spot.imgdata"
             style="cursor: pointer"
-            @click="onSpot(spot.spot_id)"
+            @click="onSpot(spot.id)"
           ></v-img>
           <v-btn x-large block text
             ><h2>{{ spot.name }}</h2></v-btn
@@ -70,7 +70,7 @@ export default {
     ...mapActions(WishStore, ["reqWishList"]),
 
     onSpot(id) {
-      this.$router.push("/spot/detail/" + id);
+      this.$router.push("/spotdetail/" + id);
     }
   }
 };

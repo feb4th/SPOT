@@ -58,12 +58,16 @@ const WishStore = {
 
     // 위시리스트 추가(관광지)
     reqAddWish(context, info) {
-      let frm = new FormData();
-      frm.append("name", info.name);
-      frm.append("spot_id", info.spot_id);
-      frm.append("user_id", info.user_id);
       return axios
-        .post("/wish", frm)
+        .post("/wish", {
+          id: info.spot_id,
+          img: info.img,
+          latitude: info.latitude,
+          longitude: info.longtitude,
+          name: info.name,
+          type: "1",
+          user_id: info.user_id
+        })
         .then(response => {
           if (response.data.message == "add wish") {
             context.commit("setWishId", response.data.result.wishlist_id);
