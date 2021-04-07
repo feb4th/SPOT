@@ -8,7 +8,6 @@
               <banner />
               <suggest-theme />
               <suggest-spot />
-              <main-map class="mt-8" />
             </v-sheet>
           </v-col>
         </v-row>
@@ -19,14 +18,12 @@
 
 <script>
 import Banner from "../components/MainPage/Banner.vue";
-import MainMap from "../components/MainPage/Map.vue";
 import SuggestSpot from "../components/MainPage/SuggestSpot.vue";
 import SuggestTheme from "../components/MainPage/SuggestTheme.vue";
 
 export default {
   components: {
     Banner,
-    MainMap,
     SuggestSpot,
     SuggestTheme
   }
