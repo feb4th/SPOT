@@ -6,21 +6,21 @@ const ThemeStore = {
     themelist: [
       {
         id: "1",
-        name: "경주 벚꽃 SPOT",
-        img: "../../assets/images/theme1.png",
-        web: "https://blog.naver.com/the_trip/222300482896"
-      },
-      {
-        id: "2",
         name: "홍대/신촌 야경 SPOT",
-        img: "../../assets/images/theme2.png",
+        img: "../../assets/images/theme1.png",
         web: "https://blog.naver.com/the_trip/222288335721"
       },
       {
-        id: "3",
+        id: "2",
         name: "당신이 몰랐던 이천 SPOT",
-        img: "../../assets/images/theme3.png",
+        img: "../../assets/images/theme2.png",
         web: "https://blog.naver.com/the_trip/222288507779"
+      },
+      {
+        id: "3",
+        name: "경주 벚꽃 SPOT",
+        img: "../../assets/images/theme3.png",
+        web: "https://blog.naver.com/the_trip/222300482896"
       }
     ],
     theme: {}
