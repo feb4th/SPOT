@@ -21,7 +21,6 @@
 <script>
 import { mapActions } from "vuex";
 const FindStore = "FindStore";
-
 export default {
   data() {
     return {

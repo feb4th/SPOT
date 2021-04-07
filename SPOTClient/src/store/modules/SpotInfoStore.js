@@ -1,4 +1,5 @@
 import axios from "../../axios/axios-common";
+import axios2 from "axios";
 
 const SpotInfoStore = {
   namespaced: true, // 모듈 개발사용 가능
@@ -57,11 +58,12 @@ const SpotInfoStore = {
   actions: {
     //스팟 상세정보
     reqSpot(context, no) {
-      return axios
-        .get("/store/" + no)
+      return axios2
+        .get("http://j4a102.p.ssafy.io:8000/store/" + no)
         .then(response => {
           if (response.data.message == "success") {
-            context.commit("setSpot", response.data.result);
+            console.log(response);
+            context.commit("setSpot", response.data.contents);
             return {
               result: true,
               msg: "세부 사항으로 이동"

@@ -1,4 +1,4 @@
-import axios2 from "../../axios/axios-common2";
+import axios from "axios";
 
 const FindStore = {
   namespaced: true, // 모듈 개발사용 가능
@@ -48,8 +48,9 @@ const FindStore = {
 
   actions: {
     reqSearch(context, name) {
-      return axios2
-        .get("/store/" + name)
+      console.log(name);
+      return axios
+        .get("http://j4a102.p.ssafy.io:8000/search/" + name)
         .then(response => {
           console.log(response);
           if (response.data.message == "success") {
@@ -78,8 +79,8 @@ const FindStore = {
         });
     },
     reqSuggest(context, user_id) {
-      return axios2
-        .post("/recommendation/" + user_id)
+      return axios
+        .post("http://j4a102.p.ssafy.io/recommendation/" + user_id)
         .then(response => {
           if (response.data.message == "success") {
             context.commit("setSuggestList", response.data.contents);

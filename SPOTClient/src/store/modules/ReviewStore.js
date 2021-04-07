@@ -1,5 +1,5 @@
 import axios from "../../axios/axios-common";
-import axios2 from "../../axios/axios-common2";
+import axios2 from "axios";
 
 const ReviewStore = {
   namespaced: true,
@@ -10,14 +10,14 @@ const ReviewStore = {
         img: "",
         member_id: "123",
         content: "아빠발국밥이 맛있어요!",
-        rating: 4.5
+        score: 4.5
       },
       {
         review_id: 2,
         img: "",
         member_id: "123",
         content: "제 취향 아닙니다 우웩 ㅠㅠ",
-        rating: 2.0
+        score: 2.0
       }
     ]
   },
@@ -32,18 +32,31 @@ const ReviewStore = {
     }
   },
   actions: {
-    //리뷰리스트 조회
-    reqReviewList(context, spot_id) {
-      return axios
-        .get("/review/" + spot_id)
+    //맛집 리뷰리스트 조회
+    reqReviewList(context, no) {
+      return axios2
+        .get("http://j4a102.p.ssafy.io:8000/store/" + no)
         .then(response => {
-          if (response.message == "success") {
-            context.commit("setReviewList", response.reviews);
-            return true;
-          } else return false;
+          if (response.data.message == "success") {
+            console.log(response);
+            context.commit("setReviewList", response.data.contents.review_list);
+            return {
+              result: true,
+              msg: "세부 사항으로 이동"
+            };
+          } else {
+            return {
+              result: false,
+              msg: "실패"
+            };
+          }
         })
         .catch(error => {
           console.log(error);
+          return {
+            result: false,
+            msg: "에러 발생"
+          };
         });
     },
 
@@ -65,7 +78,20 @@ const ReviewStore = {
     //리뷰작성
     reqCreateReview(context, review) {
       return axios2
-        .post("/review", { review })
+        .post("http://j4a102.p.ssafy.io:8000/review", {
+          writer_info: {
+            id: 1,
+            gender: review.writer_info.gender,
+            born_year: parseInt(review.writer_info.born_year)
+          },
+          review_info: {
+            id: 1,
+            score: parseInt(review.review_info.score),
+            content: review.review_info.content,
+            reg_time: review.review_info.reg_time
+          },
+          id: parseInt(review.id)
+        })
         .then(response => {
           if (response.message == "success") {
             return true;

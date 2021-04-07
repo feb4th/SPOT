@@ -40,7 +40,9 @@ export default {
   created() {
     this.reqCheckWish({
       spot_id: this.$route.params.spotid,
-      user_id: this.getMemberInfo.user_id
+      user_id: this.getMemberInfo.user_id,
+      name: this.getSpot.name,
+      type: "0"
     });
   },
   computed: {

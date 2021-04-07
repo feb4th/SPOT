@@ -84,6 +84,7 @@ export default {
       context: "",
       score: 0,
       review_id: "",
+      genderidx: "남",
       tmpComment: {},
       Dialog: {
         modify: false,
@@ -95,7 +96,7 @@ export default {
     };
   },
   created() {
-    this.reqTourReviewList(this.$route.params.spotid);
+    this.reqReviewList(this.$route.params.spotid);
   },
   computed: {
     ...mapGetters(ReviewStore, ["getReviewList"]),
@@ -111,19 +112,26 @@ export default {
       "reqCreateTourReview"
     ]),
     onWrite() {
-      //관광지일때
       let date =
         new Date().toISOString().substr(0, 10) +
         " " +
         new Date().toTimeString().substr(0, 8);
-      this.reqCreateTourReview({
-        toursight_id: this.$route.params.spotid,
-        user_id: this.getMemberInfo.user_id,
-        content: this.context,
-        score: this.score,
-        date: date
-      }).then(response => {
-        if (response) this.reqTourReviewList(this.$route.params.spotid);
+
+      if (this.getMemberInfo.gender == 0) this.genderidx = "남";
+      else this.genderidx = "여";
+      this.reqCreateReview({
+        writer_info: {
+          id: "1",
+          gender: this.genderidx,
+          born_year: this.getMemberInfo.birth
+        },
+        review_info: {
+          id: "1",
+          score: this.score,
+          content: this.context,
+          reg_time: date
+        },
+        id: this.$route.params.spotid
       });
     },
     openModify(comment) {
