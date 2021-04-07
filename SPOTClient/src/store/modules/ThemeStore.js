@@ -6,28 +6,21 @@ const ThemeStore = {
     themelist: [
       {
         id: "1",
-        name: "연인을 위한 코스",
-        img: ""
+        name: "경주 벚꽃 SPOT",
+        img: "../../assets/images/theme1.png",
+        web: "https://blog.naver.com/the_trip/222300482896"
       },
       {
         id: "2",
-        name: "친구와 함께",
-        img: ""
+        name: "홍대/신촌 야경 SPOT",
+        img: "../../assets/images/theme2.png",
+        web: "https://blog.naver.com/the_trip/222288335721"
       },
       {
         id: "3",
-        name: "1박2일 제주도여행",
-        img: ""
-      },
-      {
-        id: "4",
-        name: "서울근교여행",
-        img: ""
-      },
-      {
-        id: "5",
-        name: "템플스테이",
-        img: ""
+        name: "당신이 몰랐던 이천 SPOT",
+        img: "../../assets/images/theme3.png",
+        web: "https://blog.naver.com/the_trip/222288507779"
       }
     ],
     theme: {}

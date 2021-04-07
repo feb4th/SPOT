@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True # <- 모든 호스트 허용
+
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -126,3 +127,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+# CORS_ORIGIN_WHITELIST = (
+#        'http://localhost:8080',    #로컬
+#        'http://j4a102.p.ssafy.io:8081',    #Djang도메인
+#        'http://j4a102.p.ssafy.io'
+# )
+
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)

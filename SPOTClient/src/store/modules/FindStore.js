@@ -1,4 +1,3 @@
-import axios from "../../axios/axios-common";
 import axios2 from "../../axios/axios-common2";
 
 const FindStore = {
@@ -8,17 +7,17 @@ const FindStore = {
     searchList: {},
     suggestList: [
       {
+        spot_id: "500001",
+        name: "관광지",
+        latitude: "33.451705",
+        longitude: "126.571677",
+        img: ""
+      },
+      {
         spot_id: "1",
         name: "좋은 장소",
         lat: "33.450705",
         lng: "126.570677",
-        img: ""
-      },
-      {
-        spot_id: "500001",
-        name: "관광지",
-        latitude: "33.450705",
-        longitude: "126.570677",
         img: ""
       }
     ]
@@ -49,50 +48,41 @@ const FindStore = {
 
   actions: {
     reqSearch(context, name) {
-      console.log(name);
-      return (
-        axios2
-          //.get("/search/" + name)
-          .get("/rank")
-          .then(response => {
-            console.log(response);
-            if (response.status === 200 && response.data.status === true) {
-              context.commit("setIsSearched", true); // 검색된 상태로 변경
-              context.commit("setSearchList", response.data.object.stores);
-              return {
-                result: true,
-                msg: "검색 되었습니다",
-                color: "success"
-              };
-            } else {
-              return {
-                result: false,
-                msg: "검색에 실패하였습니다.",
-                color: "warning"
-              };
-            }
-          })
-          .catch(error => {
-            console.log(error);
+      return axios2
+        .get("/store/" + name)
+        .then(response => {
+          console.log(response);
+          if (response.data.message == "success") {
+            context.commit("setIsSearched", true); // 검색된 상태로 변경
+            context.commit("setSearchList", response.data.contents);
+            return {
+              result: true,
+              msg: "검색 되었습니다",
+              color: "success"
+            };
+          } else {
             return {
               result: false,
-              msg: "에러 발생",
+              msg: "검색에 실패하였습니다.",
               color: "warning"
             };
-          })
-      );
-    },
-    reqSuggest(context, email) {
-      return axios
-        .post("/recommend/place", {
-          email: email
+          }
         })
+        .catch(error => {
+          console.log(error);
+          return {
+            result: false,
+            msg: "에러 발생",
+            color: "warning"
+          };
+        });
+    },
+    reqSuggest(context, user_id) {
+      return axios2
+        .post("/recommendation/" + user_id)
         .then(response => {
-          if (response.status === 200 && response.data.status === true) {
-            context.commit(
-              "setSuggestList",
-              response.data.object.recommend_place_list
-            );
+          if (response.data.message == "success") {
+            context.commit("setSuggestList", response.data.contents);
 
             return {
               result: true,

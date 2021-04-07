@@ -28,9 +28,9 @@
     <v-row>
       <v-window show-arrows class="ma-6" style="width: 95%;">
         <v-window-item v-for="(card, idx) in getThemeList" :key="idx">
-          <v-card color="grey">
+          <v-card @click="onSelect(card.web)">
             <v-row align="center" justify="center">
-              <v-img contain src="../../assets/logo.png" height="200"></v-img>
+              <v-img contain :src="getSrc(card.id)" height="300"></v-img>
             </v-row>
           </v-card>
         </v-window-item>
@@ -44,17 +44,16 @@ import { mapGetters, mapActions } from "vuex";
 const ThemeStore = "ThemeStore";
 
 export default {
-  created() {
-    this.reqThemeList();
-  },
   computed: {
     ...mapGetters(ThemeStore, ["getThemeList"])
   },
   methods: {
     ...mapActions(ThemeStore, ["reqThemeList"]),
-
-    onSelect(theme_id) {
-      this.$router.push("/spotdetail/" + theme_id);
+    onSelect(web) {
+      window.open(web);
+    },
+    getSrc(order) {
+      return require("../../assets/images/theme" + order + ".png");
     }
   }
 };

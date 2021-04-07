@@ -29,7 +29,7 @@ const MemberStore = "MemberStore";
 
 export default {
   created() {
-    // this.reqSuggest(this.getMemberInfo.email); // 이메일 정보를 통해서 추천 List 받아옴.
+    this.reqSuggest(this.getMemberInfo.user_id); // 이메일 정보를 통해서 추천 List 받아옴.
   },
   computed: {
     ...mapGetters(FindStore, ["getSuggestList"]),

@@ -2,17 +2,21 @@
   <v-app>
     <router-view id="contents" />
     <!-- 로그인 시 푸터를 보여줌 -->
-    <Footer id="footer" />
+    <Footer id="footer" v-show="getIsLogined" />
   </v-app>
 </template>
 
 <script>
 import "./assets/style.css";
 import Footer from "./views/Footer";
+import { mapGetters } from "vuex";
+const MemberStore = "MemberStore";
 
 export default {
   name: "App",
-
+  computed: {
+    ...mapGetters(MemberStore, ["getIsLogined"])
+  },
   components: {
     Footer
   },
