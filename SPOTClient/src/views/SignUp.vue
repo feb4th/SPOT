@@ -281,13 +281,7 @@ export default {
       "reqCheckEmail",
       "reqCheckNickname"
     ]),
-    reset() {
-      (this.email = ""),
-        (this.pw = ""),
-        (this.pwvaild = ""),
-        (this.phone = ""),
-        (this.name = "");
-    },
+
     onSignup() {
       // form 검증
       if (this.$refs.form.validate() === false) return;
@@ -300,8 +294,8 @@ export default {
         return;
       }
 
-      // 이메일 중복체크 검증
-      if (!this.nicknameheck) {
+      // 닉네임 중복체크 검증
+      if (!this.nicknamecheck) {
         this.msg = "닉네임 중복체크를 진행해 주세요";
         this.color = "error";
         this.snackbar = true;
@@ -310,11 +304,15 @@ export default {
 
       this.processing = true;
 
+      let gen;
+      if (this.gender == "남") gen = 0;
+      else gen = 1;
       this.reqSignup({
         email: this.email,
         pw: this.pw,
-        phone: this.phone,
-        name: this.name
+        birth: this.birth,
+        gender: gen,
+        nickname: this.nickname
       })
         .then(response => {
           if (response) {
@@ -337,6 +335,9 @@ export default {
             this.email = "";
             this.pw = "";
             this.pwvaild = "";
+            this.nickname = "";
+            this.gender = "";
+            this.birth = "";
           }
         })
         .catch(error => {
@@ -347,7 +348,7 @@ export default {
     checkEmail() {
       this.reqCheckEmail(this.email)
         .then(response => {
-          if (response) {
+          if (response.status == true) {
             //사용 가능한 이메일일 때
             this.msg = "사용가능한 이메일입니다";
             this.snackbar = true;
@@ -367,12 +368,12 @@ export default {
     checkNickname() {
       this.reqCheckNickname(this.nickname)
         .then(response => {
-          if (response) {
+          if (response.status == true) {
             //사용 가능한 닉네임일 때
             this.msg = "사용가능한 닉네임입니다";
             this.snackbar = true;
             this.color = "success";
-            this.emailcheck = true;
+            this.nicknamecheck = true;
           } else {
             //중복값이 존재할 때
             this.msg = "이미 존재하는 닉네임입니다";

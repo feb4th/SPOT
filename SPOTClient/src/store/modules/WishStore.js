@@ -26,6 +26,7 @@ const WishStore = {
   actions: {
     //회원 위시리스트 조회
     reqWishList(context, user_id) {
+      console.log("위시리스트" + user_id);
       return axios
         .get("/wish/" + user_id)
         .then(response => {
@@ -45,6 +46,7 @@ const WishStore = {
         .get("/wishcheck?spot_id=" + info.spot_id + "&user_id=" + info.user_id)
         .then(response => {
           if (response.data.message == "success") {
+            console.log(response.data.result.wishlist_id);
             context.commit("setWishId", response.data.result.wishlist_id);
             return true;
           } else return false;
@@ -57,12 +59,13 @@ const WishStore = {
     // 위시리스트 추가(관광지)
     reqAddWish(context, info) {
       let frm = new FormData();
+      frm.append("name", info.name);
       frm.append("spot_id", info.spot_id);
       frm.append("user_id", info.user_id);
       return axios
         .post("/wish", frm)
         .then(response => {
-          if (response.data.message == "success") {
+          if (response.data.message == "add wish") {
             context.commit("setWishId", response.data.result.wishlist_id);
             return true;
           } else return false;

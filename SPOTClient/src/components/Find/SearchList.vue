@@ -10,11 +10,9 @@
             class="ma-4"
             height="200"
             width="200"
-            @click="onSelect(card.storeid)"
+            @click="onSelect(card.id)"
           >
-            <v-img>
-              :src = "card.img"
-            </v-img>
+            <v-card-title> {{ card.name }} </v-card-title>
           </v-card>
         </v-slide-item>
       </v-slide-group>
@@ -33,11 +31,7 @@ export default {
   methods: {
     ...mapActions(SpotInfoStore, ["reqSpot"]),
     onSelect(storeNum) {
-      this.reqSpot(storeNum).then(response => {
-        if (!response) {
-          this.$router.push("/spotdetail");
-        } else alert(response.msg);
-      });
+      this.$router.push("/spotdetail/" + storeNum);
     }
   }
 };

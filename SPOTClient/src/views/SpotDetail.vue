@@ -36,7 +36,8 @@
               <spot-map />
               <!-- <like /> -->
               <detail />
-              <review />
+              <review-spot v-if="this.$route.params.spotid < 500000" />
+              <review v-else />
             </v-sheet>
           </v-col>
         </v-row>
@@ -51,6 +52,7 @@ import Like from "../components/SpotDetail/Like.vue";
 import SpotMap from "../components/SpotDetail/Map.vue";
 import Photo from "../components/SpotDetail/Photo.vue";
 import Review from "../components/SpotDetail/Review.vue";
+import ReviewSpot from "../components/SpotDetail/Review_Spot.vue";
 
 import { mapGetters, mapActions } from "vuex";
 const SpotInfoStore = "SpotInfoStore";
@@ -61,7 +63,8 @@ export default {
     SpotMap,
     Like,
     Detail,
-    Review
+    Review,
+    ReviewSpot
   },
   created() {
     if (this.$route.params.spotid < 500000)
