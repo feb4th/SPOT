@@ -123,7 +123,7 @@ export default {
         score: this.score,
         date: date
       }).then(response => {
-        if (response) this.reqTourReviewList(this.$route.params.spotid);
+        if (response == true) this.reqTourReviewList(this.$route.params.spotid);
       });
     },
     openModify(comment) {

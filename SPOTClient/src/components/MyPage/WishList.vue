@@ -35,7 +35,7 @@
             contain
             max-height="150"
             style="cursor: pointer"
-            @click="onSpot(spot.spot_id)"
+            @click="onSpot(spot.id)"
           >
           </v-img>
 
@@ -46,7 +46,7 @@
             max-height="150"
             :src="spot.imgdata"
             style="cursor: pointer"
-            @click="onSpot(spot.spot_id)"
+            @click="onSpot(spot.id)"
           ></v-img>
           <v-btn block text
             ><h3>{{ spot.name }}</h3></v-btn
@@ -75,7 +75,7 @@ export default {
     ...mapActions(WishStore, ["reqWishList"]),
 
     onSpot(id) {
-      this.$router.push("/spot/detail/" + id);
+      this.$router.push("/spotdetail/" + id);
     }
   }
 };

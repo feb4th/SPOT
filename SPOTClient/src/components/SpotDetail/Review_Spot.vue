@@ -41,21 +41,18 @@
       </v-row>
     </v-card>
     <v-card class="mx-auto" max-width="750" elevation="0">
-      <v-list-item v-for="comment in getReviewList" :key="comment.review_id">
-        <v-col cols="auto" class="align-center"
-          ><v-avatar>
-            <v-img
-              v-if="comment.img == '' || comment.img == null"
-              src="../../assets/logo.png"
-            />
-            <v-img v-else :src="getMemberInfo.img" /> </v-avatar
-        ></v-col>
+      <v-list-item v-for="(comment, idx) in getReviewList" :key="idx">
+        <v-col cols="auto" class="align-center">
+          <v-avatar> <v-img src="../../assets/logo.png" /> </v-avatar>
+        </v-col>
         <v-col cols="4">
           <v-list-item-content>
             <div class="overline">
-              <span style="margin-left: 1em;">{{ comment.member_id }}</span>
+              <span style="margin-left: 1em;">{{
+                comment.writer_info.gender
+              }}</span>
               <v-rating
-                :v-model="comment.score"
+                v-model="comment.review_info.score"
                 color="yellow darken-3"
                 background-color="grey darken-1"
                 empty-icon="$ratingFull"
@@ -66,7 +63,7 @@
           </v-list-item-content>
         </v-col>
         <v-col>
-          {{ comment.content }}
+          {{ comment.review_info.content }}
         </v-col>
       </v-list-item>
     </v-card>
@@ -132,6 +129,10 @@ export default {
           reg_time: date
         },
         id: this.$route.params.spotid
+      }).then(res => {
+        if (res == true) {
+          this.reqReviewList(this.$route.params.spotid);
+        }
       });
     },
     openModify(comment) {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../axios/axios-common";
 import axios2 from "axios";
 
 const SuggestStore = {
@@ -408,10 +408,11 @@ const SuggestStore = {
     reqSuggest(context, user_id) {
       //console.log(user_id);
       return axios2
-        .get("/recommendation/" + user_id)
+        .get("http://j4a102.p.ssafy.io:8000/recommendation/" + user_id)
         .then(response => {
-          if (response.message == "success") {
-            context.commit("setSuggestList", response.contents);
+          console.log(response);
+          if (response.data.message == "success") {
+            context.commit("setSuggestList", response.data.contents);
             return {
               result: true,
               msg: "추천 데이터 가져왔습니다.",
