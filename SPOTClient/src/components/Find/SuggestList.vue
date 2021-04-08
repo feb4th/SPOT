@@ -1,22 +1,10 @@
 <template>
   <v-container>
     <v-sheet class="mx-auto" max-width="800">
-      <h1 v-if="getSuggestList.length == 0">추천 결과가 없습니다.</h1>
-      <!-- <v-slide-group class="pa-4" active-class="success" show-arrows>
-        <v-slide-item v-for="(card, idx) in getSuggestList" :key="idx">
-          <v-card
-            class="ma-4"
-            height="200"
-            width="200"
-            @click="onSelect(card.storeid)"
-          >
-            <v-img>
-              :src = "card.img"
-            </v-img>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group> -->
-      <v-row class="ml-12">
+      <h1 v-if="getSuggestList.length == 0" justify="center" align="center">
+        추천 결과가 없습니다.
+      </h1>
+      <v-row v-else class="ml-12">
         <div>
           <h1>{{ getMemberInfo.nickname }}님!</h1>
           <h1>이 SPOT은 어때요?🤔</h1>
