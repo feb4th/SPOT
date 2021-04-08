@@ -19,32 +19,37 @@
     </v-row>
 
     <!-- 위시리스트가 존재할 때 -->
-    <v-row
-      justify="center"
-      v-for="spot in getWishList"
-      :key="spot.wishlist_id"
-      v-else
-    >
-      <v-col cols="2">
-        <v-card class="ma-5">
+    <v-row v-else>
+      <v-col
+        cols="3"
+        justify="center"
+        v-for="spot in getWishList"
+        :key="spot.wishlist_id"
+        class="pa-5"
+      >
+        <v-card>
           <!-- 이미지 데이터가 없을 때 -->
           <v-img
             v-if="spot.imgdata == null || spot.imgdata == ''"
             src="../../assets/logo.png"
+            contain
+            max-height="150"
             style="cursor: pointer"
-            @click="onSpot(spot.spot_id)"
+            @click="onSpot(spot.id)"
           >
           </v-img>
 
           <!-- 이미지 데이터가 있을 때 -->
           <v-img
             v-else
+            contain
+            max-height="150"
             :src="spot.imgdata"
             style="cursor: pointer"
-            @click="onSpot(spot.spot_id)"
+            @click="onSpot(spot.id)"
           ></v-img>
-          <v-btn x-large block text
-            ><h2>{{ spot.name }}</h2></v-btn
+          <v-btn block text
+            ><h3>{{ spot.name }}</h3></v-btn
           >
         </v-card>
       </v-col>
@@ -70,7 +75,7 @@ export default {
     ...mapActions(WishStore, ["reqWishList"]),
 
     onSpot(id) {
-      this.$router.push("/spot/detail/" + id);
+      this.$router.push("/spotdetail/" + id);
     }
   }
 };

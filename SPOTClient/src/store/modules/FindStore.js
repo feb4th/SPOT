@@ -1,4 +1,4 @@
-import axios from "../../axios/axios-common";
+import axios from "axios";
 
 const FindStore = {
   namespaced: true, // 모듈 개발사용 가능
@@ -7,17 +7,17 @@ const FindStore = {
     searchList: {},
     suggestList: [
       {
+        spot_id: "500001",
+        name: "관광지",
+        latitude: "33.451705",
+        longitude: "126.571677",
+        img: ""
+      },
+      {
         spot_id: "1",
         name: "좋은 장소",
         lat: "33.450705",
         lng: "126.570677",
-        img: ""
-      },
-      {
-        spot_id: "500001",
-        name: "관광지",
-        latitude: "33.450705",
-        longitude: "126.570677",
         img: ""
       }
     ]
@@ -48,14 +48,14 @@ const FindStore = {
 
   actions: {
     reqSearch(context, name) {
+      console.log(name);
       return axios
-        .get("/placelist", {
-          name: name
-        })
+        .get("http://j4a102.p.ssafy.io:8000/search/" + name)
         .then(response => {
-          if (response.status === 200 && response.data.status === true) {
+          console.log(response);
+          if (response.data.message == "success") {
             context.commit("setIsSearched", true); // 검색된 상태로 변경
-            context.commit("setSearchList", response.data.object.stores);
+            context.commit("setSearchList", response.data.contents);
             return {
               result: true,
               msg: "검색 되었습니다",
@@ -78,17 +78,12 @@ const FindStore = {
           };
         });
     },
-    reqSuggest(context, email) {
+    reqSuggest(context, user_id) {
       return axios
-        .post("/recommend/place", {
-          email: email
-        })
+        .get("http://j4a102.p.ssafy.io/recommendation/" + user_id)
         .then(response => {
-          if (response.status === 200 && response.data.status === true) {
-            context.commit(
-              "setSuggestList",
-              response.data.object.recommend_place_list
-            );
+          if (response.data.message == "success") {
+            context.commit("setSuggestList", response.data.contents);
 
             return {
               result: true,

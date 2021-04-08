@@ -42,12 +42,11 @@ export default {
       spot_id: this.$route.params.spotid,
       user_id: this.getMemberInfo.user_id
     });
-    console.log("wish: " + this.getWishId);
   },
   computed: {
     ...mapGetters(WishStore, ["getWishId"]),
     ...mapGetters(MemberStore, ["getMemberInfo"]),
-    ...mapGetters(SpotInfoStore, ["getSpot"])
+    ...mapGetters(SpotInfoStore, ["getSpot", "getImage"])
   },
   methods: {
     ...mapActions(WishStore, ["reqCheckWish", "reqAddWish", "reqDeleteWish"]),
@@ -55,10 +54,27 @@ export default {
       this.reqDeleteWish(this.getWishId);
     },
     setFollow() {
-      this.reqAddWish({
-        spot_id: this.$route.params.spotid,
-        user_id: this.getMemberInfo.user_id
-      });
+      //맛집일때
+      if (this.$route.params.spotid < 50000) {
+        this.reqAddWish({
+          spot_id: this.$route.params.spotid,
+          img: this.getSpot.img,
+          latitude: this.getSpot.latitude,
+          longitude: this.getSpot.longitude,
+          name: this.getSpot.name,
+          user_id: this.getMemberInfo.user_id
+        });
+      } else {
+        //관광지일때
+        this.reqAddWish({
+          spot_id: this.$route.params.spotid,
+          img: this.getImage,
+          latitude: this.getSpot.latitude,
+          longitude: this.getSpot.longitude,
+          name: this.getSpot.name,
+          user_id: this.getMemberInfo.user_id
+        });
+      }
     }
   }
 };

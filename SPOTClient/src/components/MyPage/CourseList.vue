@@ -27,11 +27,11 @@
     >
       <v-col cols="9">
         <v-card
-          class="mb-15 rounded-tl-xl rounded-br-xl"
+          class="mb-5 rounded-tl-xl rounded-br-xl"
           color="rgba(255, 255, 255, 0.9)"
         >
           <v-btn x-large block text @click="onCourse(course.course_id)"
-            ><h2>{{ course.name }}</h2></v-btn
+            ><h2>{{ course.course_name }}</h2></v-btn
           >
         </v-card>
       </v-col>

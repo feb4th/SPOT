@@ -1,7 +1,7 @@
 // Components import
 import AreaSelect from "../../views/AreaSelect";
 import AreaSuggest from "../../views/AreaSuggest";
-import MakeCourse from "../../views/MakeCourse";
+import MakeCourse1 from "../../views/MakeCourse";
 
 const mapRoute = [
   {
@@ -20,9 +20,9 @@ const mapRoute = [
   },
   {
     // 코스 수정
-    path: "/makecourse",
-    name: "makecourse",
-    component: MakeCourse,
+    path: "/makecourse1/:courseid",
+    name: "makecourse1",
+    component: MakeCourse1,
     props: true
   }
 ];

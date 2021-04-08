@@ -41,21 +41,18 @@
       </v-row>
     </v-card>
     <v-card class="mx-auto" max-width="750" elevation="0">
-      <v-list-item v-for="comment in getReviewList" :key="comment.review_id">
-        <v-col cols="auto" class="align-center"
-          ><v-avatar>
-            <v-img
-              v-if="comment.img == '' || comment.img == null"
-              src="../../assets/logo.png"
-            />
-            <v-img v-else :src="getMemberInfo.img" /> </v-avatar
-        ></v-col>
+      <v-list-item v-for="(comment, idx) in getReviewList" :key="idx">
+        <v-col cols="auto" class="align-center">
+          <v-avatar> <v-img src="../../assets/logo.png" /> </v-avatar>
+        </v-col>
         <v-col cols="4">
           <v-list-item-content>
             <div class="overline">
-              <span style="margin-left: 1em;">{{ comment.member_id }}</span>
+              <span style="margin-left: 1em;">{{
+                comment.writer_info.gender
+              }}</span>
               <v-rating
-                :v-model="comment.score"
+                v-model="comment.review_info.score"
                 color="yellow darken-3"
                 background-color="grey darken-1"
                 empty-icon="$ratingFull"
@@ -66,7 +63,7 @@
           </v-list-item-content>
         </v-col>
         <v-col>
-          {{ comment.content }}
+          {{ comment.review_info.content }}
         </v-col>
       </v-list-item>
     </v-card>
@@ -84,6 +81,7 @@ export default {
       context: "",
       score: 0,
       review_id: "",
+      genderidx: "남",
       tmpComment: {},
       Dialog: {
         modify: false,
@@ -95,7 +93,7 @@ export default {
     };
   },
   created() {
-    this.reqTourReviewList(this.$route.params.spotid);
+    this.reqReviewList(this.$route.params.spotid);
   },
   computed: {
     ...mapGetters(ReviewStore, ["getReviewList"]),
@@ -111,19 +109,30 @@ export default {
       "reqCreateTourReview"
     ]),
     onWrite() {
-      //관광지일때
       let date =
         new Date().toISOString().substr(0, 10) +
         " " +
         new Date().toTimeString().substr(0, 8);
-      this.reqCreateTourReview({
-        toursight_id: this.$route.params.spotid,
-        user_id: this.getMemberInfo.user_id,
-        content: this.context,
-        score: this.score,
-        date: date
-      }).then(response => {
-        if (response == true) this.reqTourReviewList(this.$route.params.spotid);
+
+      if (this.getMemberInfo.gender == 0) this.genderidx = "남";
+      else this.genderidx = "여";
+      this.reqCreateReview({
+        writer_info: {
+          id: "1",
+          gender: this.genderidx,
+          born_year: this.getMemberInfo.birth
+        },
+        review_info: {
+          id: "1",
+          score: this.score,
+          content: this.context,
+          reg_time: date
+        },
+        id: this.$route.params.spotid
+      }).then(res => {
+        if (res == true) {
+          this.reqReviewList(this.$route.params.spotid);
+        }
       });
     },
     openModify(comment) {

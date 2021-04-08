@@ -1,23 +1,27 @@
 <template>
   <v-container>
-    <v-sheet class="mx-auto" elevation="8" max-width="800">
-      <template v-if="getSearchList.length == 0">
-        <h1>검색 결과가 없습니다.</h1>
-      </template>
-      <v-slide-group class="pa-4" active-class="success" show-arrows>
-        <v-slide-item v-for="(card, idx) in getSearchList" :key="idx">
-          <v-card
-            class="ma-4"
-            height="200"
-            width="200"
-            @click="onSelect(card.storeid)"
+    <v-sheet class="mx-auto" max-width="800" justify="center" align="center">
+      <h1 v-if="getSearchList.length == 0">검색 결과가 없습니다.</h1>
+      <v-row>
+        <v-card
+          v-for="(card, idx) in getSearchList"
+          :key="idx"
+          height="180"
+          width="180"
+          class="mx-auto my-3"
+          @click="onSelect(card.id)"
+        >
+          <v-img
+            contain
+            aspect-ratio="1"
+            :src="getSrc(card.img)"
+            class="white--text align-end"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           >
-            <v-img>
-              :src = "card.img"
-            </v-img>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
+            <v-card-title> {{ card.name }} </v-card-title></v-img
+          >
+        </v-card>
+      </v-row>
     </v-sheet>
   </v-container>
 </template>
@@ -33,11 +37,13 @@ export default {
   methods: {
     ...mapActions(SpotInfoStore, ["reqSpot"]),
     onSelect(storeNum) {
-      this.reqSpot(storeNum).then(response => {
-        if (!response) {
-          this.$router.push("/spotdetail");
-        } else alert(response.msg);
-      });
+      this.$router.push("/spotdetail/" + storeNum);
+    },
+    getSrc(order) {
+      if (order == "" || order == "null" || order == undefined)
+        return "@/assets/logo.png";
+      // console.log(order);
+      return order;
     }
   }
 };

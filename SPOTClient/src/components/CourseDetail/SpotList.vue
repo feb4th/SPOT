@@ -57,7 +57,7 @@ export default {
       this.$router.push("/spotdetail/" + spot_id);
     },
     onModify() {
-      this.$router.push("/makecourse/" + this.$route.params.course_id);
+      this.$router.push("/makecourse1/" + this.$route.params.course_id);
     },
     getSrc(order) {
       return require("../../assets/numbers/" + order + ".png");

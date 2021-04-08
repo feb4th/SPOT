@@ -40,28 +40,28 @@ export default {
     initMap() {
       var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
 
-      var options = {
-        //지도를 생성할 때 필요한 기본 옵션
-
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 3 //지도의 레벨(확대, 축소 정도)
-      };
-
-      var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
+      var latnow = 33.450701,
+        lngnow = 126.570667;
       // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
       if (navigator.geolocation) {
         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(function(position) {
-          var lat = position.coords.latitude, // 위도
-            lng = position.coords.longitude; // 경도
-
-          new kakao.maps.LatLng(lat, lng); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+          latnow = position.coords.latitude; // 위도
+          lngnow = position.coords.longitude; // 경도
+          console.log(latnow, lngnow);
+          new kakao.maps.LatLng(latnow, lngnow); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           // 마커와 인포윈도우를 표시합니다
         });
       } else {
-        alert(1);
+        console.log("현위치 받아오기 실패");
       }
+      var options = {
+        //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(latnow, lngnow), //지도의 중심좌표.
+        level: 4 //지도의 레벨(확대, 축소 정도)
+      };
+
+      var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
       // 마커 이미지의 이미지 주소입니다
       var imageSrc =

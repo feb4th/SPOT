@@ -1,14 +1,12 @@
 <template>
   <v-container>
-    <v-window show-arrows class="ma-10">
-      <v-window-item v-for="(image, idx) in getImage" :key="idx">
-        <v-card color="grey">
-          <v-row align="center" justify="center">
-            <v-img contain :src="setimage(image)" height="400"></v-img>
-          </v-row>
-        </v-card>
-      </v-window-item>
-    </v-window>
+    <v-img
+      :src="getImage[0]"
+      height="400"
+      contain
+      v-if="this.$route.params.spotid >= 500000"
+    ></v-img>
+    <v-img :src="getSpot.img" height="400" contain v-else> </v-img>
   </v-container>
 </template>
 
@@ -16,16 +14,14 @@
 import { mapGetters } from "vuex";
 const SpotInfoStore = "SpotInfoStore";
 export default {
-  created() {
-    //console.log(this.getImage[0]);
-  },
   computed: {
-    ...mapGetters(SpotInfoStore, ["getImage"])
+    ...mapGetters(SpotInfoStore, ["getImage", "getSpot"])
   },
   methods: {
     setimage(ab) {
-      console.log(ab.substring(1));
-      return ab.substring(1);
+      console.log(ab);
+      if (this.$route.params.spotid < 50000) return ab;
+      else return "http:/" + ab;
     }
   }
 };

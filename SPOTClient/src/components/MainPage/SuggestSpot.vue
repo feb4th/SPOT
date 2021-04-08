@@ -19,7 +19,7 @@
             <v-img
               contain
               aspect-ratio="1"
-              :src="getSrc(card.id)"
+              :src="card.img"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             >
@@ -34,14 +34,13 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-const FindStore = "FindStore";
 const SpotInfoStore = "SpotInfoStore";
 const MemberStore = "MemberStore";
 const SuggestStore = "SuggestStore";
 
 export default {
   created() {
-    this.reqSuggest(this.getMemberInfo.email); // 이메일 정보를 통해서 추천 List 받아옴.
+    this.reqSuggest(this.getMemberInfo.user_id); // 이메일 정보를 통해서 추천 List 받아옴.
   },
   computed: {
     ...mapGetters(SuggestStore, ["getSuggestList"]),
@@ -49,7 +48,7 @@ export default {
   },
   methods: {
     ...mapActions(SpotInfoStore, ["reqSpot"]),
-    ...mapActions(FindStore, ["reqSuggest"]),
+    ...mapActions(SuggestStore, ["reqSuggest"]),
 
     onSelect(spot_id) {
       this.$router.push("/spotdetail/" + spot_id);

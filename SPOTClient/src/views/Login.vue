@@ -7,7 +7,7 @@
             <v-sheet min-height="70vh" rounded="lg">
               <v-card class="pu-10 px-10 mu-10" elevation="0">
                 <v-card-title class="headline justify-space-between">
-                  <v-btn
+                  <!-- <v-btn
                     icon
                     large
                     @click="
@@ -17,7 +17,9 @@
                     "
                   >
                     <v-icon large>mdi-arrow-left</v-icon>
-                  </v-btn>
+                  </v-btn> -->
+
+                  <v-btn disabled text><v-spacer></v-spacer></v-btn>
 
                   <h2>로그인</h2>
                   <v-btn disabled text><v-spacer></v-spacer></v-btn>

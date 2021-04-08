@@ -3,7 +3,7 @@
     <v-card
       elevation="0"
       style="margin-left: 1.5em;"
-      v-if="getSpot.spot_id < 500000"
+      v-if="this.$route.params.spotid < 500000"
     >
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
@@ -17,7 +17,7 @@
     <v-card
       elevation="0"
       style="margin-left: 1.5em;"
-      v-if="getSpot.spot_id < 500000"
+      v-if="this.$route.params.spotid < 500000"
     >
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
