@@ -6,6 +6,7 @@
           <v-col>
             <v-sheet min-height="70vh" rounded="lg">
               <banner />
+              <map-vue hidden />
               <suggest-theme />
               <suggest-spot />
             </v-sheet>
@@ -18,6 +19,7 @@
 
 <script>
 import Banner from "../components/MainPage/Banner.vue";
+import MapVue from "../components/MainPage/Map.vue";
 import SuggestSpot from "../components/MainPage/SuggestSpot.vue";
 import SuggestTheme from "../components/MainPage/SuggestTheme.vue";
 
@@ -25,7 +27,8 @@ export default {
   components: {
     Banner,
     SuggestSpot,
-    SuggestTheme
+    SuggestTheme,
+    MapVue
   }
 };
 </script>
