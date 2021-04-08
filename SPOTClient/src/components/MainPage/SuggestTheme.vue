@@ -8,7 +8,7 @@
     <v-carousel
       class="mx-auto"
       height="270"
-      style="width:800px;"
+      style="width:750px;"
       cycle
       show-arrows-on-hover
       hide-delimiter-background
