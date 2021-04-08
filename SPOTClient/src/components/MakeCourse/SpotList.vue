@@ -92,6 +92,8 @@ export default {
         .put("/course/" + this.$route.params.courseid, this.list)
         .then(response => {
           console.log(response);
+          alert("코스 등록 완료하였습니다!");
+          this.$router.push("/mypage/" + this.getMemberInfo.user_id);
         })
         .catch(error => {
           console.log(error);
