@@ -13,7 +13,7 @@
             <v-row class="px-10" align="center">
               <v-col cols="3">
                 <!-- order에 따른 이미지로 수정 예정 -->
-                <v-btn>{{ idx }}</v-btn>
+                <v-img :src="getSrc(idx)" contain></v-img>
               </v-col>
               <v-col cols="3">
                 <v-btn x-large text @click="onDetail(course.spot_id)"
@@ -103,6 +103,9 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    getSrc(order) {
+      return require("../../assets/numbers/" + order + ".png");
     }
   }
 };
