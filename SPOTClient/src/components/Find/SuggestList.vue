@@ -22,7 +22,7 @@
           <v-img
             contain
             aspect-ratio="1"
-            :src="getSrc(card.img)"
+            :src="card.img"
             class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           >
