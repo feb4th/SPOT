@@ -69,10 +69,12 @@ export default {
     },
     onSave() {
       //수정 정보 저장
+      const tmpCourseName = this.getCourseInfo[0].course_name;
+      for (var i = 1; i < this.getCourseInfo.length; i++) {
+        this.getCourseInfo[i].course_name = tmpCourseName;
+      }
       axios
-        .put("/course/" + this.$route.params.course_id, {
-          user_id: this.getMemberInfo.email
-        })
+        .put("/course/" + this.$route.params.courseid, this.list)
         .then(response => {
           console.log(response);
         })
