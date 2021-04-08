@@ -45,8 +45,7 @@ import axios from "../../axios/axios-common";
 export default {
   data() {
     return {
-      list: [],
-      course_no: 0
+      list: []
     };
   },
   created() {
@@ -71,7 +70,7 @@ export default {
     onSave() {
       //수정 정보 저장
       axios
-        .put("/course/" + this.course_no, {
+        .put("/course/" + this.$route.params.course_id, {
           user_id: this.getMemberInfo.email
         })
         .then(response => {

@@ -80,7 +80,7 @@ const FindStore = {
     },
     reqSuggest(context, user_id) {
       return axios
-        .post("http://j4a102.p.ssafy.io/recommendation/" + user_id)
+        .get("http://j4a102.p.ssafy.io/recommendation/" + user_id)
         .then(response => {
           if (response.data.message == "success") {
             context.commit("setSuggestList", response.data.contents);
