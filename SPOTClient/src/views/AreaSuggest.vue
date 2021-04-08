@@ -52,12 +52,7 @@
                             <v-row justify="center" class="ma-auto">
                               <v-tooltip bottom>
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn
-                                    icon
-                                    :color="color"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  >
+                                  <v-btn icon v-bind="attrs" v-on="on">
                                     <v-icon
                                       v-if="wishFlag[idx] == true"
                                       size="50"
@@ -146,12 +141,7 @@
                           <v-row justify="center" class="ma-auto">
                             <v-tooltip bottom>
                               <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                  icon
-                                  :color="color"
-                                  v-bind="attrs"
-                                  v-on="on"
-                                >
+                                <v-btn icon v-bind="attrs" v-on="on">
                                   <v-icon
                                     v-if="suggestFlag[idx] == true"
                                     size="50"
@@ -209,7 +199,8 @@ export default {
       dialog: false,
       btnNumber: 0,
       suggestFlag: [],
-      wishFlag: []
+      wishFlag: [],
+      courseRoom: []
     };
   },
   created() {
@@ -229,54 +220,60 @@ export default {
     },
     onClick() {
       // 위시리스트와 추천리스트에서 선택한 것만 리스트에 넣어줌.
-      let formData = new FormData();
-      let tmpIdx = 0;
+      let tmpIdx = 1;
       for (var i = 0; i < this.getSuggestTourList.length; i++) {
         if (this.suggestFlag[i] == true) {
           const tmp = this.getSuggestTourList[i];
-          let formData2 = new FormData();
-          formData2.append("course_id", 0);
-          formData2.append("date", 0);
-          formData2.append("memo", 0);
-          formData2.append("name", tmp.name);
-          formData2.append("orders", tmpIdx++);
-          formData2.append("spot_id", tmp.spot_id);
-          formData2.append("time", 0);
-          formData2.append("type", 0);
-          formData2.append("user_id", this.getMemberInfo.user_id);
-          formData.append("", formData2);
+          this.courseRoom[tmpIdx - 1] = {
+            course_id: "0",
+            course_name: "new코스",
+            date: "0",
+            memo: "0",
+            name: tmp.name,
+            orders: tmpIdx,
+            spot_id: tmp.id,
+            time: "0",
+            type: "0",
+            latitude: tmp.latitude,
+            longitude: tmp.longitude,
+            user_id: this.getMemberInfo.user_id
+          };
+          tmpIdx++;
         }
       }
 
       for (i = 0; i < this.getWishList.length; i++) {
         if (this.wishFlag[i] == true) {
           const tmp = this.wishFlag[i];
-          let formData2 = new FormData();
-          formData2.append("course_id", 0);
-          formData2.append("date", 0);
-          formData2.append("memo", 0);
-          formData2.append("name", tmp.name);
-          formData2.append("orders", tmpIdx++);
-          formData2.append("spot_id", tmp.spot_id);
-          formData2.append("time", 0);
-          formData2.append("type", 0);
-          formData2.append("user_id", this.getMemberInfo.user_id);
-          formData.append("", formData2);
+          this.courseRoom[tmpIdx - 1] = {
+            course_id: "0",
+            course_name: "new코스",
+            date: "0",
+            memo: "0",
+            name: tmp.name,
+            orders: tmpIdx,
+            spot_id: tmp.id,
+            time: "0",
+            type: "0",
+            latitude: tmp.latitude,
+            longitude: tmp.longitude,
+            user_id: this.getMemberInfo.user_id
+          };
+          tmpIdx++;
         }
       }
 
       // 여기서 선택한 곳만 리스트로 보내고, 코스 선택으로 넘겨야 함.
       // 여기부터 작업하면 됨. 코스로 보내는 곳
 
-      this.reqCreateCourse(this.getMemberInfo.user_id).then(response => {
-        // 아이디로 코스 만듦
-        const courseNum = response.result;
-        this.reqCreate(courseNum, formData).then(res => {
-          if (res.result) {
-            this.$router.push("/makecourse");
-            console.log(res);
-          } else alert(response.msg);
-        });
+      console.log(this.courseRoom);
+      const tt = JSON.parse(JSON.stringify(this.courseRoom));
+      console.log(tt);
+      this.reqCreate(tt).then(res => {
+        if (res.msg) {
+          console.log(res);
+          this.$router.push("/makecourse1/" + res.result);
+        } else alert(res.msg);
       });
     },
     onSuggestClick(idx) {
@@ -292,7 +289,7 @@ export default {
       this.btnNumber--;
     },
     onWishUnclick(idx) {
-      this.wish[idx] = true;
+      this.wishFlag[idx] = true;
       this.btnNumber++;
     },
     getSrc(img) {

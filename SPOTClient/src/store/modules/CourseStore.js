@@ -4,24 +4,7 @@ const CourseStore = {
   namespaced: true,
   state: {
     courseList: [],
-    courseInfo: [
-      {
-        course_id: "1",
-        spot_id: "1",
-        latitude: "37.570425",
-        longitude: "126.991316",
-        name: "스팟명",
-        course_name: "기본코스"
-      },
-      {
-        course_id: "1",
-        spot_id: "2",
-        latitude: "37.571525",
-        longitude: "126.991316",
-        name: "두번째 스팟",
-        course_name: "기본코스"
-      }
-    ]
+    courseInfo: []
   },
   getters: {
     getCourseList(state) {
@@ -78,7 +61,7 @@ const CourseStore = {
         .post("/course/" + id)
         .then(response => {
           console.log(response.data);
-          if (response.message == "success") {
+          if (response.data.message == "success") {
             return {
               result: response.data.result,
               msg: "코스 값 가져왔습니다.",
@@ -97,18 +80,17 @@ const CourseStore = {
         });
     },
     //코스 생성
-    reqCreate(context, id, list) {
+    reqCreate(context, list) {
+      console.log(list);
       return axios
-        .post("/course/add/" + id, {
-          list: list
-        })
+        .post("/course/add", list)
         .then(response => {
           console.log(response.data);
-          if (response.message == "success") {
-            context.commit("setCourseInfo", response.data.result);
+          if (response.data.message == "insert course") {
+            context.commit("setCourseInfo", list);
             return {
-              result: true,
-              msg: "코스 가져왔습니다.",
+              result: response.data.result,
+              msg: true,
               color: "success"
             };
           } else {
