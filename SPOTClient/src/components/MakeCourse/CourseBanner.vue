@@ -26,13 +26,7 @@
               >
               </v-text-field
             ></v-col>
-            <v-col cols="1" justify="end">
-              <v-btn class="mr-4" icon large>
-                <v-icon class="kakao-link" large @click="onShare()"
-                  >mdi-share-variant
-                </v-icon>
-              </v-btn></v-col
-            >
+            <v-col cols="1" justify="end"> <v-spacer></v-spacer></v-col>
           </v-row>
 
           <!-- <v-btn icon large v-if="getIsLogined">
