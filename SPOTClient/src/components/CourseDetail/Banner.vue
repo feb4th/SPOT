@@ -15,7 +15,7 @@
             <v-icon large>mdi-arrow-left</v-icon>
           </v-btn>
 
-          {{ getCourseInfo[0].name }}
+          {{ getCourseInfo[0].course_name }}
           <v-btn icon large v-if="getIsLogined">
             <v-icon class="kakao-link" large @click="onShare()"
               >mdi-share-variant
