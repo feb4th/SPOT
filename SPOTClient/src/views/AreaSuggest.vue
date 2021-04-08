@@ -94,7 +94,7 @@
               <v-row style="height:90%;">
                 <v-col cols="1"></v-col>
                 <v-col cols="10">
-                  <v-sheet class="mx-auto" elevation="0" max-width="1000">
+                  <v-sheet class="mx-auto" elevation="0">
                     <v-slide-group
                       class="pa-4"
                       active-class="success"
@@ -293,7 +293,8 @@ export default {
       this.btnNumber++;
     },
     getSrc(img) {
-      return "http:/" + img;
+      console.log(img);
+      return "@/assets/images/logo.png";
     }
   }
 };
