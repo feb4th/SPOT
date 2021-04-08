@@ -32,7 +32,7 @@ export default new Vuex.Store({
   plugins: [
     createPersistedState({
       //store 내부 정보가 날아가지 않도록 해줌
-      paths: ["MemberStore"] //원하는 모듈별로 추가가능
+      paths: ["MemberStore", "CourseStore", "SuggestStore", "WishStore"] //원하는 모듈별로 추가가능
     })
   ]
 });
