@@ -30,7 +30,7 @@
 	</select>
 	
 	<select id="tourSightList" resultType="TourSight" parameterType="string">
-		select * from TourSight where new_address like CONCAT(#{area},'%') or old_address like CONCAT(#{area},'%') order by rand() limit 10; 
+		select * from TourSight where new_address like CONCAT(#{area},'%') or old_address like CONCAT(#{area},'%') order by rand() limit 12; 
 	</select>
 	
 	<select id="findOneImage" resultType="String" parameterType="string">
