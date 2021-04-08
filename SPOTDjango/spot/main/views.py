@@ -125,7 +125,7 @@ def recommendation(request, id):
                 # print(tmp)
 
                 # 자신(유사도 1)을 제외하고 가장 높은 것 10개 뽑음
-                for i in tmp[1:11]:
+                for i in tmp[1:13]:
                     # print(bigdata.find_one({"id": i[0] + 1}))
                     store = bigdata.find_one({"id": i[0] + 1})
                     del store['_id']
@@ -134,7 +134,7 @@ def recommendation(request, id):
                 res['message'] = 'success'
             #위시리스트가 비어있을경우 콜드스타트 rank를 리턴
             else:
-                for i in rank.find({'rank' : {'$lt' : 11}}):
+                for i in rank.find({'rank' : {'$lt' : 13}}):
                     del i['_id']
                     data.append(i)
 
