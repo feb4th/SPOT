@@ -61,7 +61,7 @@
 import { mapActions, mapGetters } from "vuex";
 const WishStore = "WishStore";
 const MemberStore = "MemberStore";
-
+const SpotInfoStore = "SpotInfoStore";
 export default {
   created() {
     this.reqWishList(this.$route.params.memberid);
@@ -73,9 +73,22 @@ export default {
 
   methods: {
     ...mapActions(WishStore, ["reqWishList"]),
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"]),
 
-    onSpot(id) {
-      this.$router.push("/spotdetail/" + id);
+    onSpot(spot_id) {
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     }
   }
 };

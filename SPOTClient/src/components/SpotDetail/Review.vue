@@ -41,7 +41,7 @@
       </v-row>
     </v-card>
     <v-card class="mx-auto" max-width="750" elevation="0">
-      <v-list-item v-for="comment in getReviewList" :key="comment.review_id">
+      <v-list-item v-for="(comment, idx) in getReviewList" :key="idx">
         <v-col cols="auto" class="align-center"
           ><v-avatar>
             <v-img

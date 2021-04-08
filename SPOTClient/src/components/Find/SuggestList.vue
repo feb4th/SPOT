@@ -53,7 +53,19 @@ export default {
     ...mapActions(FindStore, ["reqSuggest"]),
 
     onSelect(spot_id) {
-      this.$router.push("/spotdetail/" + spot_id);
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     },
     getSrc(order) {
       // console.log(order);

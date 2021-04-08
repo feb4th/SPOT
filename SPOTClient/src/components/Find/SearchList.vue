@@ -35,9 +35,21 @@ export default {
     ...mapGetters(FindStore, ["getSearchList"])
   },
   methods: {
-    ...mapActions(SpotInfoStore, ["reqSpot"]),
-    onSelect(storeNum) {
-      this.$router.push("/spotdetail/" + storeNum);
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"]),
+    onSelect(spot_id) {
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     },
     getSrc(order) {
       if (order == "" || order == "null" || order == undefined)

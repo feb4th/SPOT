@@ -37,7 +37,7 @@
                               class="ma-4"
                               height="180"
                               width="200"
-                              @click="onSelect(card.spot_id)"
+                              @click="onSelect(card.id)"
                             >
                               <!-- 이미지 데이터가 없을 때 -->
                               <!-- 이미지 데이터가 없을 때 -->
@@ -210,7 +210,7 @@ const SuggestStore = "SuggestStore";
 const MemberStore = "MemberStore";
 const CourseStore = "CourseStore";
 const WishStore = "WishStore";
-
+const SpotInfoStore = "SpotInfoStore";
 export default {
   data() {
     return {
@@ -232,9 +232,22 @@ export default {
   methods: {
     ...mapActions(WishStore, ["reqWishList"]),
     ...mapActions(CourseStore, ["reqCreateCourse", "reqCreate"]),
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"]),
 
-    onSelect(id) {
-      this.$router.push("/spotdetail/" + id); // 상세 보기.
+    onSelect(spot_id) {
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     },
     onClick() {
       // 위시리스트와 추천리스트에서 선택한 것만 리스트에 넣어줌.

@@ -38,6 +38,7 @@
 import { mapGetters, mapActions } from "vuex";
 const CourseStore = "CourseStore";
 const MemberStore = "MemberStore";
+const SpotInfoStore = "SpotInfoStore";
 
 import draggable from "vuedraggable";
 import axios from "../../axios/axios-common";
@@ -64,8 +65,22 @@ export default {
       "reqChangeStatus",
       "reqModifyCourse"
     ]),
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"]),
+
     onDetail(spot_id) {
-      this.$router.push("/spotdetail/" + spot_id);
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     },
     onSave() {
       //수정 정보 저장
