@@ -6,27 +6,30 @@ public class CourseReq {
 	private String user_id;
 	private String spot_id;
 	private String orders;
-	private String memo;
-	private String time;
+	private String latitude;
+	private String longitude;
 	private String type;
 	private String date;
+	private String course_name;
 	
 	public CourseReq() {
 	}
-	
-	public CourseReq(String course_id, String name, String user_id, String spot_id, String orders, String memo,
-			String time, String type, String date) {
+
+	public CourseReq(String course_id, String name, String user_id, String spot_id, String orders, String latitude,
+			String longitude, String type, String date, String course_name) {
+		super();
 		this.course_id = course_id;
 		this.name = name;
 		this.user_id = user_id;
 		this.spot_id = spot_id;
 		this.orders = orders;
-		this.memo = memo;
-		this.time = time;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.type = type;
 		this.date = date;
+		this.course_name = course_name;
 	}
-	
+
 	public String getCourse_id() {
 		return course_id;
 	}
@@ -59,7 +62,6 @@ public class CourseReq {
 		this.spot_id = spot_id;
 	}
 
-	
 	public String getOrders() {
 		return orders;
 	}
@@ -68,20 +70,20 @@ public class CourseReq {
 		this.orders = orders;
 	}
 
-	public String getMemo() {
-		return memo;
+	public String getLatitude() {
+		return latitude;
 	}
 
-	public void setMemo(String memo) {
-		this.memo = memo;
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
-	public String getTime() {
-		return time;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 	public String getType() {
@@ -98,6 +100,14 @@ public class CourseReq {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getCourse_name() {
+		return course_name;
+	}
+
+	public void setCourse_name(String course_name) {
+		this.course_name = course_name;
 	}
 	
 	

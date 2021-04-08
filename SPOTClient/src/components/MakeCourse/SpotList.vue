@@ -13,7 +13,7 @@
             <v-row class="px-10" align="center">
               <v-col cols="3">
                 <!-- order에 따른 이미지로 수정 예정 -->
-                <h2>{{ idx }}.</h2>
+                <v-img :src="getSrc(idx)" contain></v-img>
               </v-col>
               <v-col cols="9">
                 <v-btn x-large text @click="onDetail(course.spot_id)"
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 const CourseStore = "CourseStore";
 const MemberStore = "MemberStore";
 const SpotInfoStore = "SpotInfoStore";
@@ -62,6 +62,7 @@ export default {
     ...mapGetters(MemberStore, ["getMemberInfo"])
   },
   methods: {
+    ...mapMutations(CourseStore, ["setCourseInfo"]),
     ...mapActions(CourseStore, [
       "reqCourseInfo",
       "reqChangeStatus",
@@ -87,19 +88,26 @@ export default {
     onSave() {
       //수정 정보 저장
       const tmpCourseName = this.getCourseInfo[0].course_name;
-      for (var i = 1; i < this.getCourseInfo.length; i++) {
-        this.getCourseInfo[i].course_name = tmpCourseName;
+      //console.log(tmpCourseName);
+      for (var i = 0; i < this.getCourseInfo.length; i++) {
+        this.list[i].course_name = tmpCourseName;
+        //console.log(this.list[i].course_name);
       }
       axios
         .put("/course/" + this.$route.params.courseid, this.list)
         .then(response => {
           console.log(response);
+          this.setCourseInfo(this.list);
           alert("코스 등록 완료하였습니다!");
+
           this.$router.push("/mypage/" + this.getMemberInfo.user_id);
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    getSrc(order) {
+      return require("../../assets/numbers/" + order + ".png");
     }
   }
 };

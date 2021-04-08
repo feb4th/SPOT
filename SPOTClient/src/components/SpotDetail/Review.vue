@@ -55,7 +55,7 @@
             <div class="overline">
               <span style="margin-left: 1em;">{{ comment.member_id }}</span>
               <v-rating
-                :v-model="comment.score"
+                :v-model="parseInt(comment.score)"
                 color="yellow darken-3"
                 background-color="grey darken-1"
                 empty-icon="$ratingFull"
@@ -84,6 +84,7 @@ export default {
       context: "",
       score: 0,
       review_id: "",
+      genderidx: "남",
       tmpComment: {},
       Dialog: {
         modify: false,
@@ -96,6 +97,7 @@ export default {
   },
   created() {
     this.reqTourReviewList(this.$route.params.spotid);
+    console.log(this.getReviewList);
   },
   computed: {
     ...mapGetters(ReviewStore, ["getReviewList"]),
@@ -122,9 +124,10 @@ export default {
         content: this.context,
         score: this.score,
         date: date
-      }).then(response => {
-        if (response == true) this.reqTourReviewList(this.$route.params.spotid);
       });
+      this.score = 0;
+      this.context = "";
+      this.reqTourReviewList(this.$route.params.spotid);
     },
     openModify(comment) {
       this.review_id = comment.review_id;

@@ -11,7 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
 
-  private final Path root = Paths.get("C:/Users/multicampus/Desktop");
+//  private final Path root = Paths.get("C:/Users/multicampus/Desktop");
+  private final Path root = Paths.get("/home/ubuntu/");
 
   @Override
   public void init() {
@@ -25,7 +26,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
   @Override
   public void saveimage(MultipartFile file, String timeurl) {
     try {
-//    	System.out.println(this.root.resolve(file.getOriginalFilename())); //.\HBD.jpg
+    	System.out.println(this.root.resolve(file.getOriginalFilename())); //.\HBD.jpg
       Files.copy(file.getInputStream(), this.root.resolve("profile/"+timeurl+file.getOriginalFilename()));
     } catch (Exception e) {
       throw new RuntimeException("Could not store the file. Error: " + e.getMessage());

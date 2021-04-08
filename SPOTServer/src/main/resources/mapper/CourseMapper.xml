@@ -5,7 +5,7 @@
 
 <mapper namespace="com.ssafy.spot.mapper.CourseMapper">
 	<insert id="insertCourse" parameterType="CourseReq">
-		insert into Course values(null, #{course_id}, #{name}, #{user_id}, #{spot_id}, #{orders}, #{memo}, #{time}, #{type}, #{date})
+		insert into Course values(null, #{course_id}, #{name}, #{user_id}, #{spot_id}, #{orders}, #{latitude}, #{longitude}, #{type}, #{date}, #{course_name})
   	</insert>
   	
   	<select id="findById" parameterType="String" resultType="Integer">
@@ -13,11 +13,11 @@
   	</select>
   	
   	<select id="courseList" parameterType="String" resultType="java.util.Map">
-  		select distinct course_id,name from Course where user_id=#{user_id};
+  		select distinct course_id, course_name from Course where user_id=#{user_id};
   	</select>
   	
   	<update id="updateCourse">
-  		update Course set spot_id=#{spot_id}, orders=#{orders}, memo=#{memo}, time=#{time}, type=#{type} where user_id=#{user_id} and course_id=#{course_id}
+  		update Course set course_name=#{course_name}, spot_id=#{spot_id}, orders=#{orders}, latitude=#{latitude}, longitude=#{longitude}, type=#{type} where user_id=#{user_id} and course_id=#{course_id}
   	</update>
   	
   	<select id="findIdByName" parameterType="String" resultType="String">
