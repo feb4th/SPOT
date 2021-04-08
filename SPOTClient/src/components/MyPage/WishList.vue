@@ -30,7 +30,7 @@
         <v-card>
           <!-- 이미지 데이터가 없을 때 -->
           <v-img
-            v-if="spot.imgdata == null || spot.imgdata == ''"
+            v-if="spot.img == null || spot.img == ''"
             src="../../assets/logo.png"
             contain
             max-height="150"
@@ -44,7 +44,7 @@
             v-else
             contain
             max-height="150"
-            :src="spot.imgdata"
+            :src="spot.img"
             style="cursor: pointer"
             @click="onSpot(spot.id)"
           ></v-img>
