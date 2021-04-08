@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.spot.mapper.TourReviewMapper">
+
+	<select id="findById" resultType="TourReview" parameterType="string">
+		select * from TourSightReview where toursight_id = #{id};
+	</select>
+	
+	<insert id="insertReview" parameterType="TourReview">
+		insert into TourSightReview values(null, #{user_id}, #{toursight_id}, #{content}, now(), #{score});
+	</insert>
+	
+	<update id="updateReview" parameterType="TourReview">
+		update TourSightReview set content=#{content}, score=#{score} where tour_review_id = #{tour_review_id};
+	</update>
+	
+	<delete id="deleteReview" parameterType="String">
+		delete from TourSightReview where tour_review_id = #{id};
+	</delete>
+	
+</mapper>

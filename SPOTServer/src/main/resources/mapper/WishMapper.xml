@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.spot.mapper.WishMapper">
+
+	<insert id="insertWish" parameterType="AddWish">
+		insert into WishList values(null, #{user_id}, #{id}, #{type}, #{name}, #{latitude}, #{longitude}, #{img})
+	</insert>
+	
+	<select id="checkWish" parameterType="String" resultType="java.util.Map">
+		select wishlist_id,name from WishList where user_id=#{user_id} and id=#{spot_id}
+	</select>
+	
+	<delete id="deleteWish" parameterType="String">
+		delete from WishList where wishlist_id=#{wishlist_id}
+	</delete>
+	
+	<select id="wishlist" parameterType="String" resultType="WishList">
+		select * from WishList where user_id=#{user_id}
+	</select>
+	
+	<select id="findLat" parameterType="String" resultType="java.util.Map">
+		select latitude, longitude from TourSight where id=#{spot_id}
+	</select>
+
+	
+</mapper>

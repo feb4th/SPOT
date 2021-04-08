@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap");
+
+@font-face {
+  font-family: "NanumSquare";
+  src: url("./fonts/NanumSquareRoundB.ttf");
+}
+
+html,
+body {
+  font-family: "NanumSquare", serif;
+}
+
+* {
+  font-family: "NanumSquare", serif;
+}
+
+h1,
+h2,
+h3,
+p {
+  color: rgb(92, 86, 86);
+}
