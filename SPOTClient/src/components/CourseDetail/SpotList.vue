@@ -18,7 +18,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="ma-auto" justify="center" v-if="!getIsLogined">
+    <v-row class="ma-auto" justify="center" v-if="getIsLogined">
       <v-col cols="auto">
         <v-btn x-large icon @click="onModify()"
           ><v-icon>mdi-pencil</v-icon></v-btn
