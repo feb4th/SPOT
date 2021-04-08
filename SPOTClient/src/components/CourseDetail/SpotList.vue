@@ -10,8 +10,12 @@
               <v-img :src="getSrc(idx)" contain></v-img>
             </v-col>
             <v-col cols="3">
-              <v-btn x-large text @click="onDetail(course.spot_id)">
-                <h2>{{ course.name }}</h2>
+              <v-btn
+                x-large
+                text
+                @click="onDetail(course.spot_id)"
+                class="text-start text-truncate"
+                ><h2 style="max-width:150px">{{ course.name }}</h2>
               </v-btn>
             </v-col>
           </v-row>
