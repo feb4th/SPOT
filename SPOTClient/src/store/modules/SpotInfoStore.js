@@ -5,7 +5,7 @@ const SpotInfoStore = {
   namespaced: true, // 모듈 개발사용 가능
   state: {
     spot: {
-      name: "엄마손 맛집",
+      name: "SPOT명",
       latitude: "37.570425",
       longitude: "126.991316",
       address: "서울시 종로구 종로3가",
@@ -14,16 +14,7 @@ const SpotInfoStore = {
           etc: "1월 1일부터 12월 31일까지 쉽니다 ^^"
         }
       ],
-      menu_list: [
-        {
-          menu: "엄마손국밥",
-          price: "6000"
-        },
-        {
-          menu: "아빠발국밥",
-          price: "5000"
-        }
-      ],
+      menu_list: [],
       tel: "010-1234-1234",
       review_cnt: 1,
       type: 1

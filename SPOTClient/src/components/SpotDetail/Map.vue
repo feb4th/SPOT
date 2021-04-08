@@ -70,8 +70,9 @@ export default {
         position: new kakao.maps.LatLng(lat, lng), // 마커를 표시할 위치
         image: markerImage // 마커 이미지
       });
+      var content_name = this.getSpot.name;
       var infowindow = new kakao.maps.InfoWindow({
-        content: this.getSpot.name
+        content: content_name
       });
       infowindow.open(map, marker);
       marker.setMap(map);
