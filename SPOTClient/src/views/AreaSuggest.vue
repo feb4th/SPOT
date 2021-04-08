@@ -2,16 +2,18 @@
   <v-app>
     <v-main class="grey lighten-3">
       <v-container>
-        <v-row style="height:100%;">
+        <v-row style="height:90%;">
           <v-col>
-            <v-sheet min-height="70vh" rounded="lg">
-              <div class="ml-3">
-                <h1>당신에게 추천하는</h1>
-                <span style="font-size: 3em;"><strong>SPOT</strong></span>
-                <span style="font-size: 2.5em;">🚩</span>
-              </div>
+            <v-sheet min-height="70vh" rounded="lg" class="mt-3">
+              <v-row class="ml-12">
+                <div class="mt-5">
+                  <h1>{{ getMemberInfo.nickname }}님에게 추천하는</h1>
+                  <span style="font-size: 3em;"><strong>SPOT</strong></span>
+                  <span style="font-size: 2.5em;">🚩</span>
+                </div></v-row
+              >
               <!-- 위시리스트 팝업 부분 -->
-              <v-row class="justify-end mr-8">
+              <v-row class="justify-end my-8 mr-12">
                 <v-btn color="grey" dark @click.stop="dialog = true">
                   나의 위시리스트
                 </v-btn>
@@ -35,8 +37,8 @@
                           <div>
                             <v-card
                               class="ma-4"
-                              height="180"
-                              width="200"
+                              height="100"
+                              width="100"
                               @click="onSelect(card.id)"
                             >
                               <!-- 이미지 데이터가 없을 때 -->
@@ -44,7 +46,7 @@
                               <v-img
                                 v-if="card.img == '' || card.img == null"
                                 contain
-                                aspect-ratio="1.1"
+                                aspect-ratio="1"
                                 src="@/assets/logo.png"
                                 class="white--text align-end"
                                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -56,7 +58,7 @@
                               <v-img
                                 v-else
                                 contain
-                                aspect-ratio="1.1"
+                                aspect-ratio="1"
                                 :src="card.img"
                                 class="white--text align-end"
                                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -101,7 +103,7 @@
                       <v-spacer></v-spacer>
 
                       <v-btn color="secondary" text @click="dialog = false">
-                        닫기
+                        확인
                       </v-btn>
                     </v-card-actions>
                   </v-card>
@@ -109,93 +111,61 @@
               </v-row>
 
               <!-- 추천 지역 list -->
-              <v-row style="height:90%;">
+              <v-row style="height:80%;">
                 <v-col cols="1"></v-col>
                 <v-col cols="10">
-                  <v-sheet class="mx-auto" elevation="0">
-                    <v-slide-group
-                      class="pa-4"
-                      active-class="success"
-                      show-arrows
+                  <v-row>
+                    <v-card
+                      v-for="(card, idx) in getSuggestTourList"
+                      :key="idx"
+                      height="150"
+                      width="150"
+                      class="mx-auto my-8"
                     >
-                      <v-slide-item
-                        v-for="(card, idx) in getSuggestTourList"
-                        :key="idx"
+                      <v-img
+                        contain
+                        aspect-ratio="1"
+                        :src="getSrc(card.img)"
+                        class="white--text align-end"
+                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                        @click="onSelect(card.id)"
                       >
-                        <div>
-                          <v-card
-                            class="ma-4"
-                            height="180"
-                            width="200"
-                            @click="onSelect(card.id)"
-                          >
-                            <!-- 이미지 데이터가 없을 때 -->
-                            <v-img
-                              v-if="card.img == '' || card.img == null"
-                              contain
-                              aspect-ratio="1.1"
-                              src="@/assets/logo.png"
-                              class="white--text align-end"
-                              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                              ><v-card-title
-                                class="text-no-wrap text-truncate"
-                                >{{ card.name }}</v-card-title
+                        <v-card-title> {{ card.name }} </v-card-title></v-img
+                      ><v-row justify="center" class="my-3">
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon v-bind="attrs" v-on="on">
+                              <v-icon
+                                v-if="suggestFlag[idx] == true"
+                                size="50"
+                                @click="onSuggestClick(idx)"
+                                color="primary"
+                                >mdi-playlist-check</v-icon
                               >
-                            </v-img>
-                            <v-img
-                              v-else
-                              contain
-                              aspect-ratio="1.1"
-                              :src="card.img"
-                              class="white--text align-end"
-                              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                            >
-                              <v-card-title
-                                class="text-no-wrap text-truncate"
-                                >{{ card.name }}</v-card-title
-                              ></v-img
-                            >
-                          </v-card>
-                          <v-row justify="center" class="ma-auto">
-                            <v-tooltip bottom>
-                              <template v-slot:activator="{ on, attrs }">
-                                <v-btn icon v-bind="attrs" v-on="on">
-                                  <v-icon
-                                    v-if="suggestFlag[idx] == true"
-                                    size="50"
-                                    @click="onSuggestClick(idx)"
-                                    color="primary"
-                                    >mdi-playlist-check</v-icon
-                                  >
-                                  <v-icon
-                                    v-else
-                                    size="40"
-                                    @click="onSuggestUnclick(idx)"
-                                    color="gray"
-                                    >mdi-check</v-icon
-                                  >
-                                </v-btn>
-                              </template>
-                              <span v-if="suggestFlag[idx] == true">취소</span>
-                              <span v-else>추가</span>
-                            </v-tooltip>
-                          </v-row>
-                        </div>
-                      </v-slide-item>
-                    </v-slide-group>
-                  </v-sheet>
+                              <v-icon
+                                v-else
+                                size="40"
+                                @click="onSuggestUnclick(idx)"
+                                color="gray"
+                                >mdi-check</v-icon
+                              >
+                            </v-btn>
+                          </template>
+                          <span v-if="suggestFlag[idx] == true">취소</span>
+                          <span v-else>추가</span>
+                        </v-tooltip>
+                      </v-row>
+                    </v-card>
+                  </v-row>
                 </v-col>
                 <v-col cols="1" class="ma-auto"
                   ><v-btn depressed icon v-if="btnNumber > 0" @click="onClick"
                     ><v-icon x-large>mdi-arrow-right</v-icon></v-btn
                   ></v-col
                 >
-                <!-- <v-col cols="1" class="ma-auto">
-                  <v-btn depressed :disabled="btnNumber <= 0" @click="onClick">
-                    다음
-                  </v-btn></v-col
-                > -->
               </v-row>
+
+              <v-row style="height:50px;" class="mb-2"></v-row>
             </v-sheet>
           </v-col>
         </v-row>
@@ -257,7 +227,7 @@ export default {
           const tmp = this.getSuggestTourList[i];
           this.courseRoom[tmpIdx - 1] = {
             course_id: "0",
-            course_name: "new코스",
+            course_name: "새로운 코스",
             date: "0",
             memo: "0",
             name: tmp.name,
@@ -278,7 +248,7 @@ export default {
           const tmp = this.getWishList[i];
           this.courseRoom[tmpIdx - 1] = {
             course_id: "0",
-            course_name: "new코스",
+            course_name: "새로운 코스",
             date: "0",
             memo: "0",
             name: tmp.name,
@@ -324,8 +294,7 @@ export default {
       this.btnNumber++;
     },
     getSrc(img) {
-      console.log(img);
-      return "@/assets/images/logo.png";
+      return img;
     }
   }
 };

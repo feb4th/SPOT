@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center">
+    <v-row justify="center" class="ma-4">
       <div id="map" class="map"></div>
     </v-row>
   </v-container>
