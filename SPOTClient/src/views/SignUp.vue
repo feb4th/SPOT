@@ -319,10 +319,11 @@ export default {
             this.reqSignupValidation(this.email).then(response => {
               if (response) this.dialog = true;
               else {
-                this.msg = "이메일 전송이 실패했습니다";
+                this.msg = "가입성공~ 이메일 인증 후 로그인 해 주세요!";
                 this.snackbar = true;
                 this.color = "error";
                 this.processing = false;
+                this.$router.push("/login");
               }
             });
           } else {

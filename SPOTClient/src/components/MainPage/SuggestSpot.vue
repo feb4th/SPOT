@@ -47,11 +47,23 @@ export default {
     ...mapGetters(MemberStore, ["getMemberInfo"])
   },
   methods: {
-    ...mapActions(SpotInfoStore, ["reqSpot"]),
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"]),
     ...mapActions(SuggestStore, ["reqSuggest"]),
 
     onSelect(spot_id) {
-      this.$router.push("/spotdetail/" + spot_id);
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     },
     getSrc(order) {
       return require("../../assets/images/spot/" + order + ".png");

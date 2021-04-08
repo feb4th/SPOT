@@ -1,31 +1,43 @@
 <template>
-  <v-container>
-    <v-card class="pu-10 px-10 mu-10" elevation="0">
-      <v-card-title class="headline justify-space-between">
-        <v-btn
-          class="ml-4"
-          icon
-          large
-          @click="
-            () => {
-              this.$router.go(-1);
-            }
-          "
-        >
-          <v-icon size="50">mdi-undo-variant</v-icon>
-        </v-btn>
-        <strong>
-          {{ getCourseInfo[0].name }}
-        </strong>
+  <v-row>
+    <v-col>
+      <v-card elevation="0">
+        <v-card-title class="headline justify-space-between">
+          <v-row>
+            <v-col cols="1" justify="left">
+              <v-btn
+                icon
+                large
+                @click="
+                  () => {
+                    this.$router.go(-1);
+                  }
+                "
+              >
+                <v-icon large>mdi-arrow-left</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="10">
+              <v-text-field
+                style="font-size:30px;"
+                justify="center"
+                v-model="getCourseInfo[0].course_name"
+                filled
+              >
+              </v-text-field
+            ></v-col>
+            <v-col cols="1" justify="end"> <v-spacer></v-spacer></v-col>
+          </v-row>
 
-        <v-btn class="mr-4" icon large>
-          <v-icon class="kakao-link" size="50" @click="onShare()"
-            >mdi-share-variant
-          </v-icon>
-        </v-btn>
-      </v-card-title>
-    </v-card>
-  </v-container>
+          <!-- <v-btn icon large v-if="getIsLogined">
+            <v-icon class="kakao-link" large @click="onShare()"
+              >mdi-share-variant
+            </v-icon>
+          </v-btn> -->
+        </v-card-title>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -40,7 +52,8 @@ export default {
     onShare() {
       // 현재 페이지 정보 공유
       let url =
-        "https://localhost:8080/course/detail/" + this.$route.params.course_id;
+        "https://j4a102.p.ssafy.io/course/detail/" +
+        this.$route.params.courseid;
       let descr = " 코스 정보가 도착했어요~";
       console.log(url);
       window.Kakao.Link.createDefaultButton({

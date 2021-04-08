@@ -54,10 +54,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(CourseStore, ["reqCourseList"]),
+    ...mapActions(CourseStore, ["reqCourseList", "reqCourseInfo"]),
 
     onCourse(id) {
-      this.$router.push("/course/detail/" + id);
+      this.reqCourseInfo({
+        user_id: this.$route.params.memberid,
+        course_id: id
+      }).then(() => {
+        this.$router.push("/course/detail/" + id);
+      });
     }
   }
 };

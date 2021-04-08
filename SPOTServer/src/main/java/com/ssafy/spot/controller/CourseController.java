@@ -33,51 +33,52 @@ public class CourseController {
 	@Autowired
 	CourseService service;
 	
-	@PostMapping(value = "/course/{user_id}")
-	@ApiOperation(value = "코스id생성", notes = "성공 시 코스id생성 완료")
+//	@PostMapping(value = "/course/{user_id}")
+//	@ApiOperation(value = "코스id생성", notes = "성공 시 코스id생성 완료")
+//	
+//	public Object insertCourseId(@PathVariable String user_id) {
+//		BasicResponse result = new BasicResponse();
+//		HttpStatus status;
+//		try {
+//			service.insertCourseId(user_id);
+//			int courseId=service.findCourseId();
+//			result.message = "success";
+//			result.result=courseId;
+//		} catch (Exception e) {
+//			status=HttpStatus.INTERNAL_SERVER_ERROR;
+//			e.printStackTrace();
+//		}
+//		
+//		status= HttpStatus.ACCEPTED;
+//        return new ResponseEntity<>(result, status);
+//	}
 	
-	public Object insertCourseId(@PathVariable String user_id) {
-		BasicResponse result = new BasicResponse();
-		HttpStatus status;
-		try {
-			service.insertCourseId(user_id);
-			int courseId=service.findCourseId();
-			result.message = "insert courseid";
-			result.result=courseId;
-		} catch (Exception e) {
-			status=HttpStatus.INTERNAL_SERVER_ERROR;
-			e.printStackTrace();
-		}
-		
-		status= HttpStatus.ACCEPTED;
-        return new ResponseEntity<>(result, status);
-	}
 	
-	
-	@PostMapping(value = "/course/add/{course_id}")
+	@PostMapping(value = "/course/add")
 	@ApiOperation(value = "코스생성", notes = "성공 시 코스생성 완료")
 	
-	public Object insertCourse(@PathVariable String course_id, @RequestBody List<CourseReq> list) {
+	public Object insertCourse(@RequestBody List<CourseReq> list) {
 		BasicResponse result = new BasicResponse();
 		HttpStatus status;
-		String user_id=list.get(0).getUser_id();
-		String name=list.get(0).getName();
+		
 		try {
-			if(service.findById(user_id, name)==0) {
-				SimpleDateFormat format= new SimpleDateFormat("yyyyMMddHHmmss");
-				Date time = new Date();
-				String timeurl=format.format(time);
-				
-				for (int i = 0; i < list.size(); i++) {
-					list.get(i).setCourse_id(course_id);
-					list.get(i).setDate(timeurl);
-					service.insertCourse(list.get(i));
-				}
-				result.message = "insert course";
+			
+			SimpleDateFormat format= new SimpleDateFormat("yyyyMMddHHmmss");
+			Date time = new Date();
+			String timeurl=format.format(time);
+			service.insertCourseId(list.get(0).getUser_id());
+			int course_id=service.findCourseId();
+			String courseid= Integer.toString(course_id);
+			
+			for (int i = 0; i < list.size(); i++) {
+				list.get(i).setCourse_id(courseid);
+				list.get(i).setDate(timeurl);
+				list.get(i).setCourse_name("new코스");
+				service.insertCourse(list.get(i));
 			}
-			else {
-				result.message = "exist name";
-			}
+			result.message = "insert course";
+			result.result=course_id;
+			
 		} catch (Exception e) {
 			status=HttpStatus.INTERNAL_SERVER_ERROR;
 			e.printStackTrace();
@@ -115,6 +116,9 @@ public class CourseController {
 		try {
 			service.reset(course_id);
 			for (int i = 0; i < list.size(); i++) {
+				list.get(i).setCourse_id(course_id);
+				String order=Integer.toString(i+1);
+				list.get(i).setOrders(order);
 				service.insertCourse(list.get(i));
 			}
 //			List<String> id=service.findIdByName(user_id, course_id);

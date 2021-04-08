@@ -55,7 +55,7 @@ export default {
     },
     setFollow() {
       //맛집일때
-      if (this.$route.params.spotid < 50000) {
+      if (this.$route.params.spotid < 500000) {
         this.reqAddWish({
           spot_id: this.$route.params.spotid,
           img: this.getSpot.img,
@@ -68,7 +68,7 @@ export default {
         //관광지일때
         this.reqAddWish({
           spot_id: this.$route.params.spotid,
-          img: this.getImage,
+          img: this.getImage[0],
           latitude: this.getSpot.latitude,
           longitude: this.getSpot.longitude,
           name: this.getSpot.name,

@@ -129,11 +129,10 @@ export default {
           reg_time: date
         },
         id: this.$route.params.spotid
-      }).then(res => {
-        if (res == true) {
-          this.reqReviewList(this.$route.params.spotid);
-        }
       });
+      this.score = 0;
+      this.context = "";
+      this.reqReviewList(this.$route.params.spotid);
     },
     openModify(comment) {
       this.review_id = comment.review_id;

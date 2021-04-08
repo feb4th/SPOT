@@ -49,13 +49,8 @@ export default {
     initMap() {
       var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       var lat, lng;
-      if (this.$route.params.spotid < 500000) {
-        lat = this.getSpot.latitude;
-        lng = this.getSpot.longitude;
-      } else {
-        lat = this.getSpot.lat;
-        lng = this.getSpot.lng;
-      }
+      lat = this.getSpot.latitude;
+      lng = this.getSpot.longitude;
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(lat, lng), //지도의 중심좌표.
@@ -75,8 +70,9 @@ export default {
         position: new kakao.maps.LatLng(lat, lng), // 마커를 표시할 위치
         image: markerImage // 마커 이미지
       });
+      var content_name = this.getSpot.name;
       var infowindow = new kakao.maps.InfoWindow({
-        content: this.getSpot.name
+        content: content_name
       });
       infowindow.open(map, marker);
       marker.setMap(map);

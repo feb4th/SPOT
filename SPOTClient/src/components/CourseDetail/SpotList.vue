@@ -18,7 +18,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="ma-auto" justify="center" v-if="!getIsLogined">
+    <v-row class="ma-auto" justify="center" v-if="getIsLogined">
       <v-col cols="auto">
         <v-btn x-large icon @click="onModify()"
           ><v-icon>mdi-pencil</v-icon></v-btn
@@ -32,6 +32,7 @@
 import { mapGetters, mapActions } from "vuex";
 const CourseStore = "CourseStore";
 const MemberStore = "MemberStore";
+const SpotInfoStore = "SpotInfoStore";
 
 export default {
   data() {
@@ -52,9 +53,22 @@ export default {
   },
   methods: {
     ...mapActions(CourseStore, ["reqCourseInfo"]),
+    ...mapActions(SpotInfoStore, ["reqSpot", "reqTourSight"]),
 
     onDetail(spot_id) {
-      this.$router.push("/spotdetail/" + spot_id);
+      if (spot_id < 500000) {
+        this.reqSpot(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      } else {
+        this.reqTourSight(spot_id).then(response => {
+          if (response.result == true) {
+            this.$router.push("/spotdetail/" + spot_id);
+          }
+        });
+      }
     },
     onModify() {
       this.$router.push("/makecourse1/" + this.$route.params.course_id);

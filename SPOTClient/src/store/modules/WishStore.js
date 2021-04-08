@@ -49,21 +49,26 @@ const WishStore = {
             console.log(response.data.result.wishlist_id);
             context.commit("setWishId", response.data.result.wishlist_id);
             return true;
-          } else return false;
+          } else {
+            context.commit("setWishId", "");
+            return false;
+          }
         })
         .catch(error => {
+          context.commit("setWishId", "");
           console.log(error);
         });
     },
 
     // 위시리스트 추가(관광지)
     reqAddWish(context, info) {
+      console.log(info);
       return axios
         .post("/wish", {
           id: info.spot_id,
           img: info.img,
           latitude: info.latitude,
-          longitude: info.longtitude,
+          longitude: info.longitude,
           name: info.name,
           type: "1",
           user_id: info.user_id
