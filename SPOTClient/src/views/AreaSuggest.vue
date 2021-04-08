@@ -262,7 +262,7 @@ export default {
 
       for (i = 0; i < this.getWishList.length; i++) {
         if (this.wishFlag[i] == true) {
-          const tmp = this.wishFlag[i];
+          const tmp = this.getWishList[i];
           this.courseRoom[tmpIdx - 1] = {
             course_id: "0",
             course_name: "new코스",
