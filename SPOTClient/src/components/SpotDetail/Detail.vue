@@ -8,7 +8,7 @@
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>영업시간</strong>
-        <v-card-text v-for="hours in getSpot.bhour_list" :key="hours.type">
+        <v-card-text v-for="(hours, idx) in getSpot.bhour_list" :key="idx">
           {{ hours.etc }}
         </v-card-text>
       </v-card-title>
@@ -22,7 +22,7 @@
       <v-card-title>
         <v-icon x-large>mdi-check</v-icon>
         <strong>대표메뉴</strong>
-        <v-card-text v-for="menus in getSpot.menu_list" :key="menus.menu">
+        <v-card-text v-for="(menus, idx) in getSpot.menu_list" :key="idx">
           {{ menus.menu }} : {{ menus.price }} 원
         </v-card-text>
       </v-card-title>
