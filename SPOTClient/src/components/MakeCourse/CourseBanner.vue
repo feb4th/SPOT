@@ -1,38 +1,49 @@
 <template>
-  <v-container>
-    <v-card class="pu-10 px-10 mu-10" elevation="0">
-      <v-card-title class="headline justify-space-between">
-        <v-row>
-          <v-col cols="2">
-            <v-btn
-              class="ml-4"
-              icon
-              large
-              @click="
-                () => {
-                  this.$router.go(-1);
-                }
-              "
+  <v-row>
+    <v-col>
+      <v-card elevation="0">
+        <v-card-title class="headline justify-space-between">
+          <v-row>
+            <v-col cols="1" justify="left">
+              <v-btn
+                icon
+                large
+                @click="
+                  () => {
+                    this.$router.go(-1);
+                  }
+                "
+              >
+                <v-icon large>mdi-arrow-left</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="10">
+              <v-text-field
+                style="font-size:30px;"
+                justify="center"
+                v-model="getCourseInfo[0].course_name"
+                filled
+              >
+              </v-text-field
+            ></v-col>
+            <v-col cols="1" justify="end">
+              <v-btn class="mr-4" icon large>
+                <v-icon class="kakao-link" large @click="onShare()"
+                  >mdi-share-variant
+                </v-icon>
+              </v-btn></v-col
             >
-              <v-icon size="50">mdi-undo-variant</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field v-model="getCourseInfo[0].course_name" filled>
-            </v-text-field>
-          </v-col>
+          </v-row>
 
-          <v-col cols="2">
-            <v-btn class="mr-4" icon large>
-              <v-icon class="kakao-link" size="50" @click="onShare()"
-                >mdi-share-variant
-              </v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card-title>
-    </v-card>
-  </v-container>
+          <!-- <v-btn icon large v-if="getIsLogined">
+            <v-icon class="kakao-link" large @click="onShare()"
+              >mdi-share-variant
+            </v-icon>
+          </v-btn> -->
+        </v-card-title>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
