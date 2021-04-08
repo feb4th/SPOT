@@ -41,7 +41,8 @@ export default {
     onShare() {
       // 현재 페이지 정보 공유
       let url =
-        "https://localhost:8080/course/detail/" + this.$route.params.course_id;
+        "https://j4a102.p.ssafy.io/course/detail/" +
+        this.$route.params.course_id;
       let descr = " 코스 정보가 도착했어요~";
       console.log(url);
       window.Kakao.Link.createDefaultButton({
