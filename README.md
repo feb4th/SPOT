@@ -36,7 +36,7 @@
 
 ## 📜개발기록
 
-- [와이어프레임](./documents/wireFrame)
+- [와이어프레임](./documents/wireframe)
 - [발표자료](./documents/PPT)
 - [컨벤션](./documents/convention)
 
