@@ -34,6 +34,12 @@
 
 <img src="./image/기술스택.JPG"></img>
 
+## 📜개발기록
+
+- [와이어프레임](./documents/wireFrame)
+- [발표자료](./documents/PPT)
+- [컨벤션](./documents/convention)
+
 ## 🕹️주요 기능
 
 - 메인페이지
